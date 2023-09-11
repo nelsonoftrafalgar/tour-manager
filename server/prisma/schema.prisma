@@ -1,0 +1,53 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model TourManager {
+  id        String    @id @default(uuid())
+  name      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Concert   Concert[]
+  Salary    Salary[]
+}
+
+model Band {
+  id        String    @id @default(uuid())
+  name      String
+  frontMan  String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Concert   Concert[]
+  Salary    Salary[]
+}
+
+model Concert {
+  id            String      @id @default(uuid())
+  date          String
+  place         String
+  band          Band        @relation(references: [id], fields: [bandId])
+  tourManager   TourManager @relation(references: [id], fields: [tourManagerId])
+  bandId        String
+  tourManagerId String
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  Salary        Salary[]
+}
+
+model Salary {
+  id            String      @id @default(uuid())
+  amount        String
+  band          Band        @relation(references: [id], fields: [bandId])
+  tourManager   TourManager @relation(references: [id], fields: [tourManagerId])
+  concert       Concert     @relation(references: [id], fields: [concertId])
+  bandId        String
+  tourManagerId String
+  concertId     String
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
