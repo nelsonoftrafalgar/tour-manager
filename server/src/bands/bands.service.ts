@@ -34,34 +34,36 @@ export class BandsService {
   }
 
   async createBand(data: NewBandDTO): Promise<Band> {
+    const { name, frontMan } = data
     await this.preventDuplicates(data)
     return this.prisma.band.create({
       data: {
         id: uuid(),
-        name: data.name,
-        frontMan: data.frontMan,
+        name,
+        frontMan,
       },
     })
   }
 
   async updateBand(data: BandDTO): Promise<Band> {
+    const { name, frontMan, id } = data
     await this.preventDuplicates(data)
-
     return this.prisma.band.update({
-      where: { id: data.id },
+      where: { id },
       data: {
-        name: data.name,
-        frontMan: data.frontMan,
+        name,
+        frontMan,
       },
     })
   }
 
   async preventDuplicates(data: NewBandDTO | BandDTO) {
-    const duplicate = this.prisma.band.findMany({
-      where: { name: data.name, frontMan: data.frontMan },
+    const { name, frontMan } = data
+    const duplicate = await this.prisma.band.findMany({
+      where: { name, frontMan },
     })
 
-    if (duplicate) {
+    if (duplicate.length > 0) {
       throw new ConflictException()
     }
   }

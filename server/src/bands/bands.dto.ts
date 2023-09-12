@@ -1,6 +1,5 @@
 import { ApiProperty, ApiPropertyOptional, PickType } from '@nestjs/swagger'
 import {
-  IsDateString,
   IsString,
   IsUUID,
   Matches,
@@ -56,10 +55,6 @@ export class BandDTO {
   @Matches(NAME_CONSTRAIN)
   @Matches(WHITESPACE_CONSTRAIN)
   frontMan: string
-
-  @ApiProperty()
-  @IsDateString()
-  createdAt: string
 }
 
 export class BandIdDTO extends PickType(BandDTO, ['id']) {}
