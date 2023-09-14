@@ -4,9 +4,12 @@ import { INestApplication, ValidationPipe } from '@nestjs/common'
 import {
   MOCK_AMOUNT,
   MOCK_BAND_ID,
+  MOCK_BAND_NAME,
   MOCK_CONCERT_ID,
+  MOCK_PLACE,
   MOCK_SALARY_ID,
   MOCK_TOUR_MANAGER_ID,
+  MOCK_TOUR_MANAGER_NAME,
 } from 'test/mocks'
 import { Test, TestingModule } from '@nestjs/testing'
 
@@ -17,10 +20,27 @@ describe('SalariesController (e2e)', () => {
   let app: INestApplication
 
   const mockService = {
-    createSalary: jest.fn().mockResolvedValue({}),
-    getReport: jest.fn().mockResolvedValue({}),
-    updateSalary: jest.fn().mockResolvedValue({}),
-    deleteSalary: jest.fn().mockResolvedValue({}),
+    createSalary: () => ({
+      amount: MOCK_AMOUNT,
+      bandId: MOCK_BAND_ID,
+      tourManagerId: MOCK_TOUR_MANAGER_ID,
+      concertId: MOCK_CONCERT_ID,
+    }),
+    getReport: () => ({
+      id: MOCK_SALARY_ID,
+      amount: MOCK_AMOUNT,
+      place: MOCK_PLACE,
+      bandName: MOCK_BAND_NAME,
+      tourManagerName: MOCK_TOUR_MANAGER_NAME,
+    }),
+    updateSalary: () => ({
+      id: MOCK_SALARY_ID,
+      amount: MOCK_AMOUNT,
+      bandId: MOCK_BAND_ID,
+      tourManagerId: MOCK_TOUR_MANAGER_ID,
+      concertId: MOCK_CONCERT_ID,
+    }),
+    deleteSalary: () => {},
   }
 
   beforeEach(async () => {
@@ -50,43 +70,36 @@ describe('SalariesController (e2e)', () => {
         concertId: MOCK_CONCERT_ID,
       })
       .expect(200)
-      .expect({})
+      .expect(mockService.getReport())
   })
 
   it('should validate report params', async () => {
-    let response: request.Response
-    response = await request(app.getHttpServer())
+    await request(app.getHttpServer())
       .get('/salaries')
       .query({
         bandId: `${MOCK_BAND_ID}!`,
         tourManagerId: MOCK_TOUR_MANAGER_ID,
         concertId: MOCK_CONCERT_ID,
       })
+      .expect(400)
 
-    expect(response.status).toEqual(400)
-    expect(response.badRequest).toBeTruthy()
-
-    response = await request(app.getHttpServer())
+    await request(app.getHttpServer())
       .get('/salaries')
       .query({
         bandId: MOCK_BAND_ID,
         tourManagerId: `${MOCK_TOUR_MANAGER_ID}!`,
         concertId: MOCK_CONCERT_ID,
       })
+      .expect(400)
 
-    expect(response.status).toEqual(400)
-    expect(response.badRequest).toBeTruthy()
-
-    response = await request(app.getHttpServer())
+    await request(app.getHttpServer())
       .get('/salaries')
       .query({
         bandId: MOCK_BAND_ID,
         tourManagerId: MOCK_TOUR_MANAGER_ID,
         concertId: `${MOCK_CONCERT_ID}!`,
       })
-
-    expect(response.status).toEqual(400)
-    expect(response.badRequest).toBeTruthy()
+      .expect(400)
   })
 
   it('should create new salary', () => {
@@ -99,12 +112,11 @@ describe('SalariesController (e2e)', () => {
         concertId: MOCK_CONCERT_ID,
       })
       .expect(201)
-      .expect({})
+      .expect(mockService.createSalary())
   })
 
   it('should validate new salary data', async () => {
-    let response: request.Response
-    response = await request(app.getHttpServer())
+    await request(app.getHttpServer())
       .post('/salaries')
       .send({
         amount: `${MOCK_AMOUNT} `,
@@ -112,11 +124,9 @@ describe('SalariesController (e2e)', () => {
         tourManagerId: MOCK_TOUR_MANAGER_ID,
         concertId: MOCK_CONCERT_ID,
       })
+      .expect(400)
 
-    expect(response.status).toEqual(400)
-    expect(response.badRequest).toBeTruthy()
-
-    response = await request(app.getHttpServer())
+    await request(app.getHttpServer())
       .post('/salaries')
       .send({
         amount: MOCK_AMOUNT,
@@ -124,11 +134,9 @@ describe('SalariesController (e2e)', () => {
         tourManagerId: MOCK_TOUR_MANAGER_ID,
         concertId: MOCK_CONCERT_ID,
       })
+      .expect(400)
 
-    expect(response.status).toEqual(400)
-    expect(response.badRequest).toBeTruthy()
-
-    response = await request(app.getHttpServer())
+    await request(app.getHttpServer())
       .post('/salaries')
       .send({
         amount: MOCK_AMOUNT,
@@ -136,11 +144,9 @@ describe('SalariesController (e2e)', () => {
         tourManagerId: `${MOCK_TOUR_MANAGER_ID}!`,
         concertId: MOCK_CONCERT_ID,
       })
+      .expect(400)
 
-    expect(response.status).toEqual(400)
-    expect(response.badRequest).toBeTruthy()
-
-    response = await request(app.getHttpServer())
+    await request(app.getHttpServer())
       .post('/salaries')
       .send({
         amount: MOCK_AMOUNT,
@@ -148,9 +154,7 @@ describe('SalariesController (e2e)', () => {
         tourManagerId: MOCK_TOUR_MANAGER_ID,
         concertId: `${MOCK_CONCERT_ID}!`,
       })
-
-    expect(response.status).toEqual(400)
-    expect(response.badRequest).toBeTruthy()
+      .expect(400)
   })
 
   it('should update salary', () => {
@@ -164,12 +168,11 @@ describe('SalariesController (e2e)', () => {
         concertId: MOCK_CONCERT_ID,
       })
       .expect(200)
-      .expect({})
+      .expect(mockService.updateSalary())
   })
 
   it('should validate updated salary data', async () => {
-    let response: request.Response
-    response = await request(app.getHttpServer())
+    await request(app.getHttpServer())
       .put('/salaries')
       .send({
         id: `${MOCK_SALARY_ID}!`,
@@ -178,11 +181,9 @@ describe('SalariesController (e2e)', () => {
         tourManagerId: MOCK_TOUR_MANAGER_ID,
         concertId: MOCK_CONCERT_ID,
       })
+      .expect(400)
 
-    expect(response.status).toEqual(400)
-    expect(response.badRequest).toBeTruthy()
-
-    response = await request(app.getHttpServer())
+    await request(app.getHttpServer())
       .put('/salaries')
       .send({
         id: MOCK_SALARY_ID,
@@ -191,11 +192,9 @@ describe('SalariesController (e2e)', () => {
         tourManagerId: MOCK_TOUR_MANAGER_ID,
         concertId: MOCK_CONCERT_ID,
       })
+      .expect(400)
 
-    expect(response.status).toEqual(400)
-    expect(response.badRequest).toBeTruthy()
-
-    response = await request(app.getHttpServer())
+    await request(app.getHttpServer())
       .put('/salaries')
       .send({
         id: MOCK_SALARY_ID,
@@ -204,11 +203,9 @@ describe('SalariesController (e2e)', () => {
         tourManagerId: `${MOCK_TOUR_MANAGER_ID}!`,
         concertId: MOCK_CONCERT_ID,
       })
+      .expect(400)
 
-    expect(response.status).toEqual(400)
-    expect(response.badRequest).toBeTruthy()
-
-    response = await request(app.getHttpServer())
+    await request(app.getHttpServer())
       .put('/salaries')
       .send({
         id: MOCK_SALARY_ID,
@@ -217,11 +214,9 @@ describe('SalariesController (e2e)', () => {
         tourManagerId: MOCK_TOUR_MANAGER_ID,
         concertId: `${MOCK_CONCERT_ID}!`,
       })
+      .expect(400)
 
-    expect(response.status).toEqual(400)
-    expect(response.badRequest).toBeTruthy()
-
-    response = await request(app.getHttpServer())
+    await request(app.getHttpServer())
       .put('/salaries')
       .send({
         id: MOCK_SALARY_ID,
@@ -230,9 +225,7 @@ describe('SalariesController (e2e)', () => {
         tourManagerId: MOCK_TOUR_MANAGER_ID,
         concertId: MOCK_CONCERT_ID,
       })
-
-    expect(response.status).toEqual(400)
-    expect(response.badRequest).toBeTruthy()
+      .expect(400)
   })
 
   it('should delete salary', () => {
@@ -244,11 +237,9 @@ describe('SalariesController (e2e)', () => {
   })
 
   it('should validate delete salary id', async () => {
-    const response = await request(app.getHttpServer())
+    await request(app.getHttpServer())
       .delete('/salaries')
       .send({ id: `${MOCK_SALARY_ID}!` })
-
-    expect(response.status).toEqual(400)
-    expect(response.badRequest).toBeTruthy()
+      .expect(400)
   })
 })

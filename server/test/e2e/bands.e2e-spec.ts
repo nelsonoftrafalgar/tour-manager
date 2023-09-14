@@ -16,11 +16,18 @@ describe('BandsController (e2e)', () => {
   let app: INestApplication
 
   const mockService = {
-    getBands: jest.fn().mockResolvedValue({}),
-    getBandNames: jest.fn().mockResolvedValue({}),
-    getBandById: jest.fn().mockResolvedValue({}),
-    createBand: jest.fn().mockResolvedValue({}),
-    updateBand: jest.fn().mockResolvedValue({}),
+    getBands: () => [MOCK_BAND_NAME],
+    getBandNames: () => [MOCK_BAND_NAME],
+    getBandById: () => [MOCK_BAND_NAME],
+    createBand: () => ({
+      name: MOCK_BAND_NAME,
+      frontMan: MOCK_FRONTMAN,
+    }),
+    updateBand: () => ({
+      id: MOCK_BAND_ID,
+      name: MOCK_BAND_NAME,
+      frontMan: MOCK_FRONTMAN,
+    }),
   }
 
   beforeEach(async () => {
@@ -42,48 +49,46 @@ describe('BandsController (e2e)', () => {
   })
 
   it('should get all bands', () => {
-    return request(app.getHttpServer()).get('/bands').expect(200).expect({})
+    return request(app.getHttpServer())
+      .get('/bands')
+      .expect(200)
+      .expect(mockService.getBands())
   })
 
   it('should filter bands by name', async () => {
-    const response = await request(app.getHttpServer())
+    await request(app.getHttpServer())
       .get('/bands')
       .query({ name: 'Led' })
-
-    expect(response.status).toEqual(200)
-    expect(response.text).toEqual('{}')
+      .expect(200)
+      .expect(mockService.getBands())
   })
 
   it('should validate band name', async () => {
-    const response = await request(app.getHttpServer())
+    await request(app.getHttpServer())
       .get('/bands')
       .query({ name: 'Led!' })
-
-    expect(response.status).toEqual(400)
-    expect(response.badRequest).toBeTruthy()
+      .expect(400)
   })
 
   it('should get all band names', () => {
     return request(app.getHttpServer())
       .get('/bands/all_names')
       .expect(200)
-      .expect({})
+      .expect(mockService.getBandNames())
   })
 
   it('should get band by id', () => {
     return request(app.getHttpServer())
       .get(`/bands/${MOCK_BAND_ID}`)
       .expect(200)
-      .expect({})
+      .expect(mockService.getBandById())
   })
 
   it('should validate band id', async () => {
-    const response = await request(app.getHttpServer())
+    await request(app.getHttpServer())
       .get('/bands')
       .query({ id: `${MOCK_BAND_ID}!` })
-
-    expect(response.status).toEqual(400)
-    expect(response.badRequest).toBeTruthy()
+      .expect(400)
   })
 
   it('should create new band', () => {
@@ -94,50 +99,41 @@ describe('BandsController (e2e)', () => {
         frontMan: MOCK_FRONTMAN,
       })
       .expect(201)
-      .expect({})
+      .expect(mockService.createBand())
   })
 
   it('should validate new band data', async () => {
-    let response: request.Response
-    response = await request(app.getHttpServer())
+    await request(app.getHttpServer())
       .post('/bands')
       .send({
         name: `${MOCK_BAND_NAME} `,
         frontMan: MOCK_FRONTMAN,
       })
+      .expect(400)
 
-    expect(response.status).toEqual(400)
-    expect(response.badRequest).toBeTruthy()
-
-    response = await request(app.getHttpServer())
+    await request(app.getHttpServer())
       .post('/bands')
       .send({
         name: MOCK_BAND_NAME,
         frontMan: `${MOCK_FRONTMAN} `,
       })
+      .expect(400)
 
-    expect(response.status).toEqual(400)
-    expect(response.badRequest).toBeTruthy()
-
-    response = await request(app.getHttpServer())
+    await request(app.getHttpServer())
       .post('/bands')
       .send({
         name: `${MOCK_BAND_NAME} ?`,
         frontMan: MOCK_FRONTMAN,
       })
+      .expect(400)
 
-    expect(response.status).toEqual(400)
-    expect(response.badRequest).toBeTruthy()
-
-    response = await request(app.getHttpServer())
+    await request(app.getHttpServer())
       .post('/bands')
       .send({
         name: MOCK_BAND_NAME,
         frontMan: `${MOCK_FRONTMAN} ?`,
       })
-
-    expect(response.status).toEqual(400)
-    expect(response.badRequest).toBeTruthy()
+      .expect(400)
   })
 
   it('should update band', () => {
@@ -149,12 +145,11 @@ describe('BandsController (e2e)', () => {
         frontMan: MOCK_FRONTMAN,
       })
       .expect(200)
-      .expect({})
+      .expect(mockService.updateBand())
   })
 
   it('should validate updated band data', async () => {
-    let response: request.Response
-    response = await request(app.getHttpServer())
+    await request(app.getHttpServer())
       .put('/bands')
       .send({
         name: MOCK_BAND_NAME,
@@ -162,11 +157,9 @@ describe('BandsController (e2e)', () => {
         bandId: MOCK_BAND_ID,
         createdAt: `${MOCK_DATE}!`,
       })
+      .expect(400)
 
-    expect(response.status).toEqual(400)
-    expect(response.badRequest).toBeTruthy()
-
-    response = await request(app.getHttpServer())
+    await request(app.getHttpServer())
       .put('/bands')
       .send({
         name: `${MOCK_BAND_NAME} `,
@@ -174,11 +167,9 @@ describe('BandsController (e2e)', () => {
         bandId: MOCK_BAND_ID,
         createdAt: `${MOCK_DATE}!`,
       })
+      .expect(400)
 
-    expect(response.status).toEqual(400)
-    expect(response.badRequest).toBeTruthy()
-
-    response = await request(app.getHttpServer())
+    await request(app.getHttpServer())
       .put('/bands')
       .send({
         name: MOCK_BAND_NAME,
@@ -186,11 +177,9 @@ describe('BandsController (e2e)', () => {
         bandId: MOCK_BAND_ID,
         createdAt: `${MOCK_DATE}!`,
       })
+      .expect(400)
 
-    expect(response.status).toEqual(400)
-    expect(response.badRequest).toBeTruthy()
-
-    response = await request(app.getHttpServer())
+    await request(app.getHttpServer())
       .put('/bands')
       .send({
         name: MOCK_BAND_NAME,
@@ -198,8 +187,6 @@ describe('BandsController (e2e)', () => {
         bandId: MOCK_BAND_ID,
         createdAt: `${MOCK_DATE}!`,
       })
-
-    expect(response.status).toEqual(400)
-    expect(response.badRequest).toBeTruthy()
+      .expect(400)
   })
 })

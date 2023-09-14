@@ -3,6 +3,7 @@ import * as request from 'supertest'
 import { INestApplication, ValidationPipe } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
 
+import { MOCK_TOUR_MANAGER_NAME } from 'test/mocks'
 import { TourManagersModule } from '../../src/tourManagers/tourManagers.module'
 import { TourManagersService } from '../../src/tourManagers/tourManagers.service'
 
@@ -10,7 +11,7 @@ describe('TourManagersController (e2e)', () => {
   let app: INestApplication
 
   const mockService = {
-    getTourManagers: jest.fn().mockResolvedValue({}),
+    getTourManagers: () => [MOCK_TOUR_MANAGER_NAME],
   }
 
   beforeEach(async () => {
@@ -35,24 +36,20 @@ describe('TourManagersController (e2e)', () => {
     return request(app.getHttpServer())
       .get('/tour_managers')
       .expect(200)
-      .expect({})
+      .expect(mockService.getTourManagers())
   })
 
   it('should filter tour managers by name', async () => {
-    const response = await request(app.getHttpServer())
+    await request(app.getHttpServer())
       .get('/tour_managers')
       .query({ name: 'Sam' })
-
-    expect(response.status).toEqual(200)
-    expect(response.text).toEqual('{}')
+      .expect(mockService.getTourManagers())
   })
 
   it('should validate tour manager name', async () => {
-    const response = await request(app.getHttpServer())
+    await request(app.getHttpServer())
       .get('/tour_managers')
       .query({ name: 'Sam!' })
-
-    expect(response.status).toEqual(400)
-    expect(response.badRequest).toBeTruthy()
+      .expect(400)
   })
 })

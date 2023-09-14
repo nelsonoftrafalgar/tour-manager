@@ -17,10 +17,21 @@ describe('ConcertsController (e2e)', () => {
   let app: INestApplication
 
   const mockService = {
-    getConcerts: jest.fn().mockResolvedValue({}),
-    getConcertsByBandId: jest.fn().mockResolvedValue({}),
-    createConcert: jest.fn().mockResolvedValue({}),
-    updateConcert: jest.fn().mockResolvedValue({}),
+    getConcerts: () => [MOCK_PLACE],
+    getConcertsByBandId: () => [MOCK_PLACE],
+    createConcert: () => ({
+      date: MOCK_DATE,
+      place: MOCK_PLACE,
+      bandId: MOCK_BAND_ID,
+      tourManagerId: MOCK_TOUR_MANAGER_ID,
+    }),
+    updateConcert: () => ({
+      id: MOCK_CONCERT_ID,
+      date: MOCK_DATE,
+      place: MOCK_PLACE,
+      bandId: MOCK_BAND_ID,
+      tourManagerId: MOCK_TOUR_MANAGER_ID,
+    }),
   }
 
   beforeEach(async () => {
@@ -42,41 +53,39 @@ describe('ConcertsController (e2e)', () => {
   })
 
   it('should get all concerts', () => {
-    return request(app.getHttpServer()).get('/concerts').expect(200).expect({})
+    return request(app.getHttpServer())
+      .get('/concerts')
+      .expect(200)
+      .expect(mockService.getConcerts())
   })
 
   it('should filter concerts by place', async () => {
-    const response = await request(app.getHttpServer())
+    await request(app.getHttpServer())
       .get('/concerts')
       .query({ place: MOCK_PLACE })
-
-    expect(response.status).toEqual(200)
-    expect(response.text).toEqual('{}')
+      .expect(200)
+      .expect(mockService.getConcerts())
   })
 
   it('should validate concert place', async () => {
-    const response = await request(app.getHttpServer())
+    await request(app.getHttpServer())
       .get('/concerts')
       .query({ place: `${MOCK_PLACE}!` })
-
-    expect(response.status).toEqual(400)
-    expect(response.badRequest).toBeTruthy()
+      .expect(400)
   })
 
   it('should get concert by band id', () => {
     return request(app.getHttpServer())
       .get(`/concerts/${MOCK_CONCERT_ID}`)
       .expect(200)
-      .expect({})
+      .expect(mockService.getConcertsByBandId())
   })
 
   it('should validate band id', async () => {
-    const response = await request(app.getHttpServer())
+    await request(app.getHttpServer())
       .get('/concerts')
       .query({ id: `${MOCK_CONCERT_ID}!` })
-
-    expect(response.status).toEqual(400)
-    expect(response.badRequest).toBeTruthy()
+      .expect(400)
   })
 
   it('should create new concert', () => {
@@ -89,12 +98,11 @@ describe('ConcertsController (e2e)', () => {
         tourManagerId: MOCK_TOUR_MANAGER_ID,
       })
       .expect(201)
-      .expect({})
+      .expect(mockService.createConcert())
   })
 
   it('should validate new concert data', async () => {
-    let response: request.Response
-    response = await request(app.getHttpServer())
+    await request(app.getHttpServer())
       .post('/concerts')
       .send({
         date: MOCK_DATE,
@@ -102,11 +110,9 @@ describe('ConcertsController (e2e)', () => {
         bandId: MOCK_BAND_ID,
         tourManagerId: MOCK_TOUR_MANAGER_ID,
       })
+      .expect(400)
 
-    expect(response.status).toEqual(400)
-    expect(response.badRequest).toBeTruthy()
-
-    response = await request(app.getHttpServer())
+    await request(app.getHttpServer())
       .post('/concerts')
       .send({
         date: `${MOCK_DATE}!`,
@@ -114,11 +120,9 @@ describe('ConcertsController (e2e)', () => {
         bandId: MOCK_BAND_ID,
         tourManagerId: MOCK_TOUR_MANAGER_ID,
       })
+      .expect(400)
 
-    expect(response.status).toEqual(400)
-    expect(response.badRequest).toBeTruthy()
-
-    response = await request(app.getHttpServer())
+    await request(app.getHttpServer())
       .post('/concerts')
       .send({
         date: MOCK_DATE,
@@ -126,11 +130,9 @@ describe('ConcertsController (e2e)', () => {
         bandId: `${MOCK_BAND_ID}!`,
         tourManagerId: MOCK_TOUR_MANAGER_ID,
       })
+      .expect(400)
 
-    expect(response.status).toEqual(400)
-    expect(response.badRequest).toBeTruthy()
-
-    response = await request(app.getHttpServer())
+    await request(app.getHttpServer())
       .post('/concerts')
       .send({
         date: MOCK_DATE,
@@ -138,9 +140,7 @@ describe('ConcertsController (e2e)', () => {
         bandId: MOCK_BAND_ID,
         tourManagerId: `${MOCK_TOUR_MANAGER_ID}*`,
       })
-
-    expect(response.status).toEqual(400)
-    expect(response.badRequest).toBeTruthy()
+      .expect(400)
   })
 
   it('should update concert', () => {
@@ -154,12 +154,11 @@ describe('ConcertsController (e2e)', () => {
         tourManagerId: MOCK_TOUR_MANAGER_ID,
       })
       .expect(200)
-      .expect({})
+      .expect(mockService.updateConcert())
   })
 
   it('should validate updated concert data', async () => {
-    let response: request.Response
-    response = await request(app.getHttpServer())
+    await request(app.getHttpServer())
       .put('/concerts')
       .send({
         date: `${MOCK_DATE}!`,
@@ -168,11 +167,9 @@ describe('ConcertsController (e2e)', () => {
         tourManagerId: MOCK_TOUR_MANAGER_ID,
         concertId: `${MOCK_CONCERT_ID}!`,
       })
+      .expect(400)
 
-    expect(response.status).toEqual(400)
-    expect(response.badRequest).toBeTruthy()
-
-    response = await request(app.getHttpServer())
+    await request(app.getHttpServer())
       .put('/concerts')
       .send({
         date: MOCK_DATE,
@@ -181,11 +178,9 @@ describe('ConcertsController (e2e)', () => {
         tourManagerId: MOCK_TOUR_MANAGER_ID,
         concertId: `${MOCK_CONCERT_ID}!`,
       })
+      .expect(400)
 
-    expect(response.status).toEqual(400)
-    expect(response.badRequest).toBeTruthy()
-
-    response = await request(app.getHttpServer())
+    await request(app.getHttpServer())
       .put('/concerts')
       .send({
         date: MOCK_DATE,
@@ -194,11 +189,9 @@ describe('ConcertsController (e2e)', () => {
         tourManagerId: MOCK_TOUR_MANAGER_ID,
         concertId: MOCK_CONCERT_ID,
       })
+      .expect(400)
 
-    expect(response.status).toEqual(400)
-    expect(response.badRequest).toBeTruthy()
-
-    response = await request(app.getHttpServer())
+    await request(app.getHttpServer())
       .put('/concerts')
       .send({
         date: MOCK_DATE,
@@ -207,11 +200,9 @@ describe('ConcertsController (e2e)', () => {
         tourManagerId: `${MOCK_TOUR_MANAGER_ID}#`,
         concertId: MOCK_CONCERT_ID,
       })
+      .expect(400)
 
-    expect(response.status).toEqual(400)
-    expect(response.badRequest).toBeTruthy()
-
-    response = await request(app.getHttpServer())
+    await request(app.getHttpServer())
       .put('/concerts')
       .send({
         date: MOCK_DATE,
@@ -220,8 +211,6 @@ describe('ConcertsController (e2e)', () => {
         tourManagerId: MOCK_TOUR_MANAGER_ID,
         concertId: `${MOCK_CONCERT_ID}!`,
       })
-
-    expect(response.status).toEqual(400)
-    expect(response.badRequest).toBeTruthy()
+      .expect(400)
   })
 })
