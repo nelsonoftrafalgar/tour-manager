@@ -26,7 +26,7 @@ export class BandsController {
 
   @Get('all_names')
   @ApiOkResponse({ type: [BandName], description: 'Get all band names' })
-  getAllBandNames() {
+  getBandNames() {
     return this.bandsService.getBandNames()
   }
 

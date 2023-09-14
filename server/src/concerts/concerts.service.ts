@@ -6,7 +6,7 @@ import {
 } from './concerts.dto'
 import { ConflictException, Injectable } from '@nestjs/common'
 
-import { PrismaService } from 'src/prisma/prisma.service'
+import { PrismaService } from '../../src/prisma/prisma.service'
 import { v4 as uuid } from 'uuid'
 
 @Injectable()

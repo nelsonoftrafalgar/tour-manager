@@ -7,7 +7,7 @@ import {
   SalaryReportParamsDTO,
 } from './salaries.dto'
 
-import { PrismaService } from 'src/prisma/prisma.service'
+import { PrismaService } from '../../src/prisma/prisma.service'
 import { v4 as uuid } from 'uuid'
 
 @Injectable()
