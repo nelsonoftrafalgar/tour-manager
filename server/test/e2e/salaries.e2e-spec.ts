@@ -4,12 +4,10 @@ import { INestApplication, ValidationPipe } from '@nestjs/common'
 import {
   MOCK_AMOUNT,
   MOCK_BAND_ID,
-  MOCK_BAND_NAME,
   MOCK_CONCERT_ID,
-  MOCK_PLACE,
   MOCK_SALARY_ID,
   MOCK_TOUR_MANAGER_ID,
-  MOCK_TOUR_MANAGER_NAME,
+  mockSalaryService,
 } from 'test/mocks'
 import { Test, TestingModule } from '@nestjs/testing'
 
@@ -19,36 +17,12 @@ import { SalariesService } from 'src/salaries/salaries.service'
 describe('SalariesController (e2e)', () => {
   let app: INestApplication
 
-  const mockService = {
-    createSalary: () => ({
-      amount: MOCK_AMOUNT,
-      bandId: MOCK_BAND_ID,
-      tourManagerId: MOCK_TOUR_MANAGER_ID,
-      concertId: MOCK_CONCERT_ID,
-    }),
-    getReport: () => ({
-      id: MOCK_SALARY_ID,
-      amount: MOCK_AMOUNT,
-      place: MOCK_PLACE,
-      bandName: MOCK_BAND_NAME,
-      tourManagerName: MOCK_TOUR_MANAGER_NAME,
-    }),
-    updateSalary: () => ({
-      id: MOCK_SALARY_ID,
-      amount: MOCK_AMOUNT,
-      bandId: MOCK_BAND_ID,
-      tourManagerId: MOCK_TOUR_MANAGER_ID,
-      concertId: MOCK_CONCERT_ID,
-    }),
-    deleteSalary: () => {},
-  }
-
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [SalariesModule],
     })
       .overrideProvider(SalariesService)
-      .useValue(mockService)
+      .useValue(mockSalaryService)
       .compile()
 
     app = moduleFixture.createNestApplication()
@@ -70,7 +44,7 @@ describe('SalariesController (e2e)', () => {
         concertId: MOCK_CONCERT_ID,
       })
       .expect(200)
-      .expect(mockService.getReport())
+      .expect(mockSalaryService.getReport())
   })
 
   it('should validate report params', async () => {
@@ -112,7 +86,7 @@ describe('SalariesController (e2e)', () => {
         concertId: MOCK_CONCERT_ID,
       })
       .expect(201)
-      .expect(mockService.createSalary())
+      .expect(mockSalaryService.createSalary())
   })
 
   it('should validate new salary data', async () => {
@@ -168,7 +142,7 @@ describe('SalariesController (e2e)', () => {
         concertId: MOCK_CONCERT_ID,
       })
       .expect(200)
-      .expect(mockService.updateSalary())
+      .expect(mockSalaryService.updateSalary())
   })
 
   it('should validate updated salary data', async () => {

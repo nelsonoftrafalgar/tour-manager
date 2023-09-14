@@ -6,6 +6,7 @@ import {
   MOCK_BAND_NAME,
   MOCK_DATE,
   MOCK_FRONTMAN,
+  mockBandService,
 } from 'test/mocks'
 import { Test, TestingModule } from '@nestjs/testing'
 
@@ -15,27 +16,12 @@ import { BandsService } from 'src/bands/bands.service'
 describe('BandsController (e2e)', () => {
   let app: INestApplication
 
-  const mockService = {
-    getBands: () => [MOCK_BAND_NAME],
-    getBandNames: () => [MOCK_BAND_NAME],
-    getBandById: () => [MOCK_BAND_NAME],
-    createBand: () => ({
-      name: MOCK_BAND_NAME,
-      frontMan: MOCK_FRONTMAN,
-    }),
-    updateBand: () => ({
-      id: MOCK_BAND_ID,
-      name: MOCK_BAND_NAME,
-      frontMan: MOCK_FRONTMAN,
-    }),
-  }
-
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [BandsModule],
     })
       .overrideProvider(BandsService)
-      .useValue(mockService)
+      .useValue(mockBandService)
       .compile()
 
     app = moduleFixture.createNestApplication()
@@ -52,7 +38,7 @@ describe('BandsController (e2e)', () => {
     return request(app.getHttpServer())
       .get('/bands')
       .expect(200)
-      .expect(mockService.getBands())
+      .expect(mockBandService.getBands())
   })
 
   it('should filter bands by name', async () => {
@@ -60,7 +46,7 @@ describe('BandsController (e2e)', () => {
       .get('/bands')
       .query({ name: 'Led' })
       .expect(200)
-      .expect(mockService.getBands())
+      .expect(mockBandService.getBands())
   })
 
   it('should validate band name', async () => {
@@ -74,14 +60,14 @@ describe('BandsController (e2e)', () => {
     return request(app.getHttpServer())
       .get('/bands/all_names')
       .expect(200)
-      .expect(mockService.getBandNames())
+      .expect(mockBandService.getBandNames())
   })
 
   it('should get band by id', () => {
     return request(app.getHttpServer())
       .get(`/bands/${MOCK_BAND_ID}`)
       .expect(200)
-      .expect(mockService.getBandById())
+      .expect(mockBandService.getBandById())
   })
 
   it('should validate band id', async () => {
@@ -99,7 +85,7 @@ describe('BandsController (e2e)', () => {
         frontMan: MOCK_FRONTMAN,
       })
       .expect(201)
-      .expect(mockService.createBand())
+      .expect(mockBandService.createBand())
   })
 
   it('should validate new band data', async () => {
@@ -145,7 +131,7 @@ describe('BandsController (e2e)', () => {
         frontMan: MOCK_FRONTMAN,
       })
       .expect(200)
-      .expect(mockService.updateBand())
+      .expect(mockBandService.updateBand())
   })
 
   it('should validate updated band data', async () => {

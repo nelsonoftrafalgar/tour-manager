@@ -7,7 +7,8 @@ import {
   MOCK_DATE,
   MOCK_PLACE,
   MOCK_TOUR_MANAGER_ID,
-} from 'test/mocks'
+  mockConcertService,
+} from '../../test/mocks'
 import { Test, TestingModule } from '@nestjs/testing'
 
 import { ConcertsModule } from 'src/concerts/concerts.module'
@@ -16,30 +17,12 @@ import { ConcertsService } from 'src/concerts/concerts.service'
 describe('ConcertsController (e2e)', () => {
   let app: INestApplication
 
-  const mockService = {
-    getConcerts: () => [MOCK_PLACE],
-    getConcertsByBandId: () => [MOCK_PLACE],
-    createConcert: () => ({
-      date: MOCK_DATE,
-      place: MOCK_PLACE,
-      bandId: MOCK_BAND_ID,
-      tourManagerId: MOCK_TOUR_MANAGER_ID,
-    }),
-    updateConcert: () => ({
-      id: MOCK_CONCERT_ID,
-      date: MOCK_DATE,
-      place: MOCK_PLACE,
-      bandId: MOCK_BAND_ID,
-      tourManagerId: MOCK_TOUR_MANAGER_ID,
-    }),
-  }
-
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [ConcertsModule],
     })
       .overrideProvider(ConcertsService)
-      .useValue(mockService)
+      .useValue(mockConcertService)
       .compile()
 
     app = moduleFixture.createNestApplication()
@@ -56,7 +39,7 @@ describe('ConcertsController (e2e)', () => {
     return request(app.getHttpServer())
       .get('/concerts')
       .expect(200)
-      .expect(mockService.getConcerts())
+      .expect(mockConcertService.getConcerts())
   })
 
   it('should filter concerts by place', async () => {
@@ -64,7 +47,7 @@ describe('ConcertsController (e2e)', () => {
       .get('/concerts')
       .query({ place: MOCK_PLACE })
       .expect(200)
-      .expect(mockService.getConcerts())
+      .expect(mockConcertService.getConcerts())
   })
 
   it('should validate concert place', async () => {
@@ -78,7 +61,7 @@ describe('ConcertsController (e2e)', () => {
     return request(app.getHttpServer())
       .get(`/concerts/${MOCK_CONCERT_ID}`)
       .expect(200)
-      .expect(mockService.getConcertsByBandId())
+      .expect(mockConcertService.getConcertsByBandId())
   })
 
   it('should validate band id', async () => {
@@ -98,7 +81,7 @@ describe('ConcertsController (e2e)', () => {
         tourManagerId: MOCK_TOUR_MANAGER_ID,
       })
       .expect(201)
-      .expect(mockService.createConcert())
+      .expect(mockConcertService.createConcert())
   })
 
   it('should validate new concert data', async () => {
@@ -154,7 +137,7 @@ describe('ConcertsController (e2e)', () => {
         tourManagerId: MOCK_TOUR_MANAGER_ID,
       })
       .expect(200)
-      .expect(mockService.updateConcert())
+      .expect(mockConcertService.updateConcert())
   })
 
   it('should validate updated concert data', async () => {
