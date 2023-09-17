@@ -21,12 +21,12 @@ services:
   image: nestjs-dev
   restart: unless-stopped
   build:
-   context: ./server
-   dockerfile: Dockerfile
+   context: ./
+   dockerfile: ./server/Dockerfile
   volumes:
    - ./server:/app
   environment:
-   - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/postgres
+   DATABASE_URL: ${DATABASE_URL}
   ports:
    - '8000:8000'
   networks:
