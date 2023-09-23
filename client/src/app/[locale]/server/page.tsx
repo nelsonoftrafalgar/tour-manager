@@ -1,7 +1,9 @@
+import { Button } from '@radix-ui/themes'
+
 export default function Server() {
 	return (
 		<div>
-			<h1>SSR</h1>
+			<Button>SSR</Button>
 		</div>
 	)
 }

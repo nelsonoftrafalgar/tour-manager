@@ -7,6 +7,13 @@ import {
 	useScopedI18n,
 } from '@/locales/client'
 
+import { Button } from '@radix-ui/themes'
+import styled from 'styled-components'
+
+const StyledButton = styled(Button)`
+	background-color: ${({ theme }) => theme.colors.primary.orange};
+`
+
 export default function Client() {
 	const t = useI18n()
 	const changeLocale = useChangeLocale()
@@ -15,7 +22,7 @@ export default function Client() {
 
 	return (
 		<div>
-			<h1>CSR</h1>
+			<StyledButton>CSR</StyledButton>
 			<p>
 				Current locale:
 				<span>{locale}</span>

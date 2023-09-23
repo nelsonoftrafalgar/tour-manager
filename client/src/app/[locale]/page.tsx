@@ -1,3 +1,5 @@
+import { Button } from '@radix-ui/themes'
+
 export default async function Home() {
-	return <p>Hello World</p>
+	return <Button>Hello World</Button>
 }
