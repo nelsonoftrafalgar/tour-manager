@@ -1,9 +1,19 @@
-import { Inter } from 'next/font/google'
 import type { Metadata } from 'next'
 import { PropsWithChildren } from 'react'
 import Providers from '@/components/Providers'
+import localFont from 'next/font/local'
 
-const inter = Inter({ subsets: ['latin'] })
+const avenirRoman = localFont({
+	src: '../../fonts/AvenirLTStd-Roman.otf',
+	variable: '--avenir-roman',
+	display: 'swap',
+})
+
+const avenirBlack = localFont({
+	src: '../../fonts/AvenirLTStd-Black.otf',
+	variable: '--avenir-black',
+	display: 'swap',
+})
 
 export const metadata: Metadata = {
 	title: 'Create Next App',
@@ -12,11 +22,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: PropsWithChildren) {
 	return (
-		<html lang='en'>
+		<html lang='en' className={`${avenirRoman.variable} ${avenirBlack.variable}`}>
 			<head>
-				<link rel='icon' href='img/favicon.ico' sizes='any' />
+				<link rel='icon' href='/img/favicon.ico' sizes='any' />
 			</head>
-			<body className={inter.className}>
+			<body>
 				<Providers>{children}</Providers>
 			</body>
 		</html>

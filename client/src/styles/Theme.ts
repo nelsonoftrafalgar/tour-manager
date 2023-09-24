@@ -16,4 +16,10 @@ export const theme = {
 			navy: '#3d5067',
 		},
 	},
+	fonts: {
+		family: {
+			avenirRoman: 'var(--avenir-roman)',
+			avenirBlack: 'var(--avenir-black)',
+		},
+	},
 }

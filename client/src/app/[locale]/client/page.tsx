@@ -12,6 +12,8 @@ import styled from 'styled-components'
 
 const StyledButton = styled(Button)`
 	background-color: ${({ theme }) => theme.colors.primary.orange};
+	font-size: 40px;
+	font-family: ${({ theme }) => theme.fonts.family.avenirBlack};
 `
 
 export default function Client() {
@@ -22,7 +24,7 @@ export default function Client() {
 
 	return (
 		<div>
-			<StyledButton>CSR</StyledButton>
+			<StyledButton>Csr</StyledButton>
 			<p>
 				Current locale:
 				<span>{locale}</span>
