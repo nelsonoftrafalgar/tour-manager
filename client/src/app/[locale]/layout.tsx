@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { PropsWithChildren } from 'react'
-import Providers from '@/components/Providers'
+import Providers from '@/components/providers/Providers'
 import localFont from 'next/font/local'
 
 const avenirRoman = localFont({

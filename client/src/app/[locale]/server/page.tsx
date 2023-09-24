@@ -1,9 +1,24 @@
-import { Button } from '@radix-ui/themes'
+import { ReactQueryHydrate } from '@/components/ReactQueryHydrate'
+import TestComponent from '@/components/TestComponent'
+import { dehydrate } from '@tanstack/react-query'
+import { getQueryClient } from '@/utils/getQueryClient'
 
-export default function Server() {
+async function getUser() {
+	const res = await fetch('https://jsonplaceholder.typicode.com/users')
+	const users = await res.json()
+	return users
+}
+
+export default async function Server() {
+	const queryClient = getQueryClient()
+	await queryClient.prefetchQuery(['user'], getUser)
+	const dehydratedState = dehydrate(queryClient)
+
 	return (
-		<div>
-			<Button>SSR</Button>
-		</div>
+		<ReactQueryHydrate state={dehydratedState}>
+			<div>
+				<TestComponent />
+			</div>
+		</ReactQueryHydrate>
 	)
 }
