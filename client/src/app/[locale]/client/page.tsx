@@ -1,20 +1,18 @@
 'use client'
 
 import {
+	CopyIcon,
+	ExclamationTriangleIcon,
+	Pencil2Icon,
+} from '@radix-ui/react-icons'
+import {
 	useChangeLocale,
 	useCurrentLocale,
 	useI18n,
 	useScopedI18n,
 } from '@/locales/client'
 
-import { Button } from '@radix-ui/themes'
-import styled from 'styled-components'
-
-const StyledButton = styled(Button)`
-	background-color: ${({ theme }) => theme.colors.primary.orange};
-	font-size: 40px;
-	font-family: ${({ theme }) => theme.fonts.family.avenirBlack};
-`
+import { Button } from '@/components/ui/button/Button'
 
 export default function Client() {
 	const t = useI18n()
@@ -24,7 +22,22 @@ export default function Client() {
 
 	return (
 		<div>
-			<StyledButton>Csr</StyledButton>
+			<Button buttonStyle='primary'>
+				<Pencil2Icon />
+				button
+			</Button>
+			<Button buttonStyle='secondary'>
+				button
+				<CopyIcon />
+			</Button>
+			<Button buttonStyle='warning'>
+				<ExclamationTriangleIcon />
+				button
+			</Button>
+			<Button disabled buttonStyle='warning'>
+				button
+			</Button>
+
 			<p>
 				Current locale:
 				<span>{locale}</span>

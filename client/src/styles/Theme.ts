@@ -15,11 +15,21 @@ export const theme = {
 			sand: '#e8d7a5',
 			navy: '#3d5067',
 		},
+		disabled: '#d8d8d8',
 	},
 	fonts: {
 		family: {
 			avenirRoman: 'var(--avenir-roman)',
 			avenirBlack: 'var(--avenir-black)',
 		},
+		size: {
+			xs: 12,
+			s: 14,
+			m: 16,
+			l: 18,
+			xl: 24,
+			xxl: 30,
+		},
 	},
+	gridUnit: 4,
 }
