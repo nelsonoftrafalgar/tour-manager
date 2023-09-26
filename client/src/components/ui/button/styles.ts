@@ -21,7 +21,7 @@ export const StyledButton = styled(Button)<StyledButtonProps>`
 	font-family: ${({ theme }) => theme.fonts.family.avenirBlack};
 	text-transform: uppercase;
 	color: ${({ theme }) => theme.colors.primary.white};
-	border-radius: ${({ theme }) => theme.gridUnit * 2}px;
+	border-radius: ${({ theme }) => theme.borderRadius}px;
 	cursor: pointer;
 	&:hover:not(:disabled) {
 		opacity: 0.7;

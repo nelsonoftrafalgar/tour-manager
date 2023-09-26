@@ -16,6 +16,8 @@ export const theme = {
 			navy: '#3d5067',
 		},
 		disabled: '#d8d8d8',
+		border: '#e8e8e8',
+		placeholder: '#9a9a9a',
 	},
 	fonts: {
 		family: {
@@ -30,6 +32,8 @@ export const theme = {
 			xl: 24,
 			xxl: 30,
 		},
+		weight: { bold: 600 },
 	},
 	gridUnit: 4,
+	borderRadius: 8,
 }

@@ -13,6 +13,13 @@ import {
 } from '@/locales/client'
 
 import { Button } from '@/components/ui/button/Button'
+import { Input } from '@/components/ui/input/Input'
+import styled from 'styled-components'
+
+const Separator = styled.div`
+	width: 100%;
+	height: 30px;
+`
 
 export default function Client() {
 	const t = useI18n()
@@ -22,21 +29,36 @@ export default function Client() {
 
 	return (
 		<div>
+			<Separator />
 			<Button buttonStyle='primary'>
 				<Pencil2Icon />
 				button
 			</Button>
+			<Separator />
 			<Button buttonStyle='secondary'>
 				button
 				<CopyIcon />
 			</Button>
+			<Separator />
 			<Button buttonStyle='warning'>
 				<ExclamationTriangleIcon />
 				button
 			</Button>
+			<Separator />
 			<Button disabled buttonStyle='warning'>
 				button
 			</Button>
+			<Separator />
+
+			<Input label='Some label' placeholder='Some placeholder' />
+			<Separator />
+
+			<Input
+				label='Some label'
+				placeholder='Some placeholder'
+				errorMessage='There is an error'
+			/>
+			<Separator />
 
 			<p>
 				Current locale:
