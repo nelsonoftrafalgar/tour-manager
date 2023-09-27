@@ -6,6 +6,7 @@ const GlobalStyles = createGlobalStyle`
     margin: 0;
     border: 0;
     box-sizing: border-box;
+    font-family: ${({ theme }) => theme.fonts.family.avenirRoman};
   }
 `
 

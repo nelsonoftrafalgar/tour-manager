@@ -14,6 +14,7 @@ import {
 
 import { Button } from '@/components/ui/button/Button'
 import { Input } from '@/components/ui/input/Input'
+import { Textarea } from '@/components/ui/textarea/Textarea'
 import styled from 'styled-components'
 
 const Separator = styled.div`
@@ -50,11 +51,23 @@ export default function Client() {
 			</Button>
 			<Separator />
 
-			<Input label='Some label' placeholder='Some placeholder' />
+			<Input value='' label='Some label' placeholder='Some placeholder' />
 			<Separator />
 
 			<Input
+				value='Hello'
 				label='Some label'
+				placeholder='Some placeholder'
+				errorMessage='There is an error'
+			/>
+			<Separator />
+
+			<Textarea value='' label='Textarea label' placeholder='Some placeholder' />
+			<Separator />
+
+			<Textarea
+				value='hello'
+				label='Textarea label'
 				placeholder='Some placeholder'
 				errorMessage='There is an error'
 			/>

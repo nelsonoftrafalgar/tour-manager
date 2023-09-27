@@ -16,7 +16,7 @@ export const theme = {
 			navy: '#3d5067',
 		},
 		disabled: '#d8d8d8',
-		border: '#e8e8e8',
+		border: '#cccccc',
 		placeholder: '#9a9a9a',
 	},
 	fonts: {
@@ -25,6 +25,7 @@ export const theme = {
 			avenirBlack: 'var(--avenir-black)',
 		},
 		size: {
+			xxs: 10,
 			xs: 12,
 			s: 14,
 			m: 16,

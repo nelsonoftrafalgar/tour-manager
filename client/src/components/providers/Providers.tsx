@@ -17,9 +17,11 @@ const Providers: FC<PropsWithChildren> = ({ children }) => {
 		<ReactQueryProvider>
 			<I18nProviderClient>
 				<StyledComponentsRegistry>
-					<GlobalStyles />
-					<ToastContainer />
-					<ThemeProvider theme={theme}>{children}</ThemeProvider>
+					<ThemeProvider theme={theme}>
+						<GlobalStyles />
+						<ToastContainer />
+						{children}
+					</ThemeProvider>
 				</StyledComponentsRegistry>
 			</I18nProviderClient>
 		</ReactQueryProvider>

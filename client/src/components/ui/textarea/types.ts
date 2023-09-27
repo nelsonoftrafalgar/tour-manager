@@ -1,7 +1,6 @@
-export interface InputProps {
+export interface TextareaProps {
 	errorMessage?: string
 	label: string
 	placeholder?: string
-	type?: string
 	value: string
 }

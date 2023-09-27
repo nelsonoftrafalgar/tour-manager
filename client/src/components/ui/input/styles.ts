@@ -11,10 +11,9 @@ export const StyledInput = styled(TextFieldInput)<StyledInputProps>`
 	padding: ${({ theme }) => theme.gridUnit * 2.5}px;
 	border-radius: ${({ theme }) => theme.borderRadius}px;
 	margin-top: ${({ theme }) => theme.gridUnit * 2.5}px;
-	margin-bottom: ${({ theme, $error }) => !$error && theme.gridUnit * 5}px;
+	margin-bottom: ${({ theme, $error }) => (!$error ? theme.gridUnit * 5 : 0)}px;
 	&::placeholder {
 		color: ${({ theme }) => theme.colors.placeholder};
-		font-family: ${({ theme }) => theme.fonts.family.avenirRoman};
 	}
 	&:focus-visible {
 		border: 2px solid
@@ -29,7 +28,6 @@ export const StyledInput = styled(TextFieldInput)<StyledInputProps>`
 `
 
 export const StyledLabel = styled(Label)`
-	font-family: ${({ theme }) => theme.fonts.family.avenirRoman};
 	color: ${({ theme }) => theme.colors.primary.charchoal};
 	font-size: ${({ theme }) => theme.fonts.size.xs}px;
 	font-weight: ${({ theme }) => theme.fonts.weight.bold};
@@ -37,7 +35,6 @@ export const StyledLabel = styled(Label)`
 
 export const ErrorMessage = styled.span`
 	color: ${({ theme }) => theme.colors.secondary.strawberry};
-	font-family: ${({ theme }) => theme.fonts.family.avenirRoman};
 	font-size: ${({ theme }) => theme.fonts.size.xs}px;
 	margin-left: ${({ theme }) => theme.gridUnit * 3}px;
 	display: inline-block;

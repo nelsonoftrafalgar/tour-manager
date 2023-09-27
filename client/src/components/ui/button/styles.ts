@@ -38,4 +38,7 @@ export const StyledButton = styled(Button)<StyledButtonProps>`
 		margin-right: ${({ theme, $hasLeftIcon }) =>
 			$hasLeftIcon ? theme.gridUnit * 2 : 0}px;
 	}
+	&:active:not(:disabled) {
+		filter: saturate(270%);
+	}
 `

@@ -8,11 +8,13 @@ export const Input: FC<InputProps> = ({
 	label,
 	placeholder,
 	type = 'text',
+	value,
 }) => {
 	return (
 		<>
 			<StyledLabel htmlFor={label}>{label}</StyledLabel>
 			<StyledInput
+				value={value}
 				$error={!!errorMessage}
 				type={type}
 				id={label}
