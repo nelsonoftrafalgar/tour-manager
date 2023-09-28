@@ -15,6 +15,7 @@ export const Textarea: FC<TextareaProps> = ({
 	placeholder,
 	errorMessage,
 	value,
+	onChange,
 }) => {
 	return (
 		<>
@@ -24,6 +25,7 @@ export const Textarea: FC<TextareaProps> = ({
 					value={value}
 					$error={!!errorMessage}
 					placeholder={placeholder}
+					onChange={onChange}
 				/>
 				<CharCounter>
 					{value.length}/{MAX_CHARACTER_COUNT}

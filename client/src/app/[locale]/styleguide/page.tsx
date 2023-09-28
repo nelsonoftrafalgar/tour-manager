@@ -12,6 +12,7 @@ import {
 	useScopedI18n,
 } from '@/locales/client'
 
+import { Amount } from '@/components/ui/amount/Amount'
 import { Button } from '@/components/ui/button/Button'
 import { Input } from '@/components/ui/input/Input'
 import { Select } from '@/components/ui/select/Select'
@@ -31,6 +32,7 @@ export default function Styleguide() {
 	const locale = useCurrentLocale()
 
 	const [selectValue, setSelectValue] = useState('pizza')
+	const [amount, setAmount] = useState('100')
 
 	return (
 		<div>
@@ -54,6 +56,14 @@ export default function Styleguide() {
 				button
 			</Button>
 			<Separator />
+
+			<Amount
+				value={amount}
+				onChange={(value) => setAmount(value)}
+				label='Amount'
+			/>
+			<Separator />
+
 			<Select
 				value={selectValue}
 				onChange={(value) => setSelectValue(value)}
@@ -67,10 +77,16 @@ export default function Styleguide() {
 			/>
 			<Separator />
 
-			<Input value='' label='Some label' placeholder='Some placeholder' />
+			<Input
+				onChange={() => console.log()}
+				value=''
+				label='Some label'
+				placeholder='Some placeholder'
+			/>
 			<Separator />
 
 			<Input
+				onChange={() => console.log()}
 				value='Hello'
 				label='Some label'
 				placeholder='Some placeholder'
@@ -78,10 +94,16 @@ export default function Styleguide() {
 			/>
 			<Separator />
 
-			<Textarea value='' label='Textarea label' placeholder='Some placeholder' />
+			<Textarea
+				onChange={() => console.log()}
+				value=''
+				label='Textarea label'
+				placeholder='Some placeholder'
+			/>
 			<Separator />
 
 			<Textarea
+				onChange={() => console.log()}
 				value='hello'
 				label='Textarea label'
 				placeholder='Some placeholder'

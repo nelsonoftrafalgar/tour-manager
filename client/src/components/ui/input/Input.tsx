@@ -9,6 +9,7 @@ export const Input: FC<InputProps> = ({
 	placeholder,
 	type = 'text',
 	value,
+	onChange,
 }) => {
 	return (
 		<>
@@ -19,6 +20,7 @@ export const Input: FC<InputProps> = ({
 				type={type}
 				id={label}
 				placeholder={placeholder}
+				onChange={onChange}
 			/>
 			{errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
 		</>

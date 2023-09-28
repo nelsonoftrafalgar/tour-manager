@@ -11,4 +11,6 @@ export default {
 	'missing.translation.in.fr': 'This should work',
 	'cows#one': 'A cow',
 	'cows#other': '{count} cows',
+
+	amount: 'Amount',
 } as const
