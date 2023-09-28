@@ -14,19 +14,23 @@ import {
 
 import { Button } from '@/components/ui/button/Button'
 import { Input } from '@/components/ui/input/Input'
+import { Select } from '@/components/ui/select/Select'
 import { Textarea } from '@/components/ui/textarea/Textarea'
 import styled from 'styled-components'
+import { useState } from 'react'
 
 const Separator = styled.div`
 	width: 100%;
 	height: 30px;
 `
 
-export default function Client() {
+export default function Styleguide() {
 	const t = useI18n()
 	const changeLocale = useChangeLocale()
 	const t2 = useScopedI18n('scope.more')
 	const locale = useCurrentLocale()
+
+	const [selectValue, setSelectValue] = useState('pizza')
 
 	return (
 		<div>
@@ -49,6 +53,18 @@ export default function Client() {
 			<Button disabled buttonStyle='warning'>
 				button
 			</Button>
+			<Separator />
+			<Select
+				value={selectValue}
+				onChange={(value) => setSelectValue(value)}
+				placeholder='Some placeholder'
+				options={[
+					{ label: 'Pizza', value: 'pizza' },
+					{ label: 'Burger', value: 'burger' },
+					{ label: 'Pasta', value: 'pasta' },
+					{ label: 'Steak', value: 'steak' },
+				]}
+			/>
 			<Separator />
 
 			<Input value='' label='Some label' placeholder='Some placeholder' />
