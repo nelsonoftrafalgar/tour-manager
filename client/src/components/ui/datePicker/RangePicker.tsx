@@ -15,7 +15,7 @@ export const RangePicker = () => {
 
 	return (
 		<>
-			<StyledLabel>{t('date')}</StyledLabel>
+			<StyledLabel>{t('ui.date')}</StyledLabel>
 			<DatePickerWrapper>
 				<DatePicker
 					selected={startDate}

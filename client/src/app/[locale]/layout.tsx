@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
+import Navigation from '@/components/navigation/Navigation'
 import { PropsWithChildren } from 'react'
 import Providers from '@/components/providers/Providers'
+import Wrapper from '@/components/layout/Wrapper'
 import localFont from 'next/font/local'
 
 const avenirRoman = localFont({
@@ -27,7 +29,12 @@ export default function RootLayout({ children }: PropsWithChildren) {
 				<link rel='icon' href='/img/favicon.ico' sizes='any' />
 			</head>
 			<body>
-				<Providers>{children}</Providers>
+				<Providers>
+					<Wrapper>
+						<Navigation />
+						{children}
+					</Wrapper>
+				</Providers>
 			</body>
 		</html>
 	)

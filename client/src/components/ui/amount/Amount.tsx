@@ -20,7 +20,7 @@ export const Amount: FC<AmountProps> = ({ label, value }) => {
 		<Input
 			value={amount}
 			label={label}
-			placeholder={t('amount')}
+			placeholder={t('ui.amount')}
 			onChange={handleAmountChange}
 		/>
 	)

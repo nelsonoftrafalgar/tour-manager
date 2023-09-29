@@ -14,7 +14,7 @@ const DatePickerComponent = () => {
 
 	return (
 		<>
-			<StyledLabel>{t('date')}</StyledLabel>
+			<StyledLabel>{t('ui.date')}</StyledLabel>
 			<DatePickerWrapper>
 				<DatePicker selected={date} onChange={setDate} dateFormat={'dd/MM/yyyy'} />
 			</DatePickerWrapper>
