@@ -13,4 +13,5 @@ export default {
 	'cows#other': '{count} cows',
 
 	amount: 'Amount',
+	date: 'Date',
 } as const

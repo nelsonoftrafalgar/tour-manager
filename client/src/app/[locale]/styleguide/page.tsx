@@ -14,7 +14,9 @@ import {
 
 import { Amount } from '@/components/ui/amount/Amount'
 import { Button } from '@/components/ui/button/Button'
+import { DatePicker } from '@/components/ui/datePicker/DatePicker'
 import { Input } from '@/components/ui/input/Input'
+import { RangePicker } from '@/components/ui/datePicker/RangePicker'
 import { Select } from '@/components/ui/select/Select'
 import { Textarea } from '@/components/ui/textarea/Textarea'
 import styled from 'styled-components'
@@ -109,6 +111,12 @@ export default function Styleguide() {
 				placeholder='Some placeholder'
 				errorMessage='There is an error'
 			/>
+			<Separator />
+
+			<RangePicker />
+			<Separator />
+
+			<DatePicker />
 			<Separator />
 
 			<p>
