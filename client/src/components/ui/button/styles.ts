@@ -1,3 +1,5 @@
+'use client'
+
 import { Button } from '@radix-ui/themes'
 import { ButtonHTMLAttributes } from 'react'
 import styled from 'styled-components'

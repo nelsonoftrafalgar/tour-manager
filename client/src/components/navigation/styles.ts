@@ -6,6 +6,7 @@ export const Header = styled.header`
 	display: flex;
 	align-items: center;
 	gap: ${({ theme }) => theme.gridUnit * 5}px;
+	margin-bottom: ${({ theme }) => theme.gridUnit * 5}px;
 `
 
 export const StyledLink = styled(Link)<{ $active: boolean }>`

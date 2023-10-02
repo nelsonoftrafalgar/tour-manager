@@ -1,3 +1,5 @@
+'use client'
+
 import { Children, FC } from 'react'
 
 import { ButtonProps } from './types'

@@ -1,3 +1,5 @@
+'use client'
+
 import { Label } from '@radix-ui/react-label'
 import styled from 'styled-components'
 

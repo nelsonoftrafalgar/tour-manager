@@ -37,4 +37,5 @@ export const theme = {
 	},
 	gridUnit: 4,
 	borderRadius: 8,
+	boxShadow: '10px 9px 21px -12px rgb(104, 104, 104);',
 }

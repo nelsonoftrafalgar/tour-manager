@@ -10,8 +10,6 @@ export const StyledInput = styled(TextFieldInput)<StyledInputProps>`
 	border: 2px solid ${({ theme }) => theme.colors.border};
 	padding: ${({ theme }) => theme.gridUnit * 2.5}px;
 	border-radius: ${({ theme }) => theme.borderRadius}px;
-	margin-top: ${({ theme }) => theme.gridUnit * 2.5}px;
-	margin-bottom: ${({ theme, $error }) => (!$error ? theme.gridUnit * 5 : 0)}px;
 	&::placeholder {
 		color: ${({ theme }) => theme.colors.placeholder};
 	}
@@ -31,6 +29,8 @@ export const StyledLabel = styled(Label)`
 	color: ${({ theme }) => theme.colors.primary.charchoal};
 	font-size: ${({ theme }) => theme.fonts.size.xs}px;
 	font-weight: ${({ theme }) => theme.fonts.weight.bold};
+	display: block;
+	margin-bottom: ${({ theme }) => theme.gridUnit * 2.5}px;
 `
 
 export const ErrorMessage = styled.span`

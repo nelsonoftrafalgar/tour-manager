@@ -1,3 +1,5 @@
+'use client'
+
 import { Label } from '@radix-ui/react-label'
 import { TextArea } from '@radix-ui/themes'
 import styled from 'styled-components'

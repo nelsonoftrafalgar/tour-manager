@@ -1,3 +1,5 @@
+'use client'
+
 import { ErrorMessage, StyledInput, StyledLabel } from './styles'
 
 import { FC } from 'react'
@@ -12,8 +14,8 @@ export const Input: FC<InputProps> = ({
 	onChange,
 }) => {
 	return (
-		<>
-			<StyledLabel htmlFor={label}>{label}</StyledLabel>
+		<div>
+			{label && <StyledLabel htmlFor={label}>{label}</StyledLabel>}
 			<StyledInput
 				value={value}
 				$error={!!errorMessage}
@@ -23,6 +25,6 @@ export const Input: FC<InputProps> = ({
 				onChange={onChange}
 			/>
 			{errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
-		</>
+		</div>
 	)
 }

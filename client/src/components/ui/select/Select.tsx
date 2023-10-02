@@ -1,3 +1,5 @@
+'use client'
+
 import * as Component from '@radix-ui/react-select'
 
 import { FC, Ref, forwardRef, useState } from 'react'

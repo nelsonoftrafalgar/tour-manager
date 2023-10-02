@@ -1,3 +1,5 @@
+'use client'
+
 import * as Select from '@radix-ui/react-select'
 
 import styled, { css } from 'styled-components'
