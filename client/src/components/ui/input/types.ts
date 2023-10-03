@@ -7,4 +7,5 @@ export interface InputProps {
 	type?: string
 	value: string
 	onChange: (e: ChangeEvent<HTMLInputElement>) => void
+	ref?: null
 }

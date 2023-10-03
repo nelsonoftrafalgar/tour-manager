@@ -23,6 +23,7 @@ export const StyledInput = styled(TextFieldInput)<StyledInputProps>`
 	}
 	border-color: ${({ theme, $error }) =>
 		$error && theme.colors.secondary.strawberry};
+	margin-bottom: ${({ $error }) => ($error ? 0 : 25)}px;
 `
 
 export const StyledLabel = styled(Label)`

@@ -3,6 +3,7 @@
 import { Header, List } from './styles'
 
 import { Accordion } from '@/components/ui/accordion/Accordion'
+import { BandEdit } from '@/components/forms/bandEdit/BandEdit'
 import { Box } from '@/components/ui/box/styles'
 import { Button } from '@/components/ui/button/Button'
 import { Input } from '@/components/ui/input/Input'
@@ -16,7 +17,12 @@ export const Bands = () => {
 	if (isLoading || !data) return null
 
 	const bands = data.map((band) => {
-		return { id: band.id, header: band.name, content: band.frontMan }
+		const { id, name } = band
+		return {
+			id,
+			header: name,
+			content: <BandEdit {...band} />,
+		}
 	})
 
 	return (

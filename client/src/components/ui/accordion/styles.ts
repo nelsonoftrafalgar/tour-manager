@@ -70,6 +70,6 @@ export const StyledContent = styled(Accordion.Content)`
 	}
 `
 
-export const StyledContentText = styled.p`
+export const StyledContentText = styled.div`
 	padding: ${({ theme }) => theme.gridUnit * 4}px;
 `

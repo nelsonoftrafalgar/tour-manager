@@ -17,7 +17,7 @@ export const StyledButton = styled(Button)<StyledButtonProps>`
 		$type === 'secondary' && theme.colors.secondary.mint};
 	background-color: ${({ theme, $type }) =>
 		$type === 'warning' && theme.colors.secondary.strawberry};
-	padding-block: ${({ theme }) => theme.gridUnit * 2.5}px;
+	padding-block: ${({ theme }) => theme.gridUnit * 3}px;
 	padding-inline: ${({ theme }) => theme.gridUnit * 10}px;
 	font-size: ${({ theme }) => theme.fonts.size.s}px;
 	font-family: ${({ theme }) => theme.fonts.family.avenirBlack};
