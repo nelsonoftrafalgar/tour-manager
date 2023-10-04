@@ -7,6 +7,7 @@ import { BandEdit } from '@/components/forms/bandEdit/BandEdit'
 import { Box } from '@/components/ui/box/styles'
 import { Button } from '@/components/ui/button/Button'
 import { Input } from '@/components/ui/input/Input'
+import { Modal } from '@/components/ui/modal/Modal'
 import { useBandsQuery } from '@/api/queries/useBandsQuery'
 import { useI18n } from '@/locales/client'
 
@@ -33,7 +34,9 @@ export const Bands = () => {
 					value=''
 					onChange={() => {}}
 				/>
-				<Button buttonStyle='primary'>{t('bands.add_new_band')}</Button>
+				<Modal title={t('bands.add_new_band')} content='HUI'>
+					<Button buttonStyle='primary'>{t('bands.add_new_band')}</Button>
+				</Modal>
 			</Header>
 			<List>
 				<Accordion items={bands} />
