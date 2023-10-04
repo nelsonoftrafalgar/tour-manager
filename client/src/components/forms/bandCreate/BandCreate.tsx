@@ -1,33 +1,24 @@
-import { BandEditFormData, BandEditProps } from './types'
+import { BandCreateFormData, BandCreateProps } from './types'
 import { Controller, useForm } from 'react-hook-form'
-import { FC, useEffect } from 'react'
 
 import { Button } from '@/components/ui/button/Button'
+import { FC } from 'react'
 import { Form } from '@/components/ui/form/styles'
 import { Input } from '@/components/ui/input/Input'
-import { useBandEditMutation } from '@/api/mutations/useBandEditMutation'
+import { useBandCreateMutation } from '@/api/mutations/useBandCreateMutation'
 import { useI18n } from '@/locales/client'
 
-export const BandEdit: FC<BandEditProps> = ({ name, frontMan, id }) => {
+export const BandCreate: FC<BandCreateProps> = ({ handleModalClose }) => {
 	const t = useI18n()
-	const mutation = useBandEditMutation()
+	const mutation = useBandCreateMutation(handleModalClose)
 	const {
-		formState: { errors, isDirty, isSubmitting, isSubmitSuccessful },
+		formState: { errors },
 		control,
 		handleSubmit,
-		reset,
-	} = useForm<BandEditFormData>({
-		defaultValues: { name, frontMan },
-	})
+	} = useForm<BandCreateFormData>()
 
-	useEffect(() => {
-		if (isSubmitSuccessful) {
-			reset({}, { keepValues: true })
-		}
-	}, [isSubmitSuccessful, reset])
-
-	const onSubmit = (data: BandEditFormData) => {
-		mutation.mutate({ id, ...data })
+	const onSubmit = async (data: BandCreateFormData) => {
+		mutation.mutate(data)
 	}
 
 	return (
@@ -60,9 +51,7 @@ export const BandEdit: FC<BandEditProps> = ({ name, frontMan, id }) => {
 					/>
 				)}
 			/>
-			<Button disabled={!isDirty || isSubmitting} buttonStyle='primary'>
-				{t('forms.save')}
-			</Button>
+			<Button buttonStyle='primary'>{t('forms.add')}</Button>
 		</Form>
 	)
 }

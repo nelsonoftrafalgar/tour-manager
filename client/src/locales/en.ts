@@ -21,5 +21,6 @@ export default {
 	forms: {
 		required: 'This field is required',
 		save: 'Save',
+		add: 'Add',
 	},
 } as const

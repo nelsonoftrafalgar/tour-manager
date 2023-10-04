@@ -1,6 +1,8 @@
+import * as Dialog from '@radix-ui/react-dialog'
+
 import { ReactNode } from 'react'
 
-export interface ModalProps {
+export interface ModalProps extends Dialog.DialogProps {
 	title: string
 	content: ReactNode
 }

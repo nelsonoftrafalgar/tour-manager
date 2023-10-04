@@ -19,9 +19,11 @@ export const Modal: FC<PropsWithChildren<ModalProps>> = ({
 	children,
 	title,
 	content,
+	open,
+	onOpenChange,
 }) => {
 	return (
-		<Dialog.Root>
+		<Dialog.Root open={open} onOpenChange={onOpenChange}>
 			<Dialog.Trigger asChild>{children}</Dialog.Trigger>
 			<Dialog.Portal>
 				<DialogOverlay />

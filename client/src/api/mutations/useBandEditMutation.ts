@@ -7,12 +7,13 @@ interface BandUpdatePayload {
 	name: string
 	frontMan: string
 }
-const updateBand = (data: BandUpdatePayload) => client.put('/bands', data)
 
-export const useBandMutation = () => {
+const editBand = (data: BandUpdatePayload) => client.put('/bands', data)
+
+export const useBandEditMutation = () => {
 	const queryClient = useQueryClient()
 	return useMutation({
-		mutationFn: updateBand,
+		mutationFn: editBand,
 		onSuccess: () => queryClient.invalidateQueries({ queryKey: ['bands'] }),
 	})
 }

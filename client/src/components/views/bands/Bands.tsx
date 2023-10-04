@@ -3,11 +3,11 @@
 import { Header, List } from './styles'
 
 import { Accordion } from '@/components/ui/accordion/Accordion'
+import { BandCreateModal } from '@/components/modals/bandCreateModal/BandCreateModal'
 import { BandEdit } from '@/components/forms/bandEdit/BandEdit'
 import { Box } from '@/components/ui/box/styles'
 import { Button } from '@/components/ui/button/Button'
 import { Input } from '@/components/ui/input/Input'
-import { Modal } from '@/components/ui/modal/Modal'
 import { useBandsQuery } from '@/api/queries/useBandsQuery'
 import { useI18n } from '@/locales/client'
 
@@ -34,9 +34,9 @@ export const Bands = () => {
 					value=''
 					onChange={() => {}}
 				/>
-				<Modal title={t('bands.add_new_band')} content='HUI'>
+				<BandCreateModal>
 					<Button buttonStyle='primary'>{t('bands.add_new_band')}</Button>
-				</Modal>
+				</BandCreateModal>
 			</Header>
 			<List>
 				<Accordion items={bands} />
