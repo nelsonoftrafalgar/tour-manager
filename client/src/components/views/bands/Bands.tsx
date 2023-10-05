@@ -1,13 +1,10 @@
 'use client'
 
-import { ChangeEvent, useState } from 'react'
 import { Header, List } from './styles'
 
 import { Accordion } from '@/components/ui/accordion/Accordion'
-import { AccordionItem } from '@/components/ui/accordion/types'
 import ApiLoader from '@/components/ui/loader/ApiLoader'
 import { BandCreateModal } from '@/components/modals/bandCreateModal/BandCreateModal'
-import { BandEdit } from '@/components/forms/bandEdit/BandEdit'
 import { Box } from '@/components/ui/box/styles'
 import { Button } from '@/components/ui/button/Button'
 import { Input } from '@/components/ui/input/Input'
