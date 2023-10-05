@@ -1,7 +1,7 @@
 import client from '../client'
 import { useQuery } from '@tanstack/react-query'
 
-interface Band {
+export interface Band {
 	id: string
 	name: string
 	frontMan: string
