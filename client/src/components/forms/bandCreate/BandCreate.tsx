@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button/Button'
 import { FC } from 'react'
 import { Form } from '@/components/ui/form/styles'
 import { Input } from '@/components/ui/input/Input'
+import { LoaderIcon } from '@/components/ui/loader/styles'
 import { useBandCreateMutation } from '@/api/mutations/useBandCreateMutation'
 import { useI18n } from '@/locales/client'
 
@@ -12,7 +13,7 @@ export const BandCreate: FC<BandCreateProps> = ({ handleModalClose }) => {
 	const t = useI18n()
 	const mutation = useBandCreateMutation(handleModalClose)
 	const {
-		formState: { errors },
+		formState: { errors, isSubmitting },
 		control,
 		handleSubmit,
 	} = useForm<BandCreateFormData>()
@@ -51,7 +52,10 @@ export const BandCreate: FC<BandCreateProps> = ({ handleModalClose }) => {
 					/>
 				)}
 			/>
-			<Button buttonStyle='primary'>{t('forms.add')}</Button>
+			<Button disabled={isSubmitting} buttonStyle='primary'>
+				{isSubmitting && <LoaderIcon />}
+				{t('forms.add')}
+			</Button>
 		</Form>
 	)
 }

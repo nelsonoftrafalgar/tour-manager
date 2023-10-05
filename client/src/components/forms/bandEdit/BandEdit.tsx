@@ -5,6 +5,7 @@ import { FC, useEffect } from 'react'
 import { Button } from '@/components/ui/button/Button'
 import { Form } from '@/components/ui/form/styles'
 import { Input } from '@/components/ui/input/Input'
+import { LoaderIcon } from '@/components/ui/loader/styles'
 import { useBandEditMutation } from '@/api/mutations/useBandEditMutation'
 import { useI18n } from '@/locales/client'
 
@@ -19,7 +20,6 @@ export const BandEdit: FC<BandEditProps> = ({ name, frontMan, id }) => {
 	} = useForm<BandEditFormData>({
 		defaultValues: { name, frontMan },
 	})
-
 	useEffect(() => {
 		if (isSubmitSuccessful) {
 			reset({}, { keepValues: true })
@@ -61,6 +61,7 @@ export const BandEdit: FC<BandEditProps> = ({ name, frontMan, id }) => {
 				)}
 			/>
 			<Button disabled={!isDirty || isSubmitting} buttonStyle='primary'>
+				{isSubmitting && <LoaderIcon />}
 				{t('forms.save')}
 			</Button>
 		</Form>

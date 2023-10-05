@@ -34,6 +34,7 @@ export const StyledButton = styled(Button)<StyledButtonProps>`
 		cursor: not-allowed;
 	}
 	display: flex;
+	align-items: center;
 	svg {
 		margin-left: ${({ theme, $hasRightIcon }) =>
 			$hasRightIcon ? theme.gridUnit * 2 : 0}px;
