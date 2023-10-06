@@ -30,7 +30,7 @@ export const Bands = () => {
 						<Button buttonStyle='primary'>{t('bands.add_new_band')}</Button>
 					</BandCreateModal>
 				</Header>
-				<List>
+				<List data-testid='bands-list'>
 					<Accordion items={bands} />
 				</List>
 			</Box>
