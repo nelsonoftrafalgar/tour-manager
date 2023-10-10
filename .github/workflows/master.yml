@@ -20,6 +20,7 @@ jobs:
 
       - name: Install Dependencies
         run: yarn install
+        working-directory: ./client
 
       - name: Start Next.js Application
         run: yarn run dev &
