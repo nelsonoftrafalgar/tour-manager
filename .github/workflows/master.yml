@@ -24,10 +24,13 @@ jobs:
 
       - name: Start Next.js Application
         run: yarn run dev &
+        working-directory: ./client
 
       - name: Wait for Next.js to start
         run: sleep 15s
+        working-directory: ./client
 
       - name: Run Cypress Tests
         run: yarn cypress:run
+        working-directory: ./client
 
