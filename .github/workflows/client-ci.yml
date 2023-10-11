@@ -29,7 +29,7 @@ jobs:
      run: yarn run dev &
 
    - name: Wait for Next.js to start
-     run: sleep 15s
+     run: sleep 10s
 
    - name: Run TypeScript Type Check
      run: yarn type-check

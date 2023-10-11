@@ -9,7 +9,9 @@
     "lint": "next lint",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "type-check" : "tsc --noEmit --skipLibCheck --incremental false"
+    "type-check": "tsc --noEmit --skipLibCheck --incremental false",
+    "prepare": "cd .. && husky install client/.husky",
+    "eslint": "eslint --fix '**/*.{ts,tsx}'"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.1.2",
@@ -40,6 +42,13 @@
     "@types/react-dom": "18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.7.4",
     "cypress": "^13.3.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^14.0.1",
     "typescript": "5.2.2"
+  },
+  "lint-staged": {
+    "**/*.{ts,tsx}": [
+      "eslint --fix"
+    ]
   }
 }
