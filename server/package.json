@@ -20,7 +20,8 @@
     "test:e2e": "NODE_ENV=test jest --config ./test/jest-e2e.json",
     "db:migrate": "npx prisma migrate dev",
     "db:seed": "npx prisma db seed",
-    "prepare": "cd .. && husky install server/.husky"
+    "prepare": "cd .. && husky install server/.husky",
+    "type-check": "tsc --noEmit --skipLibCheck --incremental false"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
