@@ -31,5 +31,8 @@ jobs:
    - name: Wait for Next.js to start
      run: sleep 15s
 
+   - name: Run TypeScript Type Check
+     run: yarn type-check
+
    - name: Run Cypress Tests
      run: yarn cypress:run
