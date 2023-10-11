@@ -4,7 +4,7 @@
   "modulePaths": ["<rootDir>"],
   "testEnvironment": "node",
   "preset": "ts-jest",
-  "testRegex": "(/e2e/.*\\.e2e-spec\\.ts$|/unit/.*\\.spec\\.ts$)",
+  "testRegex": "(/e2e/.*\\.e2e-spec\\.ts$)",
   "transform": {
     "^.+\\.(t|j)s$": "ts-jest"
   }
