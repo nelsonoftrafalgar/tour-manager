@@ -17,10 +17,14 @@ export default {
 		input_frontMan_placeholder: 'Band frontman',
 		input_name_label: 'Name',
 		input_frontMan_label: 'Frontman',
+		delete_band: 'Delete band',
 	},
 	forms: {
 		required: 'This field is required',
 		save: 'Save',
 		add: 'Add',
+		delete: 'Delete',
+		cancel: 'Cancel',
+		confirm_delete: 'Do you want to delete',
 	},
 } as const

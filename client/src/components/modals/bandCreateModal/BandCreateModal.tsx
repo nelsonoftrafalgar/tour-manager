@@ -16,6 +16,7 @@ export const BandCreateModal: FC<PropsWithChildren> = ({ children }) => {
 			onOpenChange={setOpen}
 			title={t('bands.add_new_band')}
 			content={<BandCreate handleModalClose={handleModalClose} />}
+			modalStyle='primary'
 		>
 			{children}
 		</Modal>

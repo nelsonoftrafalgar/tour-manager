@@ -2,7 +2,9 @@ import { BandEditFormData, BandEditProps } from './types'
 import { Controller, useForm } from 'react-hook-form'
 import { FC, useEffect } from 'react'
 
+import { BandDeleteModal } from '@/components/modals/bandDeleteModal/BandDeleteModal'
 import { Button } from '@/components/ui/button/Button'
+import { DeleteWrapper } from './styles'
 import { Form } from '@/components/ui/form/styles'
 import { Input } from '@/components/ui/input/Input'
 import { LoaderIcon } from '@/components/ui/loader/styles'
@@ -64,6 +66,13 @@ export const BandEdit: FC<BandEditProps> = ({ name, frontMan, id }) => {
 				{isSubmitting && <LoaderIcon />}
 				{t('forms.save')}
 			</Button>
+			<DeleteWrapper>
+				<BandDeleteModal id={id} name={name}>
+					<Button type='button' buttonStyle='warning'>
+						{t('forms.delete')}
+					</Button>
+				</BandDeleteModal>
+			</DeleteWrapper>
 		</Form>
 	)
 }

@@ -8,9 +8,20 @@ export const ModalContent = styled.div`
 	padding: ${({ theme }) => theme.gridUnit * 4}px;
 `
 
-export const ModalHeader = styled.div`
+export const ModalHeader = styled.div<{ $style: string }>`
 	padding: ${({ theme }) => theme.gridUnit * 4}px;
-	background-color: ${({ theme }) => theme.colors.secondary.strawberry};
+
+	background-color: ${({ theme, $style }) => {
+		if ($style === 'primary') {
+			return theme.colors.primary.orange
+		}
+		if ($style === 'secondary') {
+			return theme.colors.secondary.mint
+		}
+		if ($style === 'warning') {
+			return theme.colors.secondary.strawberry
+		}
+	}};
 	border-top-right-radius: ${({ theme }) => theme.borderRadius}px;
 	border-top-left-radius: ${({ theme }) => theme.borderRadius}px;
 `
