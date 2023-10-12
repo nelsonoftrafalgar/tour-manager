@@ -145,3 +145,38 @@ describe('Band create form', () => {
 		cy.contains('Third band').should('be.visible')
 	})
 })
+
+describe('Band delete modal', () => {
+	it('should delete band', () => {
+		cy.visit('/en/bands')
+		cy
+			.intercept('GET', 'http://localhost:8000/api/bands', {
+				statusCode: 200,
+				body: [
+					{ id: 1, name: 'First band', frontMan: 'First frontman' },
+					{ id: 2, name: 'Second band', frontMan: 'Second frontman' },
+				],
+			})
+			.as('mockGET1')
+		cy.wait('@mockGET1')
+		cy.contains('First band').click()
+		cy.contains('Delete').click()
+		cy.contains('Delete band').should('be.visible')
+		cy
+			.intercept('DELETE', 'http://localhost:8000/api/bands/1', {
+				statusCode: 200,
+			})
+			.as('mockDELETE')
+		cy
+			.intercept('GET', 'http://localhost:8000/api/bands', {
+				statusCode: 200,
+				body: [{ id: 2, name: 'Second band', frontMan: 'Second frontman' }],
+			})
+			.as('mockGET2')
+		cy.get('button:contains("Delete"):last').click()
+		cy.wait('@mockDELETE')
+		cy.wait('@mockGET2')
+		cy.contains('Delete band').should('not.exist')
+		cy.contains('First band').should('not.exist')
+	})
+})
