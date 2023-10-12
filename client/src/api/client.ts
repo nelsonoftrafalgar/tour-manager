@@ -10,15 +10,17 @@ const client = axios.create({
 
 client.interceptors.response.use(
 	(res) => {
-		// toast('OK', {
-		// 	position: 'top-right',
-		// 	autoClose: 3000,
-		// 	hideProgressBar: false,
-		// 	closeOnClick: true,
-		// 	pauseOnHover: true,
-		// 	theme: 'light',
-		// 	type: 'success',
-		// })
+		if (res.config.method === 'delete') {
+			toast(res.data.message, {
+				position: 'top-right',
+				autoClose: 2000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				theme: 'light',
+				type: 'success',
+			})
+		}
 		return res
 	},
 	(error) => {

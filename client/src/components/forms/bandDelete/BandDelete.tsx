@@ -2,6 +2,7 @@ import { BandDeleteProps } from './types'
 import { Button } from '@/components/ui/button/Button'
 import { DeleteButtonsWrapper } from './styles'
 import { FC } from 'react'
+import { useBandDeleteMutation } from '@/api/mutations/useBandDeleteMutation'
 import { useI18n } from '@/locales/client'
 
 export const BandDelete: FC<BandDeleteProps> = ({
@@ -10,10 +11,10 @@ export const BandDelete: FC<BandDeleteProps> = ({
 	name,
 }) => {
 	const t = useI18n()
+	const mutation = useBandDeleteMutation(handleModalClose)
 
 	const handleDeleteBand = () => {
-		console.log('delete: ', id)
-		handleModalClose()
+		mutation.mutate({ id })
 	}
 
 	return (
