@@ -1,5 +1,9 @@
 import { Band, BandDTO, BandName, NewBandDTO } from './bands.dto'
-import { ConflictException, Injectable } from '@nestjs/common'
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common'
 
 import { PrismaService } from '../../src/prisma/prisma.service'
 import { v4 as uuid } from 'uuid'
@@ -55,6 +59,16 @@ export class BandsService {
         frontMan,
       },
     })
+  }
+
+  async deleteBand(id: string): Promise<Band> | null {
+    const band = await this.prisma.band.findUnique({ where: { id } })
+
+    if (!band) {
+      throw new NotFoundException()
+    }
+
+    return this.prisma.band.delete({ where: { id } })
   }
 
   async preventDuplicates(data: NewBandDTO | BandDTO) {

@@ -22,6 +22,7 @@ export const mockBandService = {
     name: MOCK_BAND_NAME,
     frontMan: MOCK_FRONTMAN,
   }),
+  deleteBand: () => ({}),
 }
 
 export const mockConcertService = {

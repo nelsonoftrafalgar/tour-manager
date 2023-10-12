@@ -1,9 +1,21 @@
 import { BandsService } from './bands.service'
-import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpStatus,
+  Param,
+  Post,
+  Put,
+  Query,
+  Res,
+} from '@nestjs/common'
 import {
   ApiOkResponse,
   ApiConflictResponse,
   ApiCreatedResponse,
+  ApiNotFoundResponse,
 } from '@nestjs/swagger'
 import {
   Band,
@@ -13,6 +25,7 @@ import {
   BandNameDTO,
   NewBandDTO,
 } from './bands.dto'
+import { Response } from 'express'
 
 @Controller('bands')
 export class BandsController {
@@ -48,5 +61,19 @@ export class BandsController {
   @ApiConflictResponse({ description: 'Band already exists in DB' })
   updateBand(@Body() data: BandDTO) {
     return this.bandsService.updateBand(data)
+  }
+
+  @Delete(':id')
+  @ApiOkResponse({ type: String, description: 'Delete band' })
+  @ApiNotFoundResponse({ type: String, description: 'Band not found' })
+  async deleteBand(@Param('id') id: string, @Res() res: Response) {
+    try {
+      const band = await this.bandsService.deleteBand(id)
+      res
+        .status(HttpStatus.OK)
+        .json({ message: `${band.name} has been successfully deleted` })
+    } catch {
+      res.status(HttpStatus.NOT_FOUND).json({ message: `Band not found` })
+    }
   }
 }
