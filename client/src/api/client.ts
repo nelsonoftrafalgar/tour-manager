@@ -25,15 +25,17 @@ client.interceptors.response.use(
 	},
 	(error) => {
 		if (axios.isAxiosError(error)) {
-			toast(error.message, {
-				position: 'top-right',
-				autoClose: 3000,
-				hideProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: true,
-				theme: 'light',
-				type: 'error',
-			})
+			if (error.response?.config.method === 'delete') {
+				toast(error.response?.data.message, {
+					position: 'top-right',
+					autoClose: 3000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					theme: 'light',
+					type: 'error',
+				})
+			}
 		}
 
 		return Promise.reject(error)
