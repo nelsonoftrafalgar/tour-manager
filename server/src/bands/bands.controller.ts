@@ -56,7 +56,7 @@ export class BandsController {
     try {
       const band = await this.bandsService.createBand(data)
       res
-        .status(HttpStatus.OK)
+        .status(HttpStatus.CREATED)
         .json({ message: 'Band has been successfully created', data: band })
     } catch ({ message }) {
       res.status(HttpStatus.CONFLICT).json({ message })

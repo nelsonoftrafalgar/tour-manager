@@ -58,7 +58,7 @@ describe('BandsController', () => {
 
     await controller.createBand(newBandData, res as Response)
     expect(bandsService.createBand).toHaveBeenCalledWith(newBandData)
-    expect(res.status).toHaveBeenCalledWith(HttpStatus.OK)
+    expect(res.status).toHaveBeenCalledWith(HttpStatus.CREATED)
     expect(res.json).toHaveBeenCalledWith(response)
   })
 

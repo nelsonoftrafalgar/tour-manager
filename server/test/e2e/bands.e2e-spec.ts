@@ -85,7 +85,10 @@ describe('BandsController (e2e)', () => {
         frontMan: MOCK_FRONTMAN,
       })
       .expect(201)
-      .expect(mockBandService.createBand())
+      .expect({
+        message: 'Band has been successfully created',
+        data: mockBandService.createBand(),
+      })
   })
 
   it('should validate new band data', async () => {
@@ -131,7 +134,10 @@ describe('BandsController (e2e)', () => {
         frontMan: MOCK_FRONTMAN,
       })
       .expect(200)
-      .expect(mockBandService.updateBand())
+      .expect({
+        message: 'Band has been successfully updated',
+        data: mockBandService.updateBand(),
+      })
   })
 
   it('should validate updated band data', async () => {
