@@ -65,7 +65,7 @@ export class BandsService {
     const band = await this.prisma.band.findUnique({ where: { id } })
 
     if (!band) {
-      throw new NotFoundException()
+      throw new NotFoundException({ message: `Band not found` })
     }
 
     return this.prisma.band.delete({ where: { id } })
@@ -78,7 +78,7 @@ export class BandsService {
     })
 
     if (duplicate.length > 0) {
-      throw new ConflictException()
+      throw new ConflictException({ message: 'Band already exists' })
     }
   }
 

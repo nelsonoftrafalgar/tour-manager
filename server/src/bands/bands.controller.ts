@@ -52,28 +52,42 @@ export class BandsController {
   @Post()
   @ApiCreatedResponse({ type: [Band], description: 'Add new band' })
   @ApiConflictResponse({ description: 'Band already exists in DB' })
-  createBand(@Body() data: NewBandDTO) {
-    return this.bandsService.createBand(data)
+  async createBand(@Body() data: NewBandDTO, @Res() res: Response) {
+    try {
+      const band = await this.bandsService.createBand(data)
+      res
+        .status(HttpStatus.OK)
+        .json({ message: 'Band has been successfully created', data: band })
+    } catch ({ message }) {
+      res.status(HttpStatus.CONFLICT).json({ message })
+    }
   }
 
   @Put()
   @ApiOkResponse({ type: [Band], description: 'Edit existing band' })
   @ApiConflictResponse({ description: 'Band already exists in DB' })
-  updateBand(@Body() data: BandDTO) {
-    return this.bandsService.updateBand(data)
+  async updateBand(@Body() data: BandDTO, @Res() res: Response) {
+    try {
+      const band = await this.bandsService.updateBand(data)
+      res
+        .status(HttpStatus.OK)
+        .json({ message: 'Band has been successfully updated', data: band })
+    } catch ({ message }) {
+      res.status(HttpStatus.CONFLICT).json({ message })
+    }
   }
 
   @Delete(':id')
   @ApiOkResponse({ type: String, description: 'Delete band' })
   @ApiNotFoundResponse({ type: String, description: 'Band not found' })
-  async deleteBand(@Param('id') id: string, @Res() res: Response) {
+  async deleteBand(@Param() { id }: BandIdDTO, @Res() res: Response) {
     try {
       const band = await this.bandsService.deleteBand(id)
       res
         .status(HttpStatus.OK)
         .json({ message: `${band.name} has been successfully deleted` })
-    } catch {
-      res.status(HttpStatus.NOT_FOUND).json({ message: `Band not found` })
+    } catch ({ message }) {
+      res.status(HttpStatus.NOT_FOUND).json({ message })
     }
   }
 }
