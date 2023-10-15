@@ -180,3 +180,132 @@ describe('Band delete modal', () => {
 		cy.contains('First band').should('not.exist')
 	})
 })
+
+describe('Band should propelry display error toast', () => {
+	it('when DELETE returns 404', () => {
+		cy.visit('/en/bands')
+		cy
+			.intercept('GET', 'http://localhost:8000/api/bands', {
+				statusCode: 200,
+				body: [{ id: 1, name: 'First band', frontMan: 'First frontman' }],
+			})
+			.as('mockGET1')
+		cy.wait('@mockGET1')
+		cy.contains('First band').click()
+		cy.contains('Delete').click()
+		cy
+			.intercept('DELETE', 'http://localhost:8000/api/bands/1', {
+				statusCode: 404,
+				body: { message: 'Band not found' },
+			})
+			.as('mockDELETE')
+		cy.get('button:contains("Delete"):last').click()
+		cy.contains('.Toastify__toast-body', 'Band not found')
+	})
+	it('when DELETE returns 400', () => {
+		cy.visit('/en/bands')
+		cy
+			.intercept('GET', 'http://localhost:8000/api/bands', {
+				statusCode: 200,
+				body: [{ id: 1, name: 'First band', frontMan: 'First frontman' }],
+			})
+			.as('mockGET1')
+		cy.wait('@mockGET1')
+		cy.contains('First band').click()
+		cy.contains('Delete').click()
+		cy
+			.intercept('DELETE', 'http://localhost:8000/api/bands/1', {
+				statusCode: 400,
+				body: { error: 'Bad Request' },
+			})
+			.as('mockDELETE')
+		cy.get('button:contains("Delete"):last').click()
+		cy.contains('.Toastify__toast-body', 'Bad Request')
+	})
+	it('when POST returns 400', () => {
+		cy.visit('/en/bands')
+		cy
+			.intercept('GET', 'http://localhost:8000/api/bands', {
+				statusCode: 200,
+				body: [{ id: 1, name: 'First band', frontMan: 'First frontman' }],
+			})
+			.as('mockGET1')
+		cy.wait('@mockGET1')
+		cy.contains('Add new band').click()
+		cy.get('[placeholder="Band name"]').type('Third band!')
+		cy.get('[placeholder="Band frontman"]').type('Third frontman@')
+		cy
+			.intercept('POST', 'http://localhost:8000/api/bands', {
+				statusCode: 400,
+				body: { error: 'Bad Request' },
+			})
+			.as('mockPOST')
+		cy.contains(/^Add$/).click()
+		cy.wait('@mockPOST')
+		cy.contains('.Toastify__toast-body', 'Bad Request')
+	})
+	it('when POST returns 409', () => {
+		cy.visit('/en/bands')
+		cy
+			.intercept('GET', 'http://localhost:8000/api/bands', {
+				statusCode: 200,
+				body: [{ id: 1, name: 'First band', frontMan: 'First frontman' }],
+			})
+			.as('mockGET1')
+		cy.wait('@mockGET1')
+		cy.contains('Add new band').click()
+		cy.get('[placeholder="Band name"]').type('Third band')
+		cy.get('[placeholder="Band frontman"]').type('Third frontman')
+		cy
+			.intercept('POST', 'http://localhost:8000/api/bands', {
+				statusCode: 409,
+				body: { message: 'Band already exists' },
+			})
+			.as('mockPOST')
+		cy.contains(/^Add$/).click()
+		cy.wait('@mockPOST')
+		cy.contains('.Toastify__toast-body', 'Band already exists')
+	})
+	it('when PUT returns 400', () => {
+		cy.visit('/en/bands')
+		cy
+			.intercept('GET', 'http://localhost:8000/api/bands', {
+				statusCode: 200,
+				body: [{ id: 1, name: 'First band', frontMan: 'First frontman' }],
+			})
+			.as('mockGET1')
+		cy.wait('@mockGET1')
+		cy.contains('First band').click()
+		cy.get('[value="First frontman"]').clear().type('Second frontman')
+		cy
+			.intercept('PUT', 'http://localhost:8000/api/bands', {
+				statusCode: 400,
+				body: { error: 'Bad Request' },
+			})
+			.as('mockPUTfrontman')
+		cy.contains('Save').click()
+		cy.wait('@mockPUTfrontman')
+		cy.contains('.Toastify__toast-body', 'Bad Request')
+	})
+	it('when PUT returns 409', () => {
+		cy.visit('/en/bands')
+		cy
+			.intercept('GET', 'http://localhost:8000/api/bands', {
+				statusCode: 200,
+				body: [{ id: 1, name: 'First band', frontMan: 'First frontman' }],
+			})
+			.as('mockGET1')
+		cy.wait('@mockGET1')
+		cy.contains('First band').click()
+		cy.get('[value="First frontman"]').clear().type('Second frontman')
+		cy
+			.intercept('PUT', 'http://localhost:8000/api/bands', {
+				statusCode: 409,
+				body: { message: 'Band already exists' },
+			})
+			.as('mockPUTfrontman')
+		cy.contains('Save').click()
+		cy.wait('@mockPUTfrontman')
+		cy.contains('.Toastify__toast-body', 'Band already exists')
+	})
+})
