@@ -7,6 +7,7 @@ interface StyledInputProps {
 }
 
 export const StyledInput = styled(TextFieldInput)<StyledInputProps>`
+	width: 100%;
 	border: 2px solid ${({ theme }) => theme.colors.border};
 	padding: ${({ theme }) => theme.gridUnit * 2.5}px;
 	border-radius: ${({ theme }) => theme.borderRadius}px;
