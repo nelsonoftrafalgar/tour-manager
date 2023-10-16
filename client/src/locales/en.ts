@@ -21,6 +21,7 @@ export default {
 	},
 	forms: {
 		required: 'This field is required',
+		invalid_characters: 'Field contains invalid characters',
 		save: 'Save',
 		add: 'Add',
 		delete: 'Delete',

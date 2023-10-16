@@ -6,8 +6,10 @@ import { FC } from 'react'
 import { Form } from '@/components/ui/form/styles'
 import { Input } from '@/components/ui/input/Input'
 import { LoaderIcon } from '@/components/ui/loader/styles'
+import { getBandSchema } from '../validation'
 import { useBandCreateMutation } from '@/api/mutations/useBandCreateMutation'
 import { useI18n } from '@/locales/client'
+import { yupResolver } from '@hookform/resolvers/yup'
 
 export const BandCreate: FC<BandCreateProps> = ({ handleModalClose }) => {
 	const t = useI18n()
@@ -16,7 +18,9 @@ export const BandCreate: FC<BandCreateProps> = ({ handleModalClose }) => {
 		formState: { errors, isSubmitting },
 		control,
 		handleSubmit,
-	} = useForm<BandCreateFormData>()
+	} = useForm<BandCreateFormData>({
+		resolver: yupResolver(getBandSchema(t)),
+	})
 
 	const onSubmit = async (data: BandCreateFormData) => {
 		mutation.mutate(data)
@@ -27,7 +31,6 @@ export const BandCreate: FC<BandCreateProps> = ({ handleModalClose }) => {
 			<Controller
 				name='name'
 				control={control}
-				rules={{ required: t('forms.required') }}
 				render={({ field }) => (
 					<Input
 						placeholder={t('bands.input_name_placeholder')}
@@ -41,7 +44,6 @@ export const BandCreate: FC<BandCreateProps> = ({ handleModalClose }) => {
 			<Controller
 				name='frontMan'
 				control={control}
-				rules={{ required: t('forms.required') }}
 				render={({ field }) => (
 					<Input
 						placeholder={t('bands.input_frontMan_placeholder')}

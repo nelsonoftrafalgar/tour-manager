@@ -6,8 +6,10 @@ import { Button } from '@/components/ui/button/Button'
 import { Form } from '@/components/ui/form/styles'
 import { Input } from '@/components/ui/input/Input'
 import { LoaderIcon } from '@/components/ui/loader/styles'
+import { getBandSchema } from '../validation'
 import { useBandEditMutation } from '@/api/mutations/useBandEditMutation'
 import { useI18n } from '@/locales/client'
+import { yupResolver } from '@hookform/resolvers/yup'
 
 export const BandEdit: FC<BandEditProps> = ({ name, frontMan, id }) => {
 	const t = useI18n()
@@ -18,6 +20,7 @@ export const BandEdit: FC<BandEditProps> = ({ name, frontMan, id }) => {
 		handleSubmit,
 		reset,
 	} = useForm<BandEditFormData>({
+		resolver: yupResolver(getBandSchema(t)),
 		defaultValues: { name, frontMan },
 	})
 	useEffect(() => {

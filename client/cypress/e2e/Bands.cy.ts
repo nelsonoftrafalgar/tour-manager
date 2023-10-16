@@ -106,6 +106,46 @@ describe('Band edit form', () => {
 		cy.contains('First band').should('not.exist')
 		cy.contains('Second band').should('be.visible')
 	})
+	it('should validate band name', () => {
+		cy.visit('/en/bands')
+		cy
+			.intercept('GET', 'http://localhost:8000/api/bands', {
+				statusCode: 200,
+				body: [
+					{ id: 1, name: 'First band', frontMan: 'First frontman' },
+					{ id: 2, name: 'Second band', frontMan: 'Second frontman' },
+				],
+			})
+			.as('mockGET1')
+		cy.wait('@mockGET1')
+		cy.contains('First band').click()
+		cy.get('[value="First band"]').clear().type('First band!')
+		cy.contains('Save').click()
+		cy.contains('Field contains invalid characters').should('be.visible')
+		cy.get('[value="First band!"]').clear()
+		cy.contains('Save').click()
+		cy.contains('This field is required').should('be.visible')
+	})
+	it('should validate band frontMan', () => {
+		cy.visit('/en/bands')
+		cy
+			.intercept('GET', 'http://localhost:8000/api/bands', {
+				statusCode: 200,
+				body: [
+					{ id: 1, name: 'First band', frontMan: 'First frontman' },
+					{ id: 2, name: 'Second band', frontMan: 'Second frontman' },
+				],
+			})
+			.as('mockGET1')
+		cy.wait('@mockGET1')
+		cy.contains('First band').click()
+		cy.get('[value="First frontman"]').clear().type('First frontman!')
+		cy.contains('Save').click()
+		cy.contains('Field contains invalid characters').should('be.visible')
+		cy.get('[value="First frontman!"]').clear()
+		cy.contains('Save').click()
+		cy.contains('This field is required').should('be.visible')
+	})
 })
 
 describe('Band create form', () => {
@@ -143,6 +183,48 @@ describe('Band create form', () => {
 		cy.wait('@mockPOST')
 		cy.wait('@mockGET1')
 		cy.contains('Third band').should('be.visible')
+	})
+	it('should validate band name', () => {
+		cy.visit('/en/bands')
+		cy
+			.intercept('GET', 'http://localhost:8000/api/bands', {
+				statusCode: 200,
+				body: [
+					{ id: 1, name: 'First band', frontMan: 'First frontman' },
+					{ id: 2, name: 'Second band', frontMan: 'Second frontman' },
+				],
+			})
+			.as('mockGET1')
+		cy.wait('@mockGET1')
+		cy.contains('Add new band').click()
+		cy.get('[placeholder="Band name"]').type('Third band!')
+		cy.get('[placeholder="Band frontman"]').type('Third frontman')
+		cy.contains(/^Add$/).click()
+		cy.contains('Field contains invalid characters').should('be.visible')
+		cy.get('[placeholder="Band name"]').clear()
+		cy.contains(/^Add$/).click()
+		cy.contains('This field is required').should('be.visible')
+	})
+	it('should validate band frontMan', () => {
+		cy.visit('/en/bands')
+		cy
+			.intercept('GET', 'http://localhost:8000/api/bands', {
+				statusCode: 200,
+				body: [
+					{ id: 1, name: 'First band', frontMan: 'First frontman' },
+					{ id: 2, name: 'Second band', frontMan: 'Second frontman' },
+				],
+			})
+			.as('mockGET1')
+		cy.wait('@mockGET1')
+		cy.contains('Add new band').click()
+		cy.get('[placeholder="Band name"]').type('Third band')
+		cy.get('[placeholder="Band frontman"]').type('Third frontman#')
+		cy.contains(/^Add$/).click()
+		cy.contains('Field contains invalid characters').should('be.visible')
+		cy.get('[placeholder="Band frontman"]').clear()
+		cy.contains(/^Add$/).click()
+		cy.contains('This field is required').should('be.visible')
 	})
 })
 
@@ -232,8 +314,8 @@ describe('Band should propelry display error toast', () => {
 			.as('mockGET1')
 		cy.wait('@mockGET1')
 		cy.contains('Add new band').click()
-		cy.get('[placeholder="Band name"]').type('Third band!')
-		cy.get('[placeholder="Band frontman"]').type('Third frontman@')
+		cy.get('[placeholder="Band name"]').type('Third band')
+		cy.get('[placeholder="Band frontman"]').type('Third frontman')
 		cy
 			.intercept('POST', 'http://localhost:8000/api/bands', {
 				statusCode: 400,
