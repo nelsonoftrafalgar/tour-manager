@@ -69,4 +69,12 @@ export const mockSalaryService = {
 
 export const mockTourManagerService = {
   getTourManagers: () => [MOCK_TOUR_MANAGER_NAME],
+  createTourManager: () => ({
+    name: MOCK_TOUR_MANAGER_NAME,
+  }),
+  updateTourManager: () => ({
+    id: MOCK_TOUR_MANAGER_ID,
+    name: MOCK_TOUR_MANAGER_NAME,
+  }),
+  deleteTourManager: () => ({}),
 }

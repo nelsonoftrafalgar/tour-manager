@@ -181,4 +181,10 @@ describe('BandsController (e2e)', () => {
       })
       .expect(400)
   })
+
+  it('should delete band', async () => {
+    await request(app.getHttpServer())
+      .delete(`/bands/${MOCK_BAND_ID}`)
+      .expect(200)
+  })
 })
