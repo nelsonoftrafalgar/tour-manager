@@ -7,6 +7,7 @@ import { Form } from '@/components/ui/form/styles'
 import { Input } from '@/components/ui/input/Input'
 import { LoaderIcon } from '@/components/ui/loader/styles'
 import { getBandSchema } from '../validation'
+import { trimData } from '../utils'
 import { useBandCreateMutation } from '@/api/mutations/useBandCreateMutation'
 import { useI18n } from '@/locales/client'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -23,7 +24,7 @@ export const BandCreate: FC<BandCreateProps> = ({ handleModalClose }) => {
 	})
 
 	const onSubmit = async (data: BandCreateFormData) => {
-		mutation.mutate(data)
+		mutation.mutate(trimData(data))
 	}
 
 	return (

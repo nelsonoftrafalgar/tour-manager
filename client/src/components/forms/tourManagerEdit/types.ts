@@ -6,6 +6,6 @@ export interface TourManagerEditProps {
 	setIsEditMode: Dispatch<SetStateAction<boolean>>
 }
 
-export interface TourManagerEditFormState {
+export interface TourManagerEditFormData {
 	name: string
 }

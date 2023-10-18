@@ -2,6 +2,6 @@ export interface TourManagerCreateProps {
 	handleCreateMode: (toggle: boolean) => void
 }
 
-export interface TourManagerCreateFormState {
+export interface TourManagerCreateFormData {
 	name: string
 }

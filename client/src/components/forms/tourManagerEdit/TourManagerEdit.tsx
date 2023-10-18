@@ -1,10 +1,11 @@
 import { Controller, useForm } from 'react-hook-form'
 import { EditWrapper, SaveIcon } from './styles'
 import React, { FC } from 'react'
-import { TourManagerEditFormState, TourManagerEditProps } from './types'
+import { TourManagerEditFormData, TourManagerEditProps } from './types'
 
 import { Input } from '@/components/ui/input/Input'
 import { getTourManagerSchema } from '../validation'
+import { trimData } from '../utils'
 import { useI18n } from '@/locales/client'
 import { useTourManagerEditMutation } from '@/api/mutations/useTourManagerEditMutation'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -19,7 +20,7 @@ export const TourManagerEdit: FC<TourManagerEditProps> = ({
 		control,
 		formState: { errors, isDirty, isSubmitting },
 		handleSubmit,
-	} = useForm<TourManagerEditFormState>({
+	} = useForm<TourManagerEditFormData>({
 		resolver: yupResolver(getTourManagerSchema(t)),
 		defaultValues: { name },
 	})
@@ -28,8 +29,8 @@ export const TourManagerEdit: FC<TourManagerEditProps> = ({
 		setIsEditMode(false)
 	})
 
-	const handleEditTourManager = ({ name }: TourManagerEditFormState) => {
-		editMutation.mutate({ id, name: name.trim() })
+	const handleEditTourManager = ({ name }: TourManagerEditFormData) => {
+		editMutation.mutate(trimData({ id, name }))
 	}
 
 	return (

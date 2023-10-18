@@ -7,6 +7,7 @@ import { Form } from '@/components/ui/form/styles'
 import { Input } from '@/components/ui/input/Input'
 import { LoaderIcon } from '@/components/ui/loader/styles'
 import { getBandSchema } from '../validation'
+import { trimData } from '../utils'
 import { useBandEditMutation } from '@/api/mutations/useBandEditMutation'
 import { useI18n } from '@/locales/client'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -30,7 +31,7 @@ export const BandEdit: FC<BandEditProps> = ({ name, frontMan, id }) => {
 	}, [isSubmitSuccessful, reset])
 
 	const onSubmit = (data: BandEditFormData) => {
-		mutation.mutate({ id, ...data })
+		mutation.mutate(trimData({ id, ...data }))
 	}
 
 	return (

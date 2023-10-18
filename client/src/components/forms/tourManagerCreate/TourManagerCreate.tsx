@@ -1,10 +1,11 @@
 import { Container, DeleteIcon, EditWrapper, SaveIcon } from './styles'
 import { Controller, useForm } from 'react-hook-form'
-import { TourManagerCreateFormState, TourManagerCreateProps } from './types'
+import { TourManagerCreateFormData, TourManagerCreateProps } from './types'
 
 import { FC } from 'react'
 import { Input } from '@/components/ui/input/Input'
 import { getTourManagerSchema } from '../validation'
+import { trimData } from '../utils'
 import { useI18n } from '@/locales/client'
 import { useTourManagerCreateMutation } from '@/api/mutations/useTourManagerCreateMutation'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -18,13 +19,13 @@ export const TourManagerCreate: FC<TourManagerCreateProps> = ({
 		control,
 		formState: { errors, isDirty, isSubmitting },
 		handleSubmit,
-	} = useForm<TourManagerCreateFormState>({
+	} = useForm<TourManagerCreateFormData>({
 		resolver: yupResolver(getTourManagerSchema(t)),
 		defaultValues: { name: '' },
 	})
 
-	const onSubmit = (data: TourManagerCreateFormState) => {
-		mutation.mutate(data)
+	const onSubmit = (data: TourManagerCreateFormData) => {
+		mutation.mutate(trimData(data))
 	}
 
 	return (
