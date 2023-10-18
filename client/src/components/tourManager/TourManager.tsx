@@ -1,38 +1,39 @@
-import {
-	Container,
-	DeleteIcon,
-	EditIcon,
-	EditWrapper,
-	Name,
-	SaveIcon,
-} from './styles'
+import { CancelIcon, Container, DeleteIcon, EditIcon, Name } from './styles'
 import { FC, useState } from 'react'
 
-import { Input } from '@/components/ui/input/Input'
 import { Tooltip } from '@/components/ui/tooltip/Tooltip'
+import { TourManagerEdit } from '../forms/tourManagerEdit/TourManagerEdit'
 import { TourManagerProps } from './types'
+import { useTourManagerDeleteMutation } from '@/api/mutations/useTourManagerDeleteMutation'
 
-export const TourManager: FC<TourManagerProps> = ({ name }) => {
+export const TourManager: FC<TourManagerProps> = ({ name, id }) => {
 	const [isEditMode, setIsEditMode] = useState(false)
+	const deleteMutation = useTourManagerDeleteMutation()
+
+	const handleDeleteTourManager = () => {
+		deleteMutation.mutate(id)
+	}
+
+	const handleCancelEdit = () => {
+		setIsEditMode(false)
+	}
+
+	const handleEnableEdit = () => {
+		setIsEditMode(true)
+	}
+
 	return (
 		<Container>
 			{isEditMode ? (
-				<EditWrapper>
-					<Input value={name} onChange={() => {}} />
-				</EditWrapper>
+				<TourManagerEdit name={name} id={id} setIsEditMode={setIsEditMode} />
 			) : (
 				<Tooltip title={name}>
 					<Name>{name}</Name>
 				</Tooltip>
 			)}
-			<DeleteIcon />
-			{isEditMode ? (
-				<SaveIcon onClick={() => setIsEditMode(false)} />
-			) : (
-				<EditIcon onClick={() => setIsEditMode(true)} />
-			)}
+			<DeleteIcon onClick={handleDeleteTourManager} />
+			{!isEditMode && <EditIcon onClick={handleEnableEdit} />}
+			{isEditMode && <CancelIcon onClick={handleCancelEdit} />}
 		</Container>
 	)
 }
-
-export default TourManager

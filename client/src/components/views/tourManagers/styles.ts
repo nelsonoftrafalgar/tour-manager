@@ -7,6 +7,7 @@ export const Wrapper = styled.div`
 	grid-gap: ${({ theme }) => theme.gridUnit * 4}px;
 `
 export const CreateWrapper = styled.div`
+	height: 100px;
 	display: flex;
 	align-items: center;
 	justify-content: center;

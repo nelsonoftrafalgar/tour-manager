@@ -19,9 +19,12 @@ export default {
 		input_frontMan_label: 'Frontman',
 		delete_band: 'Delete band',
 	},
+	tourManagers: {
+		input_name_placeholder: 'Tour manager name',
+	},
 	forms: {
 		required: 'This field is required',
-		invalid_characters: 'Field contains invalid characters',
+		invalid_characters: 'Invalid characters',
 		save: 'Save',
 		add: 'Add',
 		delete: 'Delete',

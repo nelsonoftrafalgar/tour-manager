@@ -1,4 +1,4 @@
-import { ArrowLeftIcon, Pencil1Icon, TrashIcon } from '@radix-ui/react-icons'
+import { CheckIcon, TrashIcon } from '@radix-ui/react-icons'
 
 import styled from 'styled-components'
 
@@ -18,11 +18,24 @@ export const Container = styled.div`
 	}
 `
 
-export const Name = styled.p`
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-	width: 120px;
+export const SaveIcon = styled(CheckIcon)`
+	color: ${({ theme }) => theme.colors.secondary.mint};
+	cursor: pointer;
+	position: absolute;
+	top: 50%;
+	right: 8px;
+	transform: translateY(-50%);
+	display: none;
+	${Container}:hover & {
+		display: block;
+	}
+`
+
+export const EditWrapper = styled.div`
+	width: 140px;
+	position: absolute;
+	left: 8px;
+	top: 29px;
 `
 
 export const DeleteIcon = styled(TrashIcon)`
@@ -31,29 +44,6 @@ export const DeleteIcon = styled(TrashIcon)`
 	cursor: pointer;
 	top: 8px;
 	right: 8px;
-	display: none;
-	${Container}:hover & {
-		display: block;
-	}
-`
-
-export const CancelIcon = styled(ArrowLeftIcon)`
-	position: absolute;
-	cursor: pointer;
-	top: 8px;
-	left: 8px;
-	display: none;
-	${Container}:hover & {
-		display: block;
-	}
-`
-
-export const EditIcon = styled(Pencil1Icon)`
-	cursor: pointer;
-	position: absolute;
-	top: 50%;
-	right: 8px;
-	transform: translateY(-50%);
 	display: none;
 	${Container}:hover & {
 		display: block;
