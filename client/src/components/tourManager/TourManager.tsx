@@ -23,16 +23,21 @@ export const TourManager: FC<TourManagerProps> = ({ name, id }) => {
 	}
 
 	return (
-		<Container>
+		<Container data-cy='tour-manager-list-item'>
 			{isEditMode ? (
 				<TourManagerEdit name={name} id={id} setIsEditMode={setIsEditMode} />
 			) : (
 				<Tooltip title={name}>
-					<Name>{name}</Name>
+					<Name data-cy='tour-manager-name'>{name}</Name>
 				</Tooltip>
 			)}
-			<DeleteIcon onClick={handleDeleteTourManager} />
-			{!isEditMode && <EditIcon onClick={handleEnableEdit} />}
+			<DeleteIcon
+				data-cy='delete-tour-manager-icon'
+				onClick={handleDeleteTourManager}
+			/>
+			{!isEditMode && (
+				<EditIcon data-cy='edit-tour-manager-icon' onClick={handleEnableEdit} />
+			)}
 			{isEditMode && <CancelIcon onClick={handleCancelEdit} />}
 		</Container>
 	)

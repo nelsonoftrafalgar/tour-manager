@@ -19,14 +19,14 @@ const TourManagers = () => {
 	return (
 		<ApiLoader isLoading={isLoading}>
 			<Box>
-				<Wrapper>
+				<Wrapper data-cy='tour-manager-list'>
 					{data?.map(({ name, id }) => (
 						<TourManager key={id} id={id} name={name} />
 					))}
 					{isCreateMode ? (
 						<TourManagerCreate handleCreateMode={handleCreateMode} />
 					) : (
-						<CreateWrapper>
+						<CreateWrapper data-cy='tour-manager-create-trigger'>
 							<AddNewTourManagerIcon
 								onClick={() => handleCreateMode(true)}
 								width={30}

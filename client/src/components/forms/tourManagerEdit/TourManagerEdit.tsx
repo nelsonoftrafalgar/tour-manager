@@ -50,7 +50,10 @@ export const TourManagerEdit: FC<TourManagerEditProps> = ({
 				/>
 			</EditWrapper>
 			{isDirty && !isSubmitting && (
-				<SaveIcon onClick={handleSubmit(handleEditTourManager)} />
+				<SaveIcon
+					data-cy='tour-manager-save-edit-icon'
+					onClick={handleSubmit(handleEditTourManager)}
+				/>
 			)}
 		</>
 	)

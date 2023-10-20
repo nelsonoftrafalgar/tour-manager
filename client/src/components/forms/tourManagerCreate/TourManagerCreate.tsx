@@ -45,7 +45,12 @@ export const TourManagerCreate: FC<TourManagerCreateProps> = ({
 				/>
 			</EditWrapper>
 			<DeleteIcon onClick={() => handleCreateMode(false)} />
-			{isDirty && !isSubmitting && <SaveIcon onClick={handleSubmit(onSubmit)} />}
+			{isDirty && !isSubmitting && (
+				<SaveIcon
+					data-cy='tour-manager-submit-create'
+					onClick={handleSubmit(onSubmit)}
+				/>
+			)}
 		</Container>
 	)
 }
