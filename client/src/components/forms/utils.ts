@@ -1,5 +1,6 @@
 import { BandCreateFormData } from './bandCreate/types'
 import { BandEditFormData } from './bandEdit/types'
+import { ConcertEditFormData } from './concertEdit/types'
 import { TourManagerCreateFormData } from './tourManagerCreate/types'
 import { TourManagerEditFormData } from './tourManagerEdit/types'
 
@@ -9,6 +10,7 @@ export const trimData = <
 		| BandEditFormData
 		| TourManagerEditFormData
 		| TourManagerCreateFormData
+		| ConcertEditFormData
 >(
 	data: T
 ): T => {

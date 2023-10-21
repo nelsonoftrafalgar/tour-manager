@@ -28,8 +28,6 @@ client.interceptors.response.use(
 	(error) => {
 		if (axios.isAxiosError(error)) {
 			const errorMessage = getErrorMessage(error)
-			console.log('errorMessage: ', errorMessage)
-
 			toast(errorMessage, {
 				position: 'top-right',
 				autoClose: 3000,

@@ -5,8 +5,10 @@ import * as Select from '@radix-ui/react-select'
 import styled, { css } from 'styled-components'
 
 import { ChevronDownIcon } from '@radix-ui/react-icons'
+import { Label } from '@radix-ui/react-label'
 
 export const SelectTrigger = styled(Select.Trigger)<{ $open: boolean }>`
+	margin-bottom: 25px;
 	padding: ${({ theme }) => theme.gridUnit * 2.5}px;
 	font-size: ${({ theme }) => theme.fonts.size.xs}px;
 	font-weight: ${({ theme }) => theme.fonts.weight.bold};
@@ -25,6 +27,9 @@ export const SelectTrigger = styled(Select.Trigger)<{ $open: boolean }>`
 			border-bottom-right-radius: 0;
 			border-bottom-left-radius: 0;
 		`}
+	&[data-placeholder] {
+		color: ${({ theme }) => theme.colors.placeholder};
+	}
 `
 
 export const SelectIcon = styled(ChevronDownIcon)`
@@ -57,4 +62,12 @@ export const SelectItem = styled(Select.Item)`
 		color: ${({ theme }) => theme.colors.primary.white};
 		outline: none;
 	}
+`
+
+export const StyledLabel = styled(Label)`
+	color: ${({ theme }) => theme.colors.primary.charchoal};
+	font-size: ${({ theme }) => theme.fonts.size.xs}px;
+	font-weight: ${({ theme }) => theme.fonts.weight.bold};
+	display: block;
+	margin-bottom: ${({ theme }) => theme.gridUnit * 2.5}px;
 `

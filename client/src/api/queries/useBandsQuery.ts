@@ -10,13 +10,8 @@ export interface Band {
 }
 
 export const getBands = async () => {
-	try {
-		const response = await client.get<Band[]>('/bands')
-		return response.data
-	} catch (error) {
-		// TODO Error handling service
-		return []
-	}
+	const { data } = await client.get<Band[]>('/bands')
+	return data
 }
 
 export const useBandsQuery = () => {

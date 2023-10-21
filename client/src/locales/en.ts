@@ -9,6 +9,7 @@ export default {
 	routes: {
 		bands: 'Bands',
 		tour_managers: 'Tour Managers',
+		concerts: 'Concerts',
 	},
 	bands: {
 		search_placeholder: 'Filter by name',
@@ -21,6 +22,21 @@ export default {
 	},
 	tourManagers: {
 		input_name_placeholder: 'Tour manager name',
+	},
+	concerts: {
+		search_placeholder: 'Filter by name',
+		add_new_concert: 'Add new concert',
+		input_place_placeholder: 'Concert place',
+		select_band_placeholder: 'Concert band',
+		select_tourManager_placeholder: 'Concert tour manager',
+		input_place_label: 'Place',
+		select_band_label: 'Band',
+		select_tourManager_label: 'Tour manager',
+		header: {
+			place: 'Place',
+			band: 'Band',
+			tourManager: 'Tour manager',
+		},
 	},
 	forms: {
 		required: 'This field is required',

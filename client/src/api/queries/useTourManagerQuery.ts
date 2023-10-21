@@ -9,13 +9,8 @@ export interface TourManager {
 }
 
 export const getTourManagers = async () => {
-	try {
-		const response = await client.get<TourManager[]>('/tour_managers')
-		return response.data
-	} catch (error) {
-		// TODO Error handling service
-		return []
-	}
+	const { data } = await client.get<TourManager[]>('/tour_managers')
+	return data
 }
 
 export const useTourManagersQuery = () => {

@@ -39,7 +39,6 @@ export const BandEdit: FC<BandEditProps> = ({ name, frontMan, id }) => {
 			<Controller
 				name='name'
 				control={control}
-				rules={{ required: t('forms.required') }}
 				render={({ field }) => (
 					<Input
 						placeholder={t('bands.input_name_placeholder')}
@@ -53,7 +52,6 @@ export const BandEdit: FC<BandEditProps> = ({ name, frontMan, id }) => {
 			<Controller
 				name='frontMan'
 				control={control}
-				rules={{ required: t('forms.required') }}
 				render={({ field }) => (
 					<Input
 						placeholder={t('bands.input_frontMan_placeholder')}
