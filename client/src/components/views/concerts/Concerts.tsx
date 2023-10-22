@@ -11,6 +11,7 @@ import { Accordion } from '@/components/ui/accordion/Accordion'
 import ApiLoader from '@/components/ui/loader/ApiLoader'
 import { Box } from '@/components/ui/box/styles'
 import { Button } from '@/components/ui/button/Button'
+import { ConcertCreateModal } from '@/components/modals/concertCreateModal/ConcertCreateModal'
 import { Input } from '@/components/ui/input/Input'
 import { useConcertSearch } from './hooks'
 import { useConcertsQuery } from '@/api/queries/useConcertsQuery'
@@ -31,7 +32,9 @@ export const Concerts = () => {
 						value={search}
 						onChange={handleSearch}
 					/>
-					<Button buttonStyle='primary'>{t('concerts.add_new_concert')}</Button>
+					<ConcertCreateModal>
+						<Button buttonStyle='primary'>{t('concerts.add_new_concert')}</Button>
+					</ConcertCreateModal>
 				</Header>
 				<ConcertListHeader>
 					<ConcertListHeaderItem>{t('concerts.header.place')}</ConcertListHeaderItem>

@@ -1,7 +1,4 @@
 export default {
-	hello: 'Hello',
-	welcome: 'Hello {name}!',
-
 	ui: {
 		amount: 'Amount',
 		date: 'Date',
@@ -47,5 +44,6 @@ export default {
 		delete: 'Delete',
 		cancel: 'Cancel',
 		confirm_delete: 'Do you want to delete',
+		date_placeholder: 'Pick date',
 	},
 } as const

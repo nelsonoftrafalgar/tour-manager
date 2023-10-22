@@ -10,6 +10,7 @@ import { Input } from '@/components/ui/input/Input'
 import { LoaderIcon } from '@/components/ui/loader/styles'
 import { Select } from '@/components/ui/select/Select'
 import { getConcertSchema } from '../validation'
+import { trimData } from '../utils'
 import { useBandsQuery } from '@/api/queries/useBandsQuery'
 import { useConcertEditMutation } from '@/api/mutations/useConcertEditMutation'
 import { useI18n } from '@/locales/client'
@@ -43,7 +44,7 @@ export const ConcertEdit: FC<ConcertEditProps> = ({
 	}, [isSubmitSuccessful, reset])
 
 	const onSubmit = (data: ConcertEditFormData) => {
-		mutation.mutate({ ...data, id })
+		mutation.mutate(trimData({ ...data, id }))
 	}
 
 	if (!bands || !tourManagers) return null

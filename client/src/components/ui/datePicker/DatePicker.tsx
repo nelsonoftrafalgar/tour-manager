@@ -15,7 +15,7 @@ const DatePickerComponent: FC<DatePickerProps> = ({
 	value,
 }) => {
 	const t = useI18n()
-	const selected = new Date(value)
+	const selected = value ? new Date(value) : null
 
 	const handleDateChange = (date: Date) => {
 		onChange(date.toISOString())
@@ -29,6 +29,7 @@ const DatePickerComponent: FC<DatePickerProps> = ({
 					selected={selected}
 					onChange={handleDateChange}
 					dateFormat={'dd/MM/yyyy'}
+					placeholderText={t('forms.date_placeholder')}
 				/>
 			</DatePickerWrapper>
 			{errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}

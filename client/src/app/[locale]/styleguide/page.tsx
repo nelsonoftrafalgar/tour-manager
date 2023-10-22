@@ -8,10 +8,7 @@ import {
 
 import { Amount } from '@/components/ui/amount/Amount'
 import { Button } from '@/components/ui/button/Button'
-import { DatePicker } from '@/components/ui/datePicker/DatePicker'
-import { Input } from '@/components/ui/input/Input'
 import { RangePicker } from '@/components/ui/datePicker/RangePicker'
-import { Select } from '@/components/ui/select/Select'
 import { Textarea } from '@/components/ui/textarea/Textarea'
 import styled from 'styled-components'
 import { useState } from 'react'
@@ -22,7 +19,6 @@ const Separator = styled.div`
 `
 
 export default function Styleguide() {
-	const [selectValue, setSelectValue] = useState('pizza')
 	const [amount, setAmount] = useState('100')
 
 	return (
@@ -55,36 +51,6 @@ export default function Styleguide() {
 			/>
 			<Separator />
 
-			<Select
-				value={selectValue}
-				onChange={(value) => setSelectValue(value)}
-				placeholder='Some placeholder'
-				options={[
-					{ label: 'Pizza', value: 'pizza' },
-					{ label: 'Burger', value: 'burger' },
-					{ label: 'Pasta', value: 'pasta' },
-					{ label: 'Steak', value: 'steak' },
-				]}
-			/>
-			<Separator />
-
-			<Input
-				onChange={() => console.log()}
-				value=''
-				label='Some label'
-				placeholder='Some placeholder'
-			/>
-			<Separator />
-
-			<Input
-				onChange={() => console.log()}
-				value='Hello'
-				label='Some label'
-				placeholder='Some placeholder'
-				errorMessage='There is an error'
-			/>
-			<Separator />
-
 			<Textarea
 				onChange={() => console.log()}
 				value=''
@@ -103,9 +69,6 @@ export default function Styleguide() {
 			<Separator />
 
 			<RangePicker />
-			<Separator />
-
-			<DatePicker value='' onChange={() => null} />
 			<Separator />
 		</div>
 	)
