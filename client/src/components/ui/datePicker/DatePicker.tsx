@@ -2,25 +2,37 @@
 
 import 'react-datepicker/dist/react-datepicker.css'
 
-import { DatePickerWrapper, StyledLabel } from './styles'
-import React, { useState } from 'react'
+import { DatePickerWrapper, ErrorMessage, StyledLabel } from './styles'
 
 import DatePicker from 'react-datepicker'
+import { DatePickerProps } from './types'
+import { FC } from 'react'
 import { useI18n } from '@/locales/client'
 
-// TODO props types
-
-const DatePickerComponent = () => {
+const DatePickerComponent: FC<DatePickerProps> = ({
+	errorMessage,
+	onChange,
+	value,
+}) => {
 	const t = useI18n()
-	const [date, setDate] = useState<Date | null>(new Date())
+	const selected = new Date(value)
+
+	const handleDateChange = (date: Date) => {
+		onChange(date.toISOString())
+	}
 
 	return (
-		<>
+		<div>
 			<StyledLabel>{t('ui.date')}</StyledLabel>
-			<DatePickerWrapper>
-				<DatePicker selected={date} onChange={setDate} dateFormat={'dd/MM/yyyy'} />
+			<DatePickerWrapper $error={!!errorMessage}>
+				<DatePicker
+					selected={selected}
+					onChange={handleDateChange}
+					dateFormat={'dd/MM/yyyy'}
+				/>
 			</DatePickerWrapper>
-		</>
+			{errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+		</div>
 	)
 }
 

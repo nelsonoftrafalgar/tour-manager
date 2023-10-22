@@ -26,11 +26,13 @@ export class ConcertsService {
         band: {
           select: {
             name: true,
+            id: true,
           },
         },
         tourManager: {
           select: {
             name: true,
+            id: true,
           },
         },
       },

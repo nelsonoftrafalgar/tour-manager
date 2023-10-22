@@ -105,7 +105,7 @@ export default function Styleguide() {
 			<RangePicker />
 			<Separator />
 
-			<DatePicker />
+			<DatePicker value='' onChange={() => null} />
 			<Separator />
 		</div>
 	)

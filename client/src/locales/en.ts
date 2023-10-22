@@ -34,6 +34,7 @@ export default {
 		select_tourManager_label: 'Tour manager',
 		header: {
 			place: 'Place',
+			date: 'Date',
 			band: 'Band',
 			tourManager: 'Tour manager',
 		},

@@ -12,8 +12,9 @@ export const getConcertSchema = (t: ReturnType<typeof useI18n>) =>
 					message: t('forms.invalid_characters'),
 				})
 				.required(t('forms.required')),
-			band: yup.string().required(t('forms.required')),
-			tourManager: yup.string().required(t('forms.required')),
+			bandId: yup.string().required(t('forms.required')),
+			tourManagerId: yup.string().required(t('forms.required')),
+			date: yup.string().required(t('forms.required')),
 		})
 		.required()
 

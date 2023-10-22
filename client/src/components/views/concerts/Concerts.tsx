@@ -35,6 +35,7 @@ export const Concerts = () => {
 				</Header>
 				<ConcertListHeader>
 					<ConcertListHeaderItem>{t('concerts.header.place')}</ConcertListHeaderItem>
+					<ConcertListHeaderItem>{t('concerts.header.date')}</ConcertListHeaderItem>
 					<ConcertListHeaderItem>{t('concerts.header.band')}</ConcertListHeaderItem>
 					<ConcertListHeaderItem>
 						{t('concerts.header.tourManager')}

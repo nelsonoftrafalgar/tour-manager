@@ -3,11 +3,11 @@
 import { Label } from '@radix-ui/react-label'
 import styled from 'styled-components'
 
-export const DatePickerWrapper = styled.div`
+export const DatePickerWrapper = styled.div<{ $error?: boolean }>`
+	margin-bottom: ${({ $error }) => ($error ? 0 : 25)}px;
 	display: flex;
 	gap: ${({ theme }) => theme.gridUnit}px;
 	align-items: center;
-	margin-top: ${({ theme }) => theme.gridUnit * 2.5}px;
 
 	.react-datepicker__triangle {
 		display: none;
@@ -55,4 +55,14 @@ export const StyledLabel = styled(Label)`
 	color: ${({ theme }) => theme.colors.primary.charchoal};
 	font-size: ${({ theme }) => theme.fonts.size.xs}px;
 	font-weight: ${({ theme }) => theme.fonts.weight.bold};
+	display: block;
+	margin-bottom: ${({ theme }) => theme.gridUnit * 2.5}px;
+`
+
+export const ErrorMessage = styled.span`
+	color: ${({ theme }) => theme.colors.secondary.strawberry};
+	font-size: ${({ theme }) => theme.fonts.size.xs}px;
+	margin-left: ${({ theme }) => theme.gridUnit * 3}px;
+	display: inline-block;
+	margin-top: ${({ theme }) => theme.gridUnit * 2.5}px;
 `

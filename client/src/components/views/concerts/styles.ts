@@ -21,7 +21,7 @@ export const ConcertContentWrapper = styled.div`
 export const ConcertListHeader = styled.ul`
 	display: flex;
 	list-style-type: none;
-	gap: 100px;
+	gap: 50px;
 	padding: ${({ theme }) => theme.gridUnit * 4}px;
 	background-color: ${({ theme }) => theme.colors.secondary.mint};
 	margin-top: ${({ theme }) => theme.gridUnit * 4}px;
@@ -34,7 +34,7 @@ export const ConcertListHeaderItem = styled.li`
 
 export const ConcertDetailsList = styled.ul`
 	display: flex;
-	gap: 100px;
+	gap: 50px;
 	list-style-type: none;
 `
 

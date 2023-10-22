@@ -9,6 +9,7 @@ import { AccordionItem } from '@/components/ui/accordion/types'
 import { Button } from '@/components/ui/button/Button'
 import { Concert } from '@/api/queries/useConcertsQuery'
 import { ConcertEdit } from '@/components/forms/concertEdit/ConcertEdit'
+import { format } from 'date-fns'
 import { useI18n } from '@/locales/client'
 
 export const useConcertSearch = (data?: Concert[]) => {
@@ -19,9 +20,11 @@ export const useConcertSearch = (data?: Concert[]) => {
 			const {
 				id,
 				place,
-				band: { name: band },
-				tourManager: { name: tourManager },
+				date,
+				band: { id: bandId, name: band },
+				tourManager: { id: tourManagerId, name: tourManager },
 			} = concert
+			const concertDate = format(new Date(date), 'dd-MM-yyy')
 
 			if (place.toLowerCase().includes(search.toLowerCase())) {
 				return [
@@ -31,13 +34,18 @@ export const useConcertSearch = (data?: Concert[]) => {
 						header: (
 							<ConcertDetailsList>
 								<ConcertDetailsItem>{place}</ConcertDetailsItem>
+								<ConcertDetailsItem>{concertDate}</ConcertDetailsItem>
 								<ConcertDetailsItem>{band}</ConcertDetailsItem>
 								<ConcertDetailsItem>{tourManager}</ConcertDetailsItem>
 							</ConcertDetailsList>
 						),
 						content: (
 							<ConcertContentWrapper>
-								<ConcertEdit {...concert} band={band} tourManager={tourManager} />
+								<ConcertEdit
+									{...concert}
+									bandId={bandId}
+									tourManagerId={tourManagerId}
+								/>
 								<Button type='button' buttonStyle='warning'>
 									{t('forms.delete')}
 								</Button>
