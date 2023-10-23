@@ -8,6 +8,7 @@ import {
 import { AccordionItem } from '@/components/ui/accordion/types'
 import { Button } from '@/components/ui/button/Button'
 import { Concert } from '@/api/queries/useConcertsQuery'
+import { ConcertDeleteModal } from '@/components/modals/concertDeleteModal/ConcertDeleteModal'
 import { ConcertEdit } from '@/components/forms/concertEdit/ConcertEdit'
 import { format } from 'date-fns'
 import { useI18n } from '@/locales/client'
@@ -46,9 +47,11 @@ export const useConcertSearch = (data?: Concert[]) => {
 									bandId={bandId}
 									tourManagerId={tourManagerId}
 								/>
-								<Button type='button' buttonStyle='warning'>
-									{t('forms.delete')}
-								</Button>
+								<ConcertDeleteModal id={id}>
+									<Button type='button' buttonStyle='warning'>
+										{t('forms.delete')}
+									</Button>
+								</ConcertDeleteModal>
 							</ConcertContentWrapper>
 						),
 					},

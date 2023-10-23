@@ -4,7 +4,11 @@ import {
   ConcertGetResponse,
   NewConcertDTO,
 } from './concerts.dto'
-import { ConflictException, Injectable } from '@nestjs/common'
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common'
 
 import { PrismaService } from '../../src/prisma/prisma.service'
 import { v4 as uuid } from 'uuid'
@@ -116,6 +120,16 @@ export class ConcertsService {
         tourManagerId,
       },
     })
+  }
+
+  async deleteConcert(id: string): Promise<Concert> | null {
+    const concert = await this.prisma.concert.findUnique({ where: { id } })
+
+    if (!concert) {
+      throw new NotFoundException({ message: `Concert not found` })
+    }
+
+    return this.prisma.concert.delete({ where: { id } })
   }
 
   async preventDuplicates({

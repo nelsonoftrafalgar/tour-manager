@@ -35,6 +35,7 @@ export default {
 			band: 'Band',
 			tourManager: 'Tour manager',
 		},
+		delete_concert: 'Delete concert',
 	},
 	forms: {
 		required: 'This field is required',
@@ -44,6 +45,7 @@ export default {
 		delete: 'Delete',
 		cancel: 'Cancel',
 		confirm_delete: 'Do you want to delete',
+		confirm_delete_concert: 'Do you want to delete concert?',
 		date_placeholder: 'Pick date',
 	},
 } as const

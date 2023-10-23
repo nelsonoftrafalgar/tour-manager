@@ -1,4 +1,9 @@
-import { ApiProperty, ApiPropertyOptional, OmitType } from '@nestjs/swagger'
+import {
+  ApiProperty,
+  ApiPropertyOptional,
+  OmitType,
+  PickType,
+} from '@nestjs/swagger'
 import {
   IsDateString,
   IsString,
@@ -83,3 +88,4 @@ export class ConcertDTO {
 }
 
 export class NewConcertDTO extends OmitType(ConcertDTO, ['id']) {}
+export class ConcertIdDTO extends PickType(ConcertDTO, ['id']) {}
