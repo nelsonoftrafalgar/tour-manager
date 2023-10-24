@@ -10,7 +10,7 @@ on:
 
 jobs:
  build:
-  runs-on: ubuntu-latest
+  runs-on: ubuntu-22.04
 
   defaults:
    run:
@@ -18,7 +18,7 @@ jobs:
 
   steps:
    - name: Checkout code
-     uses: actions/checkout@v2
+     uses: actions/checkout@v4
 
    - name: Set up Node.js
      uses: actions/setup-node@v2
@@ -38,4 +38,4 @@ jobs:
      run: yarn type-check
 
    - name: Run Cypress Tests
-     run: yarn cypress:gh-actions
+     run: yarn cypress:run
