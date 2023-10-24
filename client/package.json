@@ -9,6 +9,7 @@
     "lint": "next lint",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
+    "cypress:gh-actions": "xvfb-run cypress run --headed --browser chrome --spec 'cypress/e2e/**'",
     "type-check": "tsc --noEmit --skipLibCheck --incremental false",
     "prepare": "cd .. && husky install client/.husky",
     "eslint": "eslint --fix '**/*.{ts,tsx}'"

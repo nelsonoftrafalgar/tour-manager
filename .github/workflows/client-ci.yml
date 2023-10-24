@@ -6,6 +6,7 @@ on:
    - master
   paths:
    - 'client/**'
+ workflow_dispatch:
 
 jobs:
  build:
@@ -37,4 +38,4 @@ jobs:
      run: yarn type-check
 
    - name: Run Cypress Tests
-     run: yarn cypress:run
+     run: yarn cypress:gh-actions

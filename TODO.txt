@@ -1,4 +1,3 @@
 memoize hooks reduce data
 e2e test GET error handling
-refactor concerts api
-concert e2e tests client and server
+concert e2e tests client 
