@@ -10,7 +10,7 @@ on:
 
 jobs:
  build:
-  runs-on: ubuntu-22.04
+  runs-on: ubuntu-latest
 
   defaults:
    run:
@@ -32,15 +32,10 @@ jobs:
      run: yarn run dev &
 
    - name: Wait for Next.js to start
-     run: sleep 10s
+     run: sleep 5s
 
    - name: Run TypeScript Type Check
      run: yarn type-check
 
    - name: Run Cypress Tests
-     uses: cypress-io/github-action@v6
-     with: 
-      project: ./client
-      browser: firefox
-      start: yarn dev
-      wait-on: "http://localhost:3000"
+     run: yarn cypress:run

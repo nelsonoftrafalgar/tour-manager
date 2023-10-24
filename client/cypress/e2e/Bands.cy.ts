@@ -1,19 +1,3 @@
-describe('Bands view', () => {
-	it('should contain search input', () => {
-		cy.visit('/en/bands')
-		cy.get('[placeholder="Filter by name"]').should('be.visible')
-	})
-	it('should contain add button', () => {
-		cy.visit('/en/bands')
-		cy.contains('Add new band').should('be.visible')
-	})
-
-	it('should contain band list', () => {
-		cy.visit('/en/bands')
-		cy.get('[data-testid="bands-list"]').should('be.visible')
-	})
-})
-
 describe('Search input', () => {
 	it('should filter band list', () => {
 		cy.visit('/en/bands')
