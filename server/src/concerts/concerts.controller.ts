@@ -47,17 +47,33 @@ export class ConcertsController {
   }
 
   @Post()
-  @ApiConflictResponse({ description: 'Concert already exists in DB' })
   @ApiCreatedResponse({ type: [Concert], description: 'Add new concert' })
-  createConcert(@Body() data: NewConcertDTO) {
-    return this.concertService.createConcert(data)
+  @ApiConflictResponse({ description: 'Concert already exists in DB' })
+  async createConcert(@Body() data: NewConcertDTO, @Res() res: Response) {
+    try {
+      const concert = await this.concertService.createConcert(data)
+      res.status(HttpStatus.CREATED).json({
+        message: 'Concert has been successfully created',
+        data: concert,
+      })
+    } catch ({ message }) {
+      res.status(HttpStatus.CONFLICT).json({ message })
+    }
   }
 
   @Put()
-  @ApiConflictResponse({ description: 'Concert already exists in DB' })
   @ApiOkResponse({ type: [Concert], description: 'Edit existing concert' })
-  updateConcert(@Body() data: ConcertDTO) {
-    return this.concertService.updateConcert(data)
+  @ApiConflictResponse({ description: 'Concert already exists in DB' })
+  async updateConcert(@Body() data: ConcertDTO, @Res() res: Response) {
+    try {
+      const concert = await this.concertService.updateConcert(data)
+      res.status(HttpStatus.OK).json({
+        message: 'Concert has been successfully updated',
+        data: concert,
+      })
+    } catch ({ message }) {
+      res.status(HttpStatus.CONFLICT).json({ message })
+    }
   }
 
   @Delete(':id')

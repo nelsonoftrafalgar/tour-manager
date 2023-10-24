@@ -81,7 +81,10 @@ describe('ConcertsController (e2e)', () => {
         tourManagerId: MOCK_TOUR_MANAGER_ID,
       })
       .expect(201)
-      .expect(mockConcertService.createConcert())
+      .expect({
+        message: 'Concert has been successfully created',
+        data: mockConcertService.createConcert(),
+      })
   })
 
   it('should validate new concert data', async () => {
@@ -137,7 +140,10 @@ describe('ConcertsController (e2e)', () => {
         tourManagerId: MOCK_TOUR_MANAGER_ID,
       })
       .expect(200)
-      .expect(mockConcertService.updateConcert())
+      .expect({
+        message: 'Concert has been successfully updated',
+        data: mockConcertService.updateConcert(),
+      })
   })
 
   it('should validate updated concert data', async () => {

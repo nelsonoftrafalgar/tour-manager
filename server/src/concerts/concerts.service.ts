@@ -148,7 +148,7 @@ export class ConcertsService {
     })
 
     if (duplicate.length > 0) {
-      throw new ConflictException()
+      throw new ConflictException({ message: 'Concert already exists' })
     }
   }
 }

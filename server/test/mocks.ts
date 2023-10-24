@@ -41,6 +41,7 @@ export const mockConcertService = {
     bandId: MOCK_BAND_ID,
     tourManagerId: MOCK_TOUR_MANAGER_ID,
   }),
+  deleteConcert: () => ({}),
 }
 
 export const mockSalaryService = {
