@@ -31,7 +31,7 @@ export const Select: FC<SelectProps> = ({
 				onValueChange={onChange}
 				onOpenChange={setOpen}
 			>
-				<SelectTrigger $open={open}>
+				<SelectTrigger data-cy='select-trigger' $open={open}>
 					<Component.Value placeholder={placeholder} />
 					<Component.Icon>
 						<SelectIcon />

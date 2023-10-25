@@ -17,8 +17,8 @@ const DatePickerComponent: FC<DatePickerProps> = ({
 	const t = useI18n()
 	const selected = value ? new Date(value) : null
 
-	const handleDateChange = (date: Date) => {
-		onChange(date.toISOString())
+	const handleDateChange = (date: Date | null) => {
+		onChange(date?.toISOString())
 	}
 
 	return (
