@@ -1,3 +1,0 @@
-memoize hooks reduce data
-e2e test GET error handling
-concert e2e tests client 

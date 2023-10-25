@@ -257,3 +257,14 @@ describe('Tour managers should propelry display error toast', () => {
 		cy.contains('.Toastify__toast-body', 'Tour manager already exists')
 	})
 })
+
+describe('Tour managers should handle error', () => {
+	it('when GET returns 404', () => {
+		cy.visit('/en/tour-managers')
+		cy.intercept('GET', 'http://localhost:8000/api/tour_managers', {
+			statusCode: 404,
+			body: { error: 'Not Found' },
+		})
+		cy.contains('.Toastify__toast-body', 'Not Found')
+	})
+})

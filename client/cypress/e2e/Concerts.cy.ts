@@ -339,7 +339,7 @@ describe('Concert create form', () => {
 })
 
 describe('Concert delete modal', () => {
-	it.only('should delete concert', () => {
+	it('should delete concert', () => {
 		cy.visit('/en/concerts')
 		cy
 			.intercept('GET', 'http://localhost:8000/api/concerts', {
@@ -410,5 +410,158 @@ describe('Concert delete modal', () => {
 		cy.wait('@getConcerts2')
 		cy.contains('Delete concert').should('not.exist')
 		cy.contains('Place1').should('not.exist')
+	})
+})
+
+describe('Concert should properly display error toast', () => {
+	beforeEach(() => {
+		cy.visit('/en/concerts')
+		cy
+			.intercept('GET', 'http://localhost:8000/api/concerts', {
+				statusCode: 200,
+				body: [
+					{
+						id: '1',
+						place: 'Place1',
+						date: '2020-05-06T17:30:05.519Z',
+						band: { name: 'Band1', id: '1' },
+						tourManager: { name: 'Tour manager1', id: '1' },
+					},
+				],
+			})
+			.as('getConcerts')
+		cy.wait('@getConcerts')
+		cy
+			.intercept('GET', 'http://localhost:8000/api/bands', {
+				statusCode: 200,
+				body: [
+					{ id: '1', name: 'Band1', frontMan: 'First frontman' },
+					{ id: '2', name: 'Band2', frontMan: 'Second frontman' },
+				],
+			})
+			.as('getBands')
+		cy
+			.intercept('GET', 'http://localhost:8000/api/tour_managers', {
+				statusCode: 200,
+				body: [
+					{ id: '1', name: 'Tour manager1' },
+					{ id: '2', name: 'Tour manager2' },
+				],
+			})
+			.as('getTourManagers')
+		cy.contains('Place1').click()
+		cy.wait('@getBands')
+		cy.wait('@getTourManagers')
+	})
+	it('when DELETE returns 404', () => {
+		cy.contains('Delete').click()
+		cy
+			.intercept('DELETE', 'http://localhost:8000/api/concerts/1', {
+				statusCode: 404,
+				body: { message: 'Concert not found' },
+			})
+			.as('mockDELETE')
+		cy.get('button:contains("Delete"):last').click()
+		cy.contains('.Toastify__toast-body', 'Concert not found')
+	})
+	it('when DELETE returns 400', () => {
+		cy.contains('Delete').click()
+		cy
+			.intercept('DELETE', 'http://localhost:8000/api/concerts/1', {
+				statusCode: 404,
+				body: { message: 'Bad Request' },
+			})
+			.as('mockDELETE')
+		cy.get('button:contains("Delete"):last').click()
+		cy.contains('.Toastify__toast-body', 'Bad Request')
+	})
+	it('when PUT returns 400', () => {
+		cy.get('[placeholder="Concert place"]').clear().type('Place')
+		cy
+			.intercept('PUT', 'http://localhost:8000/api/concerts', {
+				statusCode: 400,
+				body: { error: 'Bad Request' },
+			})
+			.as('createConcert')
+		cy.contains('Save').click()
+		cy.contains('.Toastify__toast-body', 'Bad Request')
+	})
+	it('when PUT returns 409', () => {
+		cy.get('[placeholder="Concert place"]').clear().type('Place')
+		cy
+			.intercept('PUT', 'http://localhost:8000/api/concerts', {
+				statusCode: 409,
+				body: { message: 'Concert already exists' },
+			})
+			.as('createConcert')
+		cy.contains('Save').click()
+		cy.contains('.Toastify__toast-body', 'Concert already exists')
+	})
+	it('when POST returns 400', () => {
+		cy.visit('/en/concerts')
+		cy.contains('Add new concert').click()
+		cy.get('[placeholder="Concert place"]').type('Place')
+		cy.get('[placeholder="Pick date"]').type('01/01/2020')
+		cy
+			.get('[data-cy="select-trigger"]')
+			.first()
+			.click()
+			.siblings()
+			.last()
+			.select('Band2', { force: true })
+		cy
+			.get('[data-cy="select-trigger"]')
+			.last()
+			.click()
+			.siblings()
+			.last()
+			.select('Tour manager2', { force: true })
+		cy
+			.intercept('POST', 'http://localhost:8000/api/concerts', {
+				statusCode: 400,
+				body: { error: 'Bad Request' },
+			})
+			.as('mockPOST')
+		cy.contains(/^Add$/).click()
+		cy.contains('.Toastify__toast-body', 'Bad Request')
+	})
+	it('when POST returns 409', () => {
+		cy.visit('/en/concerts')
+		cy.contains('Add new concert').click()
+		cy.get('[placeholder="Concert place"]').type('Place')
+		cy.get('[placeholder="Pick date"]').type('01/01/2020')
+		cy
+			.get('[data-cy="select-trigger"]')
+			.first()
+			.click()
+			.siblings()
+			.last()
+			.select('Band2', { force: true })
+		cy
+			.get('[data-cy="select-trigger"]')
+			.last()
+			.click()
+			.siblings()
+			.last()
+			.select('Tour manager2', { force: true })
+		cy
+			.intercept('POST', 'http://localhost:8000/api/concerts', {
+				statusCode: 409,
+				body: { message: 'Concert already exists' },
+			})
+			.as('mockPOST')
+		cy.contains(/^Add$/).click()
+		cy.contains('.Toastify__toast-body', 'Concert already exists')
+	})
+})
+
+describe('Concerts should handle error', () => {
+	it('when GET returns 404', () => {
+		cy.visit('/en/concerts')
+		cy.intercept('GET', 'http://localhost:8000/api/concerts', {
+			statusCode: 404,
+			body: { error: 'Not Found' },
+		})
+		cy.contains('.Toastify__toast-body', 'Not Found')
 	})
 })

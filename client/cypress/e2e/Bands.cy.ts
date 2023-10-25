@@ -375,3 +375,14 @@ describe('Band should propelry display error toast', () => {
 		cy.contains('.Toastify__toast-body', 'Band already exists')
 	})
 })
+
+describe('Bands should handle error', () => {
+	it('when GET returns 404', () => {
+		cy.visit('/en/bands')
+		cy.intercept('GET', 'http://localhost:8000/api/bands', {
+			statusCode: 404,
+			body: { error: 'Not Found' },
+		})
+		cy.contains('.Toastify__toast-body', 'Not Found')
+	})
+})
