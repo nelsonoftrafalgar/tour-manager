@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Post, Put, Query } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Post, Put } from '@nestjs/common'
 import {
   ApiConflictResponse,
   ApiCreatedResponse,
@@ -9,7 +9,6 @@ import {
   NewSalaryDTO,
   Salary,
   SalaryDTO,
-  SalaryReportParamsDTO,
 } from './salaries.dto'
 import { SalariesService } from './salaries.service'
 
@@ -18,10 +17,16 @@ export class SalariesController {
   constructor(private readonly salariesService: SalariesService) {}
 
   @Get()
-  @ApiOkResponse({ type: [Salary], description: 'Generate report' })
-  getReport(@Query() query: SalaryReportParamsDTO) {
-    return this.salariesService.getReport(query)
+  @ApiOkResponse({ type: [Salary], description: 'Get all salaries' })
+  getSalaries() {
+    return this.salariesService.getSalaries()
   }
+
+  // @Get()
+  // @ApiOkResponse({ type: [Salary], description: 'Generate report' })
+  // getReport(@Query() query: SalaryReportParamsDTO) {
+  //   return this.salariesService.getReport(query)
+  // }
 
   @Post()
   @ApiCreatedResponse({ type: [Salary], description: 'Add new salary' })

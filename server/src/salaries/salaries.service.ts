@@ -3,6 +3,7 @@ import {
   NewSalaryDTO,
   Salary,
   SalaryDTO,
+  SalaryGetResponse,
   SalaryReport,
   SalaryReportParamsDTO,
 } from './salaries.dto'
@@ -14,14 +15,48 @@ import { v4 as uuid } from 'uuid'
 export class SalariesService {
   constructor(private prisma: PrismaService) {}
 
+  async getSalaries(): Promise<SalaryGetResponse[]> {
+    return this.prisma.salary.findMany({
+      select: {
+        id: true,
+        amount: true,
+        comment: true,
+        band: {
+          select: {
+            name: true,
+            id: true,
+          },
+        },
+        tourManager: {
+          select: {
+            name: true,
+            id: true,
+          },
+        },
+        concert: {
+          select: {
+            date: true,
+            place: true,
+            id: true,
+          },
+        },
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+      take: 7,
+    })
+  }
+
   async createSalary(data: NewSalaryDTO): Promise<Salary> {
-    const { amount, bandId, tourManagerId, concertId } = data
+    const { amount, bandId, tourManagerId, concertId, comment } = data
     await this.preventDuplicates(data)
 
     return this.prisma.salary.create({
       data: {
         id: uuid(),
         amount,
+        comment,
         bandId,
         tourManagerId,
         concertId,

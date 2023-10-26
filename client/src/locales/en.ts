@@ -7,6 +7,7 @@ export default {
 		bands: 'Bands',
 		tour_managers: 'Tour Managers',
 		concerts: 'Concerts',
+		salaries: 'Salaries',
 	},
 	bands: {
 		search_placeholder: 'Filter by name',
@@ -36,6 +37,17 @@ export default {
 			tourManager: 'Tour manager',
 		},
 		delete_concert: 'Delete concert',
+	},
+	salaries: {
+		header: {
+			date: 'Date',
+			tourManager: 'Tour manager',
+			concert: 'Concert',
+			band: 'Band',
+			amount: 'Amount',
+		},
+		comment_label: 'Comment',
+		comment_placeholder: 'Add comment',
 	},
 	forms: {
 		required: 'This field is required',

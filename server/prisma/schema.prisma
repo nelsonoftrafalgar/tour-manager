@@ -43,6 +43,7 @@ model Concert {
 model Salary {
   id            String      @id @default(uuid())
   amount        String
+  comment       String
   band          Band        @relation(references: [id], fields: [bandId])
   tourManager   TourManager @relation(references: [id], fields: [tourManagerId])
   concert       Concert     @relation(references: [id], fields: [concertId])

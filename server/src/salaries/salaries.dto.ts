@@ -51,6 +51,12 @@ export class SalaryDTO {
   amount: string
 
   @ApiProperty()
+  @IsString()
+  @MaxLength(250)
+  @Matches(WHITESPACE_CONSTRAIN)
+  comment: string
+
+  @ApiProperty()
   @IsUUID()
   bandId: string
 
@@ -103,5 +109,32 @@ export class SalaryReport {
   @ApiProperty()
   concert: {
     place: string
+  }
+}
+
+export class SalaryGetResponse {
+  @ApiProperty()
+  id: string
+
+  @ApiProperty()
+  amount: string
+
+  @ApiProperty()
+  band: {
+    name: string
+    id: string
+  }
+
+  @ApiProperty()
+  tourManager: {
+    name: string
+    id: string
+  }
+
+  @ApiProperty()
+  concert: {
+    place: string
+    date: string
+    id: string
   }
 }

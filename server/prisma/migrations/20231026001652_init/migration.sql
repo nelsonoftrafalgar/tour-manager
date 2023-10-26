@@ -36,6 +36,7 @@ CREATE TABLE "Concert" (
 CREATE TABLE "Salary" (
     "id" TEXT NOT NULL,
     "amount" TEXT NOT NULL,
+    "comment" TEXT NOT NULL,
     "bandId" TEXT NOT NULL,
     "tourManagerId" TEXT NOT NULL,
     "concertId" TEXT NOT NULL,

@@ -25,6 +25,9 @@ const Navigation = () => {
 			<StyledLink $active={pathName === ROUTES.concerts} href={ROUTES.concerts}>
 				{t('routes.concerts')}
 			</StyledLink>
+			<StyledLink $active={pathName === ROUTES.salaries} href={ROUTES.salaries}>
+				{t('routes.salaries')}
+			</StyledLink>
 		</Header>
 	)
 }
