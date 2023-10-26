@@ -4,6 +4,7 @@ export interface SelectProps {
 	onChange: (value: string) => void
 	options: SelectOption[]
 	label?: string
+	errorMessage?: string
 }
 
 interface SelectOption {

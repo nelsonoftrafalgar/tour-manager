@@ -10,6 +10,18 @@ export const SalaryListHeader = styled.ul`
 	border-radius: ${({ theme }) => theme.borderRadius}px;
 `
 
+export const SalaryBoxWrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+`
+
+export const CreateSalaryHeader = styled.h1`
+	font-weight: ${({ theme }) => theme.fonts.weight.normal};
+	font-size: ${({ theme }) => theme.fonts.size.l}px;
+	margin-bottom: ${({ theme }) => theme.gridUnit * 6}px;
+`
+
 export const SalaryListHeaderItem = styled.li`
 	width: 200px;
 `

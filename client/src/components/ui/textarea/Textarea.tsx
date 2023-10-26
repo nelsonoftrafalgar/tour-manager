@@ -5,6 +5,7 @@ import {
 	ErrorMessage,
 	StyledLabel,
 	StyledTextarea,
+	TextAreaWrapper,
 } from './styles'
 
 import { FC } from 'react'
@@ -20,20 +21,18 @@ export const Textarea: FC<TextareaProps> = ({
 	onChange,
 }) => {
 	return (
-		<>
-			<StyledLabel htmlFor={label}>
-				{label}
-				<StyledTextarea
-					value={value}
-					$error={!!errorMessage}
-					placeholder={placeholder}
-					onChange={onChange}
-				/>
-				<CharCounter>
-					{value.length}/{MAX_CHARACTER_COUNT}
-				</CharCounter>
-			</StyledLabel>
+		<TextAreaWrapper>
+			<StyledLabel htmlFor={label}>{label}</StyledLabel>
+			<StyledTextarea
+				value={value}
+				$error={!!errorMessage}
+				placeholder={placeholder}
+				onChange={onChange}
+			/>
+			<CharCounter>
+				{value.length}/{MAX_CHARACTER_COUNT}
+			</CharCounter>
 			{errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
-		</>
+		</TextAreaWrapper>
 	)
 }

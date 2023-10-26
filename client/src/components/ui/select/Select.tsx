@@ -2,14 +2,16 @@
 
 import * as Component from '@radix-ui/react-select'
 
-import { FC, Ref, forwardRef, useState } from 'react'
 import {
+	ErrorMessage,
 	SelectContent,
 	SelectIcon,
 	SelectItem,
 	SelectTrigger,
+	SelectWrapper,
 	StyledLabel,
 } from './styles'
+import { FC, Ref, forwardRef, useState } from 'react'
 import { SelectOptionProps, SelectProps } from './types'
 
 import { CheckIcon } from '@radix-ui/react-icons'
@@ -20,18 +22,23 @@ export const Select: FC<SelectProps> = ({
 	onChange,
 	options,
 	label,
+	errorMessage,
 }) => {
 	const [open, setOpen] = useState(false)
 
 	return (
-		<div>
-			{label && <StyledLabel htmlFor={label}>{label}</StyledLabel>}
+		<SelectWrapper>
+			<StyledLabel htmlFor={label}>{label}</StyledLabel>
 			<Component.Root
 				value={value}
 				onValueChange={onChange}
 				onOpenChange={setOpen}
 			>
-				<SelectTrigger data-cy='select-trigger' $open={open}>
+				<SelectTrigger
+					$error={!!errorMessage}
+					data-cy='select-trigger'
+					$open={open}
+				>
 					<Component.Value placeholder={placeholder} />
 					<Component.Icon>
 						<SelectIcon />
@@ -47,7 +54,8 @@ export const Select: FC<SelectProps> = ({
 					</Component.Viewport>
 				</SelectContent>
 			</Component.Root>
-		</div>
+			{errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+		</SelectWrapper>
 	)
 }
 

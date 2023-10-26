@@ -7,8 +7,13 @@ import styled, { css } from 'styled-components'
 import { ChevronDownIcon } from '@radix-ui/react-icons'
 import { Label } from '@radix-ui/react-label'
 
-export const SelectTrigger = styled(Select.Trigger)<{ $open: boolean }>`
-	margin-bottom: 25px;
+interface SelectTriggerProps {
+	$open: boolean
+	$error?: boolean
+}
+
+export const SelectTrigger = styled(Select.Trigger)<SelectTriggerProps>`
+	margin-bottom: ${({ $error }) => ($error ? 0 : 25)}px;
 	padding: ${({ theme }) => theme.gridUnit * 2.5}px;
 	font-size: ${({ theme }) => theme.fonts.size.xs}px;
 	font-weight: ${({ theme }) => theme.fonts.weight.bold};
@@ -47,6 +52,7 @@ export const SelectContent = styled(Select.Content)`
 	border-top: 0;
 	height: 100px;
 	width: 200px;
+	z-index: 10;
 `
 
 export const SelectItem = styled(Select.Item)`
@@ -70,4 +76,17 @@ export const StyledLabel = styled(Label)`
 	font-weight: ${({ theme }) => theme.fonts.weight.bold};
 	display: block;
 	margin-bottom: ${({ theme }) => theme.gridUnit * 2.5}px;
+`
+
+export const ErrorMessage = styled.span`
+	color: ${({ theme }) => theme.colors.secondary.strawberry};
+	font-size: ${({ theme }) => theme.fonts.size.xs}px;
+	margin-left: ${({ theme }) => theme.gridUnit * 3}px;
+	display: inline-block;
+	margin-top: ${({ theme }) => theme.gridUnit * 2.5}px;
+`
+
+export const SelectWrapper = styled.div`
+	display: flex;
+	flex-direction: column;
 `

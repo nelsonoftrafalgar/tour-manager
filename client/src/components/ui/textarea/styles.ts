@@ -8,6 +8,11 @@ interface StyledTextareaProps {
 	$error?: boolean
 }
 
+export const TextAreaWrapper = styled.div`
+	flex: 1;
+	position: relative;
+`
+
 export const StyledTextarea = styled(TextArea)<StyledTextareaProps>`
 	textarea {
 		border: 2px solid ${({ theme }) => theme.colors.border};
@@ -16,6 +21,7 @@ export const StyledTextarea = styled(TextArea)<StyledTextareaProps>`
 		margin-top: ${({ theme }) => theme.gridUnit * 2.5}px;
 		margin-bottom: ${({ theme, $error }) => (!$error ? theme.gridUnit * 5 : 0)}px;
 		resize: none;
+		width: 100%;
 		font-size: ${({ theme }) => theme.fonts.size.xs}px;
 		&::placeholder {
 			color: ${({ theme }) => theme.colors.placeholder};
@@ -38,7 +44,6 @@ export const StyledLabel = styled(Label)`
 	color: ${({ theme }) => theme.colors.primary.charchoal};
 	font-size: ${({ theme }) => theme.fonts.size.xs}px;
 	font-weight: ${({ theme }) => theme.fonts.weight.bold};
-	position: relative;
 `
 
 export const ErrorMessage = styled.span`
@@ -53,6 +58,6 @@ export const CharCounter = styled.span`
 	color: ${({ theme }) => theme.colors.border};
 	font-size: ${({ theme }) => theme.fonts.size.xxs}px;
 	position: absolute;
-	top: 80px;
+	top: 85px;
 	left: 12px;
 `

@@ -66,6 +66,7 @@ export const ConcertCreate: FC<ConcertCreateProps> = ({ handleModalClose }) => {
 						placeholder={t('concerts.select_band_placeholder')}
 						label={t('concerts.select_band_label')}
 						options={bands.map(({ name, id }) => ({ label: name, value: id }))}
+						errorMessage={errors.bandId?.message}
 					/>
 				)}
 			/>
@@ -81,6 +82,7 @@ export const ConcertCreate: FC<ConcertCreateProps> = ({ handleModalClose }) => {
 							label: name,
 							value: id,
 						}))}
+						errorMessage={errors.tourManagerId?.message}
 					/>
 				)}
 			/>

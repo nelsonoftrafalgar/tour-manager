@@ -33,7 +33,7 @@ export const theme = {
 			xl: 24,
 			xxl: 30,
 		},
-		weight: { bold: 600 },
+		weight: { bold: 600, normal: 400 },
 	},
 	gridUnit: 4,
 	borderRadius: 8,

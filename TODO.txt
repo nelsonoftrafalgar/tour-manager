@@ -1,2 +1,3 @@
 add ellipsis to accordion header items
 fix server tests
+fix console errors
