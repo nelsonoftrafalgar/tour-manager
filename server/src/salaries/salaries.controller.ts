@@ -1,4 +1,14 @@
-import { Body, Controller, Delete, Get, Post, Put } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  HttpStatus,
+  Post,
+  Put,
+  Res,
+} from '@nestjs/common'
 import {
   ApiConflictResponse,
   ApiCreatedResponse,
@@ -11,6 +21,7 @@ import {
   SalaryDTO,
 } from './salaries.dto'
 import { SalariesService } from './salaries.service'
+import { Response } from 'express'
 
 @Controller('salaries')
 export class SalariesController {
@@ -35,10 +46,17 @@ export class SalariesController {
     return this.salariesService.createSalary(data)
   }
 
-  @Delete()
+  @Delete(':id')
   @ApiOkResponse({ type: Number, description: 'Delete salary' })
-  deleteSalary(@Body() { id }: DeleteSalaryDTO) {
-    return this.salariesService.deleteSalary(id)
+  async deleteSalary(@Param() { id }: DeleteSalaryDTO, @Res() res: Response) {
+    try {
+      await this.salariesService.deleteSalary(id)
+      res
+        .status(HttpStatus.OK)
+        .json({ message: `Salary has been successfully deleted` })
+    } catch ({ message }) {
+      res.status(HttpStatus.NOT_FOUND).json({ message })
+    }
   }
 
   @Put()

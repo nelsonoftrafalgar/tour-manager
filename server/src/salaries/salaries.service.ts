@@ -1,4 +1,8 @@
-import { ConflictException, Injectable } from '@nestjs/common'
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common'
 import {
   NewSalaryDTO,
   Salary,
@@ -44,7 +48,6 @@ export class SalariesService {
       orderBy: {
         createdAt: 'desc',
       },
-      take: 7,
     })
   }
 
@@ -90,9 +93,13 @@ export class SalariesService {
   }
 
   async deleteSalary(id: string) {
-    this.prisma.salary.delete({
-      where: { id },
-    })
+    const salary = await this.prisma.salary.findUnique({ where: { id } })
+
+    if (!salary) {
+      throw new NotFoundException({ message: `Salary not found` })
+    }
+
+    return this.prisma.salary.delete({ where: { id } })
   }
 
   async updateSalary(data: SalaryDTO): Promise<Salary> {

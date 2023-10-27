@@ -43,7 +43,10 @@ export const SalaryDetailsItem = styled.li<{ $amount?: boolean }>`
 export const SalaryContentWrapper = styled.div`
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
+	justify-content: flex-end;
+	flex-wrap: wrap;
+	row-gap: 20px;
+	column-gap: 40px;
 `
 export const SalaryComment = styled.p`
 	border-radius: ${({ theme }) => theme.borderRadius}px;

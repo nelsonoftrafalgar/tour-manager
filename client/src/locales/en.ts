@@ -55,6 +55,7 @@ export default {
 		amount_label: 'Amount',
 		comment_label: 'Comment',
 		comment_placeholder: 'Add comment',
+		delete_salary: 'Delete salary',
 	},
 	forms: {
 		required: 'This field is required',
@@ -64,6 +65,7 @@ export default {
 		create: 'Create',
 		delete: 'Delete',
 		cancel: 'Cancel',
+		edit: 'Edit',
 		confirm_delete: 'Do you want to delete',
 		confirm_delete_concert: 'Do you want to delete concert?',
 		date_placeholder: 'Pick date',

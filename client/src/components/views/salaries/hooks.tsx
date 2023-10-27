@@ -5,10 +5,15 @@ import {
 	SalaryDetailsList,
 } from './styles'
 
+import { Button } from '@/components/ui/button/Button'
 import { Salary } from '@/api/queries/useSalariesQuery'
+import { SalaryDeleteModal } from '@/components/modals/salaryDeleteModal/SalaryDeleteModal'
 import { format } from 'date-fns'
+import { useI18n } from '@/locales/client'
 
 export const useSalaries = (data?: Salary[]) => {
+	const t = useI18n()
+
 	const salaries =
 		data?.map(
 			({
@@ -34,9 +39,19 @@ export const useSalaries = (data?: Salary[]) => {
 						</SalaryDetailsList>
 					),
 					content: (
-						<SalaryContentWrapper>
-							<SalaryComment>{comment}</SalaryComment>
-						</SalaryContentWrapper>
+						<>
+							<SalaryContentWrapper>
+								<SalaryComment>{comment}</SalaryComment>
+								<Button type='button' buttonStyle='secondary'>
+									{t('forms.edit')}
+								</Button>
+								<SalaryDeleteModal place={place} id={id}>
+									<Button type='button' buttonStyle='warning'>
+										{t('forms.delete')}
+									</Button>
+								</SalaryDeleteModal>
+							</SalaryContentWrapper>
+						</>
 					),
 				}
 			}
