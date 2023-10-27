@@ -16,7 +16,6 @@ export const SelectTrigger = styled(Select.Trigger)<SelectTriggerProps>`
 	margin-bottom: ${({ $error }) => ($error ? 0 : 25)}px;
 	padding: ${({ theme }) => theme.gridUnit * 2.5}px;
 	font-size: ${({ theme }) => theme.fonts.size.xs}px;
-	font-weight: ${({ theme }) => theme.fonts.weight.bold};
 	background-color: ${({ theme }) => theme.colors.primary.white};
 	border: 2px solid ${({ theme }) => theme.colors.border};
 	border-radius: ${({ theme }) => theme.borderRadius}px;

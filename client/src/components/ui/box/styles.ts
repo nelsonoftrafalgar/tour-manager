@@ -8,4 +8,5 @@ export const Box = styled.section`
 	width: 100%;
 	padding: ${({ theme }) => theme.gridUnit * 4}px;
 	box-shadow: ${({ theme }) => theme.boxShadow};
+	margin-bottom: ${({ theme }) => theme.gridUnit * 2.5}px;
 `

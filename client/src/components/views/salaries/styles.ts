@@ -13,7 +13,7 @@ export const SalaryListHeader = styled.ul`
 export const SalaryBoxWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
-	gap: 20px;
+	gap: 10px;
 `
 
 export const CreateSalaryHeader = styled.h1`

@@ -12,8 +12,8 @@ import {
   MaxLength,
 } from 'class-validator'
 
-export const AMOUNT_CONSTRAIN = /^\d+(,\d{1,2})?$/
-export const WHITESPACE_CONSTRAIN = /^[^\s]+(\s+[^\s]+)*$/
+export const AMOUNT_CONSTRAIN = /^\$\d+(\.\d{1,2})?$/
+export const WHITESPACE_CONSTRAIN = /^([^\s]+(\s+[^\s]+)*)?$/
 
 export class Salary {
   @ApiProperty()

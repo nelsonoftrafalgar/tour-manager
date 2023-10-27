@@ -28,7 +28,9 @@ export const useSalaries = (data?: Salary[]) => {
 							<SalaryDetailsItem>{tourManager}</SalaryDetailsItem>
 							<SalaryDetailsItem>{place}</SalaryDetailsItem>
 							<SalaryDetailsItem>{band}</SalaryDetailsItem>
-							<SalaryDetailsItem $amount>$ {amount}</SalaryDetailsItem>
+							<SalaryDetailsItem $amount>
+								{amount.replace('$', '$ ')}
+							</SalaryDetailsItem>
 						</SalaryDetailsList>
 					),
 					content: (

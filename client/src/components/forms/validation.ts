@@ -54,22 +54,21 @@ export const getSalarySchema = (t: ReturnType<typeof useI18n>) =>
 	yup
 		.object({
 			place: yup.string().required(t('forms.required')),
-			bandId: yup.string().required(t('forms.required')),
 			amount: yup
 				.string()
-				.matches(/^[0-9$]+$/, {
+				.matches(/^\$\d+(\.\d{1,2})?$/, {
 					excludeEmptyString: true,
 					message: t('forms.invalid_characters'),
 				})
 				.required(t('forms.required')),
-			date: yup.string().required(t('forms.required')),
 			comment: yup
 				.string()
+				.defined()
+				.strict(true)
 				.max(250)
 				.matches(/^[A-Za-z0-9\s]+$/, {
 					excludeEmptyString: true,
 					message: t('forms.invalid_characters'),
-				})
-				.required(t('forms.required')),
+				}),
 		})
 		.required()
