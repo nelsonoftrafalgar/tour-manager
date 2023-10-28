@@ -1,5 +1,5 @@
 export interface SalaryCreateFormData {
-	place: string
+	concertId: string
 	amount: string
 	comment: string
 }

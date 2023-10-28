@@ -4,3 +4,5 @@ fix console errors
 red border when error in form
 blur after select is selected
 refactor interface DTO names on server
+fix selctedConcertId bug in salary create form
+add trim data

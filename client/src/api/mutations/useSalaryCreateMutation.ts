@@ -5,9 +5,7 @@ import client from '@/api/client'
 interface SalaryCreatePayload {
 	amount: string
 	comment: string
-	bandId: string
 	concertId: string
-	tourManagerId: string
 }
 
 const createSalary = (data: SalaryCreatePayload) =>

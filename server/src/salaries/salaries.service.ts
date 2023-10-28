@@ -4,12 +4,13 @@ import {
   NotFoundException,
 } from '@nestjs/common'
 import {
-  NewSalaryDTO,
   Salary,
-  SalaryDTO,
+  SalaryCreateRequest,
+  SalaryDuplicateCheckParams,
   SalaryGetResponse,
   SalaryReport,
   SalaryReportParamsDTO,
+  SalaryUpdateRequest,
 } from './salaries.dto'
 
 import { PrismaService } from '../../src/prisma/prisma.service'
@@ -51,18 +52,22 @@ export class SalariesService {
     })
   }
 
-  async createSalary(data: NewSalaryDTO): Promise<Salary> {
-    const { amount, bandId, tourManagerId, concertId, comment } = data
-    await this.preventDuplicates(data)
+  async createSalary(data: SalaryCreateRequest) {
+    const { amount, concertId, comment } = data
+    const { bandId, tourManagerId } = await this.prisma.concert.findUnique({
+      where: { id: concertId },
+    })
+
+    await this.preventDuplicates({ ...data, bandId, tourManagerId })
 
     return this.prisma.salary.create({
       data: {
         id: uuid(),
         amount,
         comment,
+        concertId,
         bandId,
         tourManagerId,
-        concertId,
       },
     })
   }
@@ -102,9 +107,19 @@ export class SalariesService {
     return this.prisma.salary.delete({ where: { id } })
   }
 
-  async updateSalary(data: SalaryDTO): Promise<Salary> {
-    const { amount, bandId, concertId, tourManagerId, id } = data
-    await this.preventDuplicates(data)
+  async updateSalary(data: SalaryUpdateRequest): Promise<Salary> {
+    const { amount, concertId, id, comment } = data
+    const { bandId, tourManagerId } = await this.prisma.concert.findUnique({
+      where: { id: concertId },
+    })
+
+    await this.preventDuplicates({
+      comment,
+      amount,
+      concertId,
+      bandId,
+      tourManagerId,
+    })
     return this.prisma.salary.update({
       where: { id },
       data: {
@@ -112,18 +127,20 @@ export class SalariesService {
         bandId,
         concertId,
         tourManagerId,
+        comment,
       },
     })
   }
 
   async preventDuplicates({
+    comment,
     amount,
-    bandId,
     concertId,
+    bandId,
     tourManagerId,
-  }: SalaryDTO | NewSalaryDTO) {
+  }: SalaryDuplicateCheckParams) {
     const duplicates = await this.prisma.salary.findMany({
-      where: { amount, bandId, concertId, tourManagerId },
+      where: { comment, amount, concertId, bandId, tourManagerId },
     })
 
     if (duplicates.length > 0) {

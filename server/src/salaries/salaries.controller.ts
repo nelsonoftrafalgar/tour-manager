@@ -15,10 +15,10 @@ import {
   ApiOkResponse,
 } from '@nestjs/swagger'
 import {
-  DeleteSalaryDTO,
-  NewSalaryDTO,
   Salary,
-  SalaryDTO,
+  SalaryCreateRequest,
+  SalaryDeleteRequest,
+  SalaryUpdateRequest,
 } from './salaries.dto'
 import { SalariesService } from './salaries.service'
 import { Response } from 'express'
@@ -40,15 +40,25 @@ export class SalariesController {
   // }
 
   @Post()
-  @ApiCreatedResponse({ type: [Salary], description: 'Add new salary' })
+  @ApiCreatedResponse({ description: 'Add new salary' })
   @ApiConflictResponse({ description: 'Salary already exists in DB' })
-  createSalary(@Body() data: NewSalaryDTO) {
-    return this.salariesService.createSalary(data)
+  async createSalary(@Body() data: SalaryCreateRequest, @Res() res: Response) {
+    try {
+      await this.salariesService.createSalary(data)
+      res.status(HttpStatus.CREATED).json({
+        message: 'Salary has been successfully created',
+      })
+    } catch ({ message }) {
+      res.status(HttpStatus.CONFLICT).json({ message })
+    }
   }
 
   @Delete(':id')
-  @ApiOkResponse({ type: Number, description: 'Delete salary' })
-  async deleteSalary(@Param() { id }: DeleteSalaryDTO, @Res() res: Response) {
+  @ApiOkResponse({ description: 'Delete salary' })
+  async deleteSalary(
+    @Param() { id }: SalaryDeleteRequest,
+    @Res() res: Response,
+  ) {
     try {
       await this.salariesService.deleteSalary(id)
       res
@@ -60,9 +70,17 @@ export class SalariesController {
   }
 
   @Put()
-  @ApiOkResponse({ type: [Salary], description: 'Edit salary' })
+  @ApiOkResponse({ type: Salary, description: 'Edit salary' })
   @ApiConflictResponse({ description: 'Salary already exists in DB' })
-  updateSalary(@Body() data: SalaryDTO) {
-    return this.salariesService.updateSalary(data)
+  async updateSalary(@Body() data: SalaryUpdateRequest, @Res() res: Response) {
+    try {
+      const salary = await this.salariesService.updateSalary(data)
+      res.status(HttpStatus.OK).json({
+        message: 'Salary has been successfully updated',
+        data: salary,
+      })
+    } catch ({ message }) {
+      res.status(HttpStatus.CONFLICT).json({ message })
+    }
   }
 }

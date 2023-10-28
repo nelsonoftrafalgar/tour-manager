@@ -1,43 +1,46 @@
 import { Controller, useForm } from 'react-hook-form'
+import { SalaryEditFormData, SalaryEditProps } from './types'
 
 import { Amount } from '@/components/ui/amount/Amount'
 import { Button } from '@/components/ui/button/Button'
 import { CommentWrapper } from './styles'
-import { ConcertDetails } from './ConcertDetails'
+import { FC } from 'react'
 import { Form } from '@/components/ui/form/styles'
 import { LoaderIcon } from '@/components/ui/loader/styles'
-import { SalaryCreateFormData } from './types'
 import { Select } from '@/components/ui/select/Select'
 import { Textarea } from '@/components/ui/textarea/Textarea'
 import { getSalarySchema } from '../validation'
 import { useConcertsQuery } from '@/api/queries/useConcertsQuery'
 import { useI18n } from '@/locales/client'
-import { useSalaryCreateMutation } from '@/api/mutations/useSalaryCreateMutation'
+import { useSalaryEditMutation } from '@/api/mutations/useSalaryEditMutation'
 import { yupResolver } from '@hookform/resolvers/yup'
 
-export const SalaryCreate = () => {
+export const SalaryEdit: FC<SalaryEditProps> = ({
+	id,
+	amount,
+	comment,
+	concertId,
+	handleModalClose,
+}) => {
 	const t = useI18n()
 	const { data: concerts } = useConcertsQuery()
 	const {
 		formState: { errors, isSubmitting },
 		control,
 		handleSubmit,
-		watch,
-		reset,
-	} = useForm<SalaryCreateFormData>({
+	} = useForm<SalaryEditFormData>({
 		resolver: yupResolver(getSalarySchema(t)),
-		defaultValues: { amount: '', comment: '', concertId: '' },
+		defaultValues: { amount, comment, concertId },
 	})
-	const mutation = useSalaryCreateMutation(() => reset({}))
+	const mutation = useSalaryEditMutation(handleModalClose)
 
 	if (!concerts) return null
 
-	const selectedConcertId = watch('concertId')
-
-	const onSubmit = (data: SalaryCreateFormData) => {
+	const onSubmit = (data: SalaryEditFormData) => {
 		const { amount, comment, concertId } = data
 
 		mutation.mutate({
+			id,
 			amount,
 			comment,
 			concertId,
@@ -56,7 +59,6 @@ export const SalaryCreate = () => {
 						label={t('salaries.select_concert_label')}
 						options={concerts.map(({ place, id }) => ({ label: place, value: id }))}
 						errorMessage={errors.concertId?.message}
-						key={selectedConcertId}
 					/>
 				)}
 			/>
@@ -72,7 +74,6 @@ export const SalaryCreate = () => {
 				)}
 			/>
 
-			{selectedConcertId && <ConcertDetails concertId={selectedConcertId} />}
 			<CommentWrapper>
 				<Controller
 					name='comment'
@@ -86,9 +87,9 @@ export const SalaryCreate = () => {
 						/>
 					)}
 				/>
-				<Button disabled={isSubmitting} buttonStyle='primary'>
+				<Button disabled={isSubmitting} buttonStyle='secondary'>
 					{isSubmitting && <LoaderIcon />}
-					{t('forms.create')}
+					{t('forms.edit')}
 				</Button>
 			</CommentWrapper>
 		</Form>

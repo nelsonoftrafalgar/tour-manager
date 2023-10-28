@@ -8,6 +8,7 @@ import {
 import { Button } from '@/components/ui/button/Button'
 import { Salary } from '@/api/queries/useSalariesQuery'
 import { SalaryDeleteModal } from '@/components/modals/salaryDeleteModal/SalaryDeleteModal'
+import { SalaryEditModal } from '@/components/modals/salaryEditModal/SalaryEditModal'
 import { format } from 'date-fns'
 import { useI18n } from '@/locales/client'
 
@@ -18,7 +19,7 @@ export const useSalaries = (data?: Salary[]) => {
 		data?.map(
 			({
 				id,
-				concert: { date, place },
+				concert: { date, place, id: concertId },
 				band: { name: band },
 				tourManager: { name: tourManager },
 				amount,
@@ -42,9 +43,16 @@ export const useSalaries = (data?: Salary[]) => {
 						<>
 							<SalaryContentWrapper>
 								<SalaryComment>{comment}</SalaryComment>
-								<Button type='button' buttonStyle='secondary'>
-									{t('forms.edit')}
-								</Button>
+								<SalaryEditModal
+									id={id}
+									comment={comment}
+									amount={amount}
+									concertId={concertId}
+								>
+									<Button type='button' buttonStyle='secondary'>
+										{t('forms.edit')}
+									</Button>
+								</SalaryEditModal>
 								<SalaryDeleteModal place={place} id={id}>
 									<Button type='button' buttonStyle='warning'>
 										{t('forms.delete')}

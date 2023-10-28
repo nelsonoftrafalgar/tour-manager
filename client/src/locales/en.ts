@@ -56,6 +56,7 @@ export default {
 		comment_label: 'Comment',
 		comment_placeholder: 'Add comment',
 		delete_salary: 'Delete salary',
+		edit_salary: 'Edit salary',
 	},
 	forms: {
 		required: 'This field is required',

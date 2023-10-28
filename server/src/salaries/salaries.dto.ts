@@ -1,9 +1,4 @@
-import {
-  ApiProperty,
-  ApiPropertyOptional,
-  OmitType,
-  PickType,
-} from '@nestjs/swagger'
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
 import {
   IsOptional,
   IsString,
@@ -29,48 +24,17 @@ export class Salary {
   amount: string
 
   @ApiProperty()
-  bandId: string
-
-  @ApiProperty()
-  concertId: string
-
-  @ApiProperty()
-  tourManagerId: string
-}
-
-export class SalaryDTO {
-  @ApiProperty()
-  @IsUUID()
-  id: string
-
-  @ApiProperty()
-  @IsString()
-  @MaxLength(13)
-  @Matches(AMOUNT_CONSTRAIN)
-  @Matches(WHITESPACE_CONSTRAIN)
-  amount: string
-
-  @ApiProperty()
-  @IsString()
-  @MaxLength(250)
-  @Matches(WHITESPACE_CONSTRAIN)
   comment: string
 
   @ApiProperty()
-  @IsUUID()
   bandId: string
 
   @ApiProperty()
-  @IsUUID()
   concertId: string
 
   @ApiProperty()
-  @IsUUID()
   tourManagerId: string
 }
-
-export class DeleteSalaryDTO extends PickType(SalaryDTO, ['id']) {}
-export class NewSalaryDTO extends OmitType(SalaryDTO, ['id']) {}
 
 export class SalaryReportParamsDTO {
   @IsOptional()
@@ -120,6 +84,9 @@ export class SalaryGetResponse {
   amount: string
 
   @ApiProperty()
+  comment: string
+
+  @ApiProperty()
   band: {
     name: string
     id: string
@@ -137,4 +104,60 @@ export class SalaryGetResponse {
     date: string
     id: string
   }
+}
+
+export class SalaryCreateRequest {
+  @ApiProperty()
+  @IsString()
+  @MaxLength(13)
+  @Matches(AMOUNT_CONSTRAIN)
+  @Matches(WHITESPACE_CONSTRAIN)
+  amount: string
+
+  @ApiProperty()
+  @IsString()
+  @MaxLength(250)
+  @Matches(WHITESPACE_CONSTRAIN)
+  comment: string
+
+  @ApiProperty()
+  @IsUUID()
+  concertId: string
+}
+
+export class SalaryUpdateRequest {
+  @ApiProperty()
+  @IsUUID()
+  id: string
+
+  @ApiProperty()
+  @IsString()
+  @MaxLength(13)
+  @Matches(AMOUNT_CONSTRAIN)
+  @Matches(WHITESPACE_CONSTRAIN)
+  amount: string
+
+  @ApiProperty()
+  @IsString()
+  @MaxLength(250)
+  @Matches(WHITESPACE_CONSTRAIN)
+  comment: string
+
+  @ApiProperty()
+  @IsUUID()
+  concertId: string
+}
+
+export class SalaryDeleteRequest {
+  @ApiProperty()
+  @IsUUID()
+  id: string
+}
+
+export class SalaryDuplicateCheckParams {
+  comment: string
+  amount: string
+  concertId: string
+  bandId: string
+  tourManagerId: string
 }
