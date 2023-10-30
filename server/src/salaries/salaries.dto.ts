@@ -36,7 +36,10 @@ export class Salary {
   tourManagerId: string
 }
 
-export class SalaryReportParamsDTO {
+export class SalaryGetReportRequest {
+  @ApiProperty()
+  date: string
+
   @IsOptional()
   @ApiPropertyOptional()
   @IsUUID()

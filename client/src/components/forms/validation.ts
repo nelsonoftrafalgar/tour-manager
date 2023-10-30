@@ -77,3 +77,10 @@ export const getSalarySchema = (t: ReturnType<typeof useI18n>) =>
 				}),
 		})
 		.required()
+
+export const getReportSchema = (t: ReturnType<typeof useI18n>) =>
+	yup
+		.object({
+			date: yup.string().required(t('forms.required')),
+		})
+		.required()

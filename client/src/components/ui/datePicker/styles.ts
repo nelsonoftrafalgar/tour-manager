@@ -55,7 +55,8 @@ export const StyledLabel = styled(Label)`
 	color: ${({ theme }) => theme.colors.primary.charchoal};
 	font-size: ${({ theme }) => theme.fonts.size.xs}px;
 	font-weight: ${({ theme }) => theme.fonts.weight.bold};
-	display: block;
+	display: flex;
+	gap: 140px;
 	margin-bottom: ${({ theme }) => theme.gridUnit * 2.5}px;
 `
 

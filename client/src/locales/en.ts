@@ -2,12 +2,15 @@ export default {
 	ui: {
 		amount: 'Amount',
 		date: 'Date',
+		start_date: 'Start date',
+		end_date: 'End Date',
 	},
 	routes: {
 		bands: 'Bands',
 		tour_managers: 'Tour Managers',
 		concerts: 'Concerts',
 		salaries: 'Salaries',
+		reports: 'Reports',
 	},
 	bands: {
 		search_placeholder: 'Filter by name',
@@ -25,8 +28,8 @@ export default {
 		search_placeholder: 'Filter by name',
 		add_new_concert: 'Add new concert',
 		input_place_placeholder: 'Concert place',
-		select_band_placeholder: 'Concert band',
-		select_tourManager_placeholder: 'Concert tour manager',
+		select_band_placeholder: 'Select band',
+		select_tourManager_placeholder: 'Select tour manager',
 		input_place_label: 'Place',
 		select_band_label: 'Band',
 		select_tourManager_label: 'Tour manager',
@@ -57,6 +60,11 @@ export default {
 		comment_placeholder: 'Add comment',
 		delete_salary: 'Delete salary',
 		edit_salary: 'Edit salary',
+	},
+	reports: {
+		select_concert_placeholder: 'Select concert',
+		select_concert_label: 'Concert',
+		create_report: 'Create report',
 	},
 	forms: {
 		required: 'This field is required',

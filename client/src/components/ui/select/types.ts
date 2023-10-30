@@ -1,6 +1,6 @@
 export interface SelectProps {
 	placeholder: string
-	value: string
+	value?: string
 	onChange: (value: string) => void
 	options: SelectOption[]
 	label?: string

@@ -49,7 +49,7 @@ export const SelectContent = styled(Select.Content)`
 	border-top-right-radius: 0;
 	border-top-left-radius: 0;
 	border-top: 0;
-	height: 100px;
+	max-height: 100px;
 	width: 200px;
 	z-index: 10;
 `

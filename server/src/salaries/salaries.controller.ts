@@ -8,6 +8,7 @@ import {
   Post,
   Put,
   Res,
+  Query,
 } from '@nestjs/common'
 import {
   ApiConflictResponse,
@@ -33,11 +34,21 @@ export class SalariesController {
     return this.salariesService.getSalaries()
   }
 
-  // @Get()
-  // @ApiOkResponse({ type: [Salary], description: 'Generate report' })
-  // getReport(@Query() query: SalaryReportParamsDTO) {
-  //   return this.salariesService.getReport(query)
-  // }
+  @Get('report')
+  @ApiOkResponse({ type: [Salary], description: 'Generate report' })
+  getReport(
+    @Query('date') date: string,
+    @Query('bandId') bandId: string,
+    @Query('concertId') concertId: string,
+    @Query('tourManagerId') tourManagerId: string,
+  ) {
+    return this.salariesService.getReport({
+      date,
+      bandId,
+      concertId,
+      tourManagerId,
+    })
+  }
 
   @Post()
   @ApiCreatedResponse({ description: 'Add new salary' })

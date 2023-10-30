@@ -28,6 +28,9 @@ const Navigation = () => {
 			<StyledLink $active={pathName === ROUTES.salaries} href={ROUTES.salaries}>
 				{t('routes.salaries')}
 			</StyledLink>
+			<StyledLink $active={pathName === ROUTES.reports} href={ROUTES.reports}>
+				{t('routes.reports')}
+			</StyledLink>
 		</Header>
 	)
 }

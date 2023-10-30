@@ -7,9 +7,9 @@ import {
   Salary,
   SalaryCreateRequest,
   SalaryDuplicateCheckParams,
+  SalaryGetReportRequest,
   SalaryGetResponse,
   SalaryReport,
-  SalaryReportParamsDTO,
   SalaryUpdateRequest,
 } from './salaries.dto'
 
@@ -72,24 +72,38 @@ export class SalariesService {
     })
   }
 
-  async getReport(query: SalaryReportParamsDTO): Promise<SalaryReport[]> {
-    let where: Record<string, string>
+  async getReport(query: SalaryGetReportRequest): Promise<SalaryReport[]> {
+    let where: Record<string, string | { date: { gte: string; lte: string } }>
 
-    if (query.concertId) {
-      where = { concertId: query.concertId }
+    const { date, concertId, tourManagerId, bandId } = query
+    const [startDate, endDate] = date.split('_')
+
+    if (concertId) {
+      where = { concertId: concertId }
     }
-    if (query.tourManagerId) {
-      where = { tourManagerId: query.tourManagerId }
+    if (tourManagerId) {
+      where = { tourManagerId: tourManagerId }
     }
-    if (query.bandId) {
-      where = { bandId: query.bandId }
+    if (bandId) {
+      where = { bandId: bandId }
+    }
+
+    where = {
+      ...where,
+      concert: {
+        date: {
+          gte: startDate,
+          lte: endDate,
+        },
+      },
     }
 
     return this.prisma.salary.findMany({
       select: {
         id: true,
         amount: true,
-        concert: { select: { place: true } },
+        comment: true,
+        concert: { select: { place: true, date: true } },
         band: { select: { name: true } },
         tourManager: { select: { name: true } },
       },
