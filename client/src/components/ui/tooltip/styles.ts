@@ -27,8 +27,7 @@ export const TooltipContent = styled(Tooltip.Content)`
 	padding: ${({ theme }) => theme.gridUnit * 2}px;
 	font-size: ${({ theme }) => theme.fonts.size.xs}px;
 	background-color: ${({ theme }) => theme.colors.primary.white};
-	box-shadow: hsla(206, 22%, 7%, 0.35) 0px 10px 38px -10px,
-		hsla(206, 22%, 7%, 0.2) 0px 10px 20px -15px;
+	box-shadow: ${({ theme }) => theme.boxShadow};
 	user-select: none;
 	animation-duration: 400ms;
 	animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);

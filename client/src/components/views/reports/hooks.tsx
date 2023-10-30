@@ -8,6 +8,7 @@ import {
 } from './styles'
 
 import { ReportData } from './Report'
+import { Tooltip } from '@/components/ui/tooltip/Tooltip'
 import { format } from 'date-fns'
 import { useEffect } from 'react'
 import { useReportQuery } from '@/api/queries/useReportQuery'
@@ -33,11 +34,23 @@ export const useReport = (reportData: ReportData | null) => {
 				id,
 				header: (
 					<ReportDetailsList>
-						<ReportDetailsItem>{concertDate}</ReportDetailsItem>
-						<ReportDetailsItem>{tourManager}</ReportDetailsItem>
-						<ReportDetailsItem>{place}</ReportDetailsItem>
-						<ReportDetailsItem>{band}</ReportDetailsItem>
-						<ReportDetailsItem $amount>{amount.replace('$', '$ ')}</ReportDetailsItem>
+						<Tooltip title={concertDate}>
+							<ReportDetailsItem>{concertDate}</ReportDetailsItem>
+						</Tooltip>
+						<Tooltip title={tourManager}>
+							<ReportDetailsItem>{tourManager}</ReportDetailsItem>
+						</Tooltip>
+						<Tooltip title={place}>
+							<ReportDetailsItem>{place}</ReportDetailsItem>
+						</Tooltip>
+						<Tooltip title={band}>
+							<ReportDetailsItem>{band}</ReportDetailsItem>
+						</Tooltip>
+						<Tooltip title={amount.replace('$', '$ ')}>
+							<ReportDetailsItem $amount>
+								{amount.replace('$', '$ ')}
+							</ReportDetailsItem>
+						</Tooltip>
 					</ReportDetailsList>
 				),
 				content: (

@@ -1,3 +1,4 @@
+import { ellipsisMixin } from '@/styles/mixins'
 import styled from 'styled-components'
 
 export const ReportDetailsList = styled.ul`
@@ -10,6 +11,7 @@ export const ReportDetailsList = styled.ul`
 export const ReportDetailsItem = styled.li<{ $amount?: boolean }>`
 	${({ theme, $amount }) => $amount && `color: ${theme.colors.primary.orange};`}
 	width: 200px;
+	${ellipsisMixin}
 `
 export const ReportContentWrapper = styled.div`
 	display: flex;

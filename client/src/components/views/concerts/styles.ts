@@ -1,5 +1,6 @@
 'use client'
 
+import { ellipsisMixin } from '@/styles/mixins'
 import styled from 'styled-components'
 
 export const Header = styled.div`
@@ -40,4 +41,5 @@ export const ConcertDetailsList = styled.ul`
 
 export const ConcertDetailsItem = styled.li`
 	width: 200px;
+	${ellipsisMixin}
 `

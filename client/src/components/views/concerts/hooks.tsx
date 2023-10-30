@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button/Button'
 import { Concert } from '@/api/queries/useConcertsQuery'
 import { ConcertDeleteModal } from '@/components/modals/concertDeleteModal/ConcertDeleteModal'
 import { ConcertEdit } from '@/components/forms/concertEdit/ConcertEdit'
+import { Tooltip } from '@/components/ui/tooltip/Tooltip'
 import { format } from 'date-fns'
 import { useI18n } from '@/locales/client'
 
@@ -34,10 +35,18 @@ export const useConcertSearch = (data?: Concert[]) => {
 						id,
 						header: (
 							<ConcertDetailsList>
-								<ConcertDetailsItem>{place}</ConcertDetailsItem>
-								<ConcertDetailsItem>{concertDate}</ConcertDetailsItem>
-								<ConcertDetailsItem>{band}</ConcertDetailsItem>
-								<ConcertDetailsItem>{tourManager}</ConcertDetailsItem>
+								<Tooltip title={place}>
+									<ConcertDetailsItem>{place}</ConcertDetailsItem>
+								</Tooltip>
+								<Tooltip title={concertDate}>
+									<ConcertDetailsItem>{concertDate}</ConcertDetailsItem>
+								</Tooltip>
+								<Tooltip title={band}>
+									<ConcertDetailsItem>{band}</ConcertDetailsItem>
+								</Tooltip>
+								<Tooltip title={tourManager}>
+									<ConcertDetailsItem>{tourManager}</ConcertDetailsItem>
+								</Tooltip>
 							</ConcertDetailsList>
 						),
 						content: (

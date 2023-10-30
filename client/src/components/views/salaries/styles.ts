@@ -1,3 +1,4 @@
+import { ellipsisMixin } from '@/styles/mixins'
 import styled from 'styled-components'
 
 export const SalaryListHeader = styled.ul`
@@ -39,6 +40,7 @@ export const SalaryDetailsList = styled.ul`
 export const SalaryDetailsItem = styled.li<{ $amount?: boolean }>`
 	${({ theme, $amount }) => $amount && `color: ${theme.colors.primary.orange};`}
 	width: 200px;
+	${ellipsisMixin}
 `
 export const SalaryContentWrapper = styled.div`
 	display: flex;

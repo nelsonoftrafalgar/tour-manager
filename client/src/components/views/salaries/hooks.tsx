@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button/Button'
 import { Salary } from '@/api/queries/useSalariesQuery'
 import { SalaryDeleteModal } from '@/components/modals/salaryDeleteModal/SalaryDeleteModal'
 import { SalaryEditModal } from '@/components/modals/salaryEditModal/SalaryEditModal'
+import { Tooltip } from '@/components/ui/tooltip/Tooltip'
 import { format } from 'date-fns'
 import { useI18n } from '@/locales/client'
 
@@ -30,13 +31,23 @@ export const useSalaries = (data?: Salary[]) => {
 					id,
 					header: (
 						<SalaryDetailsList>
-							<SalaryDetailsItem>{concertDate}</SalaryDetailsItem>
-							<SalaryDetailsItem>{tourManager}</SalaryDetailsItem>
-							<SalaryDetailsItem>{place}</SalaryDetailsItem>
-							<SalaryDetailsItem>{band}</SalaryDetailsItem>
-							<SalaryDetailsItem $amount>
-								{amount.replace('$', '$ ')}
-							</SalaryDetailsItem>
+							<Tooltip title={concertDate}>
+								<SalaryDetailsItem>{concertDate}</SalaryDetailsItem>
+							</Tooltip>
+							<Tooltip title={tourManager}>
+								<SalaryDetailsItem>{tourManager}</SalaryDetailsItem>
+							</Tooltip>
+							<Tooltip title={place}>
+								<SalaryDetailsItem>{place}</SalaryDetailsItem>
+							</Tooltip>
+							<Tooltip title={band}>
+								<SalaryDetailsItem>{band}</SalaryDetailsItem>
+							</Tooltip>
+							<Tooltip title={amount.replace('$', '$ ')}>
+								<SalaryDetailsItem $amount>
+									{amount.replace('$', '$ ')}
+								</SalaryDetailsItem>
+							</Tooltip>
 						</SalaryDetailsList>
 					),
 					content: (
