@@ -4,6 +4,7 @@ export default {
 		date: 'Date',
 		start_date: 'Start date',
 		end_date: 'End Date',
+		empty_state: 'The are no {type}',
 	},
 	routes: {
 		bands: 'Bands',

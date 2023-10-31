@@ -11,6 +11,7 @@ import {
 import { Accordion } from '@/components/ui/accordion/Accordion'
 import ApiLoader from '@/components/ui/loader/ApiLoader'
 import { Box } from '@/components/ui/box/styles'
+import { EmptyResults } from '@/components/ui/emptyResults/EmptyResults'
 import { SalaryCreate } from '@/components/forms/salaryCreate/SalaryCreate'
 import { useI18n } from '@/locales/client'
 import { useSalaries } from './hooks'
@@ -42,7 +43,9 @@ export const Salaries = () => {
 						<SalaryListHeaderItem>{t('salaries.header.amount')}</SalaryListHeaderItem>
 					</SalaryListHeader>
 					<List data-testid='concerts-list'>
-						<Accordion items={salaries} />
+						<EmptyResults entityType='salaries' data={salaries}>
+							<Accordion items={salaries} />
+						</EmptyResults>
 					</List>
 				</Box>
 			</SalaryBoxWrapper>

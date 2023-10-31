@@ -7,7 +7,7 @@ import {
 	ReportDetailsList,
 } from './styles'
 
-import { ReportData } from './Report'
+import { ReportData } from './types'
 import { Tooltip } from '@/components/ui/tooltip/Tooltip'
 import { format } from 'date-fns'
 import { useEffect } from 'react'

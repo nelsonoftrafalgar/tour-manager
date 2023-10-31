@@ -7,6 +7,7 @@ import ApiLoader from '@/components/ui/loader/ApiLoader'
 import { BandCreateModal } from '@/components/modals/bandCreateModal/BandCreateModal'
 import { Box } from '@/components/ui/box/styles'
 import { Button } from '@/components/ui/button/Button'
+import { EmptyResults } from '@/components/ui/emptyResults/EmptyResults'
 import { Input } from '@/components/ui/input/Input'
 import { useBandSearch } from './hooks'
 import { useBandsQuery } from '@/api/queries/useBandsQuery'
@@ -31,7 +32,9 @@ export const Bands = () => {
 					</BandCreateModal>
 				</Header>
 				<List data-testid='bands-list'>
-					<Accordion items={bands} />
+					<EmptyResults entityType='bands' data={bands}>
+						<Accordion items={bands} />
+					</EmptyResults>
 				</List>
 			</Box>
 		</ApiLoader>

@@ -3,16 +3,11 @@
 import { Accordion } from '@/components/ui/accordion/Accordion'
 import { Box } from '@/components/ui/box/styles'
 import { CreateReport } from '@/components/forms/createReport/CreateReport'
+import { EmptyResults } from '@/components/ui/emptyResults/EmptyResults'
 import { List } from './styles'
+import { ReportData } from './types'
 import { useReport } from './hooks'
 import { useState } from 'react'
-
-export interface ReportData {
-	date: string
-	concertId?: string
-	bandId?: string
-	tourManagerId?: string
-}
 
 export const Report = () => {
 	const [reportData, setReportData] = useState<ReportData | null>(null)
@@ -26,7 +21,9 @@ export const Report = () => {
 		<Box>
 			<CreateReport handleReportData={handleReportData} />
 			<List data-testid='concerts-list'>
-				{report && <Accordion items={report} />}
+				<EmptyResults entityType='reports' data={report}>
+					{report && <Accordion items={report} />}
+				</EmptyResults>
 			</List>
 		</Box>
 	)

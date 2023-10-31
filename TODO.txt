@@ -3,7 +3,6 @@ fix console errors
 blur after select is selected
 refactor interface DTO names on server
 fix selctedConcertId bug in salary create form
-empty list palceholder
 make select able to unselect
 dont send bandId and tourManagerId in salary response
 fix report data config select relations

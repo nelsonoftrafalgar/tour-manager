@@ -12,6 +12,7 @@ import ApiLoader from '@/components/ui/loader/ApiLoader'
 import { Box } from '@/components/ui/box/styles'
 import { Button } from '@/components/ui/button/Button'
 import { ConcertCreateModal } from '@/components/modals/concertCreateModal/ConcertCreateModal'
+import { EmptyResults } from '@/components/ui/emptyResults/EmptyResults'
 import { Input } from '@/components/ui/input/Input'
 import { useConcertSearch } from './hooks'
 import { useConcertsQuery } from '@/api/queries/useConcertsQuery'
@@ -20,7 +21,6 @@ import { useI18n } from '@/locales/client'
 export const Concerts = () => {
 	const t = useI18n()
 	const { data, isLoading } = useConcertsQuery()
-
 	const { concerts, search, handleSearch } = useConcertSearch(data)
 
 	return (
@@ -45,7 +45,9 @@ export const Concerts = () => {
 					</ConcertListHeaderItem>
 				</ConcertListHeader>
 				<List data-testid='concerts-list'>
-					<Accordion items={concerts} />
+					<EmptyResults entityType='concerts' data={concerts}>
+						<Accordion items={concerts} />
+					</EmptyResults>
 				</List>
 			</Box>
 		</ApiLoader>
