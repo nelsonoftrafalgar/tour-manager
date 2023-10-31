@@ -11,6 +11,7 @@ import { LoaderIcon } from '@/components/ui/loader/styles'
 import { RangePicker } from '@/components/ui/datePicker/RangePicker'
 import { Select } from '@/components/ui/select/Select'
 import { getReportSchema } from '../validation'
+import { trimData } from '../utils'
 import { useBandsQuery } from '@/api/queries/useBandsQuery'
 import { useConcertsQuery } from '@/api/queries/useConcertsQuery'
 import { useI18n } from '@/locales/client'
@@ -84,7 +85,7 @@ export const CreateReport: FC<CreateReportProps> = ({ handleReportData }) => {
 	}
 
 	const onSubmit = (data: ReportCreateFormData) => {
-		handleReportData(data)
+		handleReportData(trimData(data))
 	}
 
 	return (

@@ -10,6 +10,7 @@ import { LoaderIcon } from '@/components/ui/loader/styles'
 import { Select } from '@/components/ui/select/Select'
 import { Textarea } from '@/components/ui/textarea/Textarea'
 import { getSalarySchema } from '../validation'
+import { trimData } from '../utils'
 import { useConcertsQuery } from '@/api/queries/useConcertsQuery'
 import { useI18n } from '@/locales/client'
 import { useSalaryEditMutation } from '@/api/mutations/useSalaryEditMutation'
@@ -39,12 +40,14 @@ export const SalaryEdit: FC<SalaryEditProps> = ({
 	const onSubmit = (data: SalaryEditFormData) => {
 		const { amount, comment, concertId } = data
 
-		mutation.mutate({
-			id,
-			amount,
-			comment,
-			concertId,
-		})
+		mutation.mutate(
+			trimData({
+				id,
+				amount,
+				comment,
+				concertId,
+			})
+		)
 	}
 
 	return (

@@ -10,6 +10,7 @@ import { SalaryCreateFormData } from './types'
 import { Select } from '@/components/ui/select/Select'
 import { Textarea } from '@/components/ui/textarea/Textarea'
 import { getSalarySchema } from '../validation'
+import { trimData } from '../utils'
 import { useConcertsQuery } from '@/api/queries/useConcertsQuery'
 import { useI18n } from '@/locales/client'
 import { useSalaryCreateMutation } from '@/api/mutations/useSalaryCreateMutation'
@@ -37,11 +38,13 @@ export const SalaryCreate = () => {
 	const onSubmit = (data: SalaryCreateFormData) => {
 		const { amount, comment, concertId } = data
 
-		mutation.mutate({
-			amount,
-			comment,
-			concertId,
-		})
+		mutation.mutate(
+			trimData({
+				amount,
+				comment,
+				concertId,
+			})
+		)
 	}
 
 	return (
