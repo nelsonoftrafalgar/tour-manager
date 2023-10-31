@@ -23,6 +23,11 @@ export const SelectTrigger = styled(Select.Trigger)<SelectTriggerProps>`
 	justify-content: space-between;
 	align-items: center;
 	column-gap: ${({ theme }) => theme.gridUnit * 2}px;
+	${({ theme, $error }) =>
+		$error &&
+		css`
+			border-color: ${theme.colors.secondary.strawberry};
+		`}
 	cursor: pointer;
 	width: 200px;
 	${({ $open }) =>

@@ -1,8 +1,9 @@
 'use client'
 
+import styled, { css } from 'styled-components'
+
 import { Label } from '@radix-ui/react-label'
 import { TextArea } from '@radix-ui/themes'
-import styled from 'styled-components'
 
 interface StyledTextareaProps {
 	$error?: boolean
@@ -35,8 +36,11 @@ export const StyledTextarea = styled(TextArea)<StyledTextareaProps>`
 						: theme.colors.primary.charchoal};
 			outline: none;
 		}
-		border-color: ${({ theme, $error }) =>
-			$error && theme.colors.secondary.strawberry};
+		${({ theme, $error }) =>
+			$error &&
+			css`
+				border-color: ${theme.colors.secondary.strawberry};
+			`}
 	}
 `
 

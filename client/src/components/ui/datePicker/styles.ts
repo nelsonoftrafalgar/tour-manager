@@ -1,7 +1,8 @@
 'use client'
 
+import styled, { css } from 'styled-components'
+
 import { Label } from '@radix-ui/react-label'
-import styled from 'styled-components'
 
 export const DatePickerWrapper = styled.div<{ $error?: boolean }>`
 	margin-bottom: ${({ $error }) => ($error ? 0 : 25)}px;
@@ -45,6 +46,11 @@ export const DatePickerWrapper = styled.div<{ $error?: boolean }>`
 		padding: ${({ theme }) => theme.gridUnit * 2.5}px;
 		border-radius: ${({ theme }) => theme.borderRadius}px;
 		outline: none;
+		${({ theme, $error }) =>
+			$error &&
+			css`
+				border-color: ${theme.colors.secondary.strawberry};
+			`}
 
 		&:focus-visible {
 			border: 2px solid ${({ theme }) => theme.colors.primary.charchoal};
