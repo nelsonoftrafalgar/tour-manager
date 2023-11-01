@@ -3,7 +3,6 @@ fix console errors
 blur after select is selected
 refactor interface DTO names on server
 fix selctedConcertId bug in salary create form
-make select able to unselect
 fix report data config select relations
 client salaries and reports e2e tests
 add rwd

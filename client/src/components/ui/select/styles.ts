@@ -59,6 +59,18 @@ export const SelectContent = styled(Select.Content)`
 	z-index: 10;
 `
 
+export const SelectReset = styled.p`
+	padding: ${({ theme }) => theme.gridUnit * 1.5}px;
+	padding-left: ${({ theme }) => theme.gridUnit * 2.5}px;
+	font-size: ${({ theme }) => theme.fonts.size.xs}px;
+	color: ${({ theme }) => theme.colors.placeholder};
+	&:hover {
+		background-color: ${({ theme }) => theme.colors.primary.orange};
+		color: ${({ theme }) => theme.colors.primary.white};
+		outline: none;
+	}
+`
+
 export const SelectItem = styled(Select.Item)`
 	padding: ${({ theme }) => theme.gridUnit * 1.5}px;
 	padding-left: ${({ theme }) => theme.gridUnit * 2.5}px;

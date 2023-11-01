@@ -7,6 +7,7 @@ import {
 	SelectContent,
 	SelectIcon,
 	SelectItem,
+	SelectReset,
 	SelectTrigger,
 	SelectWrapper,
 	StyledLabel,
@@ -25,6 +26,8 @@ export const Select: FC<SelectProps> = ({
 	errorMessage,
 }) => {
 	const [open, setOpen] = useState(false)
+
+	const handleSelectReset = () => onChange('')
 
 	return (
 		<SelectWrapper>
@@ -46,6 +49,7 @@ export const Select: FC<SelectProps> = ({
 				</SelectTrigger>
 				<SelectContent collisionPadding={0} position='popper'>
 					<Component.Viewport>
+						<SelectReset onClick={handleSelectReset}>{placeholder}</SelectReset>
 						{options.map(({ value, label }) => (
 							<SelectOption key={value} value={value}>
 								{label}

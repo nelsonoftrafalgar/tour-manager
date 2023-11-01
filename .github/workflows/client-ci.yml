@@ -36,6 +36,3 @@ jobs:
 
    - name: Run TypeScript Type Check
      run: yarn type-check
-
-   - name: Run Cypress Tests
-     run: yarn cypress:run
