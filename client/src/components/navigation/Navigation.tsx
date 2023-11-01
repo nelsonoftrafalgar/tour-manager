@@ -1,6 +1,6 @@
 'use client'
 
-import { Header, StyledLink } from './styles'
+import { Header, Logo, StyledLink } from './styles'
 
 import { ROUTES } from './routes'
 import React from 'react'
@@ -13,6 +13,7 @@ const Navigation = () => {
 
 	return (
 		<Header>
+			<Logo>LOGO</Logo>
 			<StyledLink $active={pathName === ROUTES.bands} href={ROUTES.bands}>
 				{t('routes.bands')}
 			</StyledLink>

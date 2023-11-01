@@ -5,7 +5,7 @@ export const Header = styled.header`
 	height: 60px;
 	display: flex;
 	align-items: center;
-	gap: ${({ theme }) => theme.gridUnit * 5}px;
+	gap: ${({ theme }) => theme.gridUnit * 7}px;
 	margin-bottom: ${({ theme }) => theme.gridUnit * 5}px;
 `
 
@@ -22,4 +22,12 @@ export const StyledLink = styled(Link)<{ $active: boolean }>`
 		position: absolute;
 		bottom: -5px;
 	}
+`
+
+export const Logo = styled.p`
+	color: ${({ theme }) => theme.colors.primary.orange};
+	font-size: 35px;
+	-webkit-text-stroke-width: 0.5px;
+	-webkit-text-stroke-color: ${({ theme }) => theme.colors.primary.black};
+	font-weight: ${({ theme }) => theme.fonts.weight.bold};
 `
