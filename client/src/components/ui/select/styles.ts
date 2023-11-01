@@ -78,6 +78,7 @@ export const SelectItem = styled(Select.Item)`
 	display: flex;
 	align-items: center;
 	gap: ${({ theme }) => theme.gridUnit * 2}px;
+	user-select: none;
 
 	&:focus {
 		background-color: ${({ theme }) => theme.colors.primary.orange};

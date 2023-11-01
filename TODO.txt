@@ -1,6 +1,5 @@
 fix server tests
 fix console errors
-blur after select is selected
 refactor interface DTO names on server
 fix selctedConcertId bug in salary create form
 fix report data config select relations
