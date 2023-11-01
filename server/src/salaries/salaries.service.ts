@@ -29,13 +29,11 @@ export class SalariesService {
         band: {
           select: {
             name: true,
-            id: true,
           },
         },
         tourManager: {
           select: {
             name: true,
-            id: true,
           },
         },
         concert: {

@@ -7,11 +7,9 @@ export interface Salary {
 	comment: string
 	band: {
 		name: string
-		id: string
 	}
 	tourManager: {
 		name: string
-		id: string
 	}
 	concert: {
 		place: string

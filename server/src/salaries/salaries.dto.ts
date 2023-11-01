@@ -92,13 +92,11 @@ export class SalaryGetResponse {
   @ApiProperty()
   band: {
     name: string
-    id: string
   }
 
   @ApiProperty()
   tourManager: {
     name: string
-    id: string
   }
 
   @ApiProperty()
