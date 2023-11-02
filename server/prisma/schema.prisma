@@ -31,8 +31,8 @@ model Concert {
   id            String      @id @default(uuid())
   date          String
   place         String
-  band          Band        @relation(references: [id], fields: [bandId])
-  tourManager   TourManager @relation(references: [id], fields: [tourManagerId])
+  band          Band        @relation(references: [id], fields: [bandId], onDelete: Cascade)
+  tourManager   TourManager @relation(references: [id], fields: [tourManagerId], onDelete: Cascade)
   bandId        String
   tourManagerId String
   createdAt     DateTime    @default(now())
@@ -44,9 +44,9 @@ model Salary {
   id            String      @id @default(uuid())
   amount        String
   comment       String
-  band          Band        @relation(references: [id], fields: [bandId])
-  tourManager   TourManager @relation(references: [id], fields: [tourManagerId])
-  concert       Concert     @relation(references: [id], fields: [concertId])
+  band          Band        @relation(references: [id], fields: [bandId], onDelete: Cascade)
+  tourManager   TourManager @relation(references: [id], fields: [tourManagerId], onDelete: Cascade)
+  concert       Concert     @relation(references: [id], fields: [concertId], onDelete: Cascade)
   bandId        String
   tourManagerId String
   concertId     String
