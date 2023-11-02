@@ -7,7 +7,6 @@ import {
   Param,
   Post,
   Put,
-  Query,
   Res,
 } from '@nestjs/common'
 import {
@@ -17,11 +16,10 @@ import {
   ApiOkResponse,
 } from '@nestjs/swagger'
 import {
-  NewTourManagerDTO,
+  CreateTourManagerRequest,
+  DeleteTourManagerRequest,
   TourManager,
-  TourManagerDTO,
-  TourManagerIdDTO,
-  TourManagerNameDTO,
+  UpdateTourManagerRequest,
 } from './tourManagers.dto'
 import { TourManagersService } from './tourManagers.service'
 import { Response } from 'express'
@@ -35,8 +33,8 @@ export class TourManagersController {
     type: [TourManager],
     description: 'Get filtered or all tour managers',
   })
-  getTourManagers(@Query() { name }: TourManagerNameDTO) {
-    return this.tourManagersService.getTourManagers(name)
+  getTourManagers() {
+    return this.tourManagersService.getTourManagers()
   }
 
   @Post()
@@ -46,7 +44,7 @@ export class TourManagersController {
   })
   @ApiConflictResponse({ description: 'Tour manager already exists in DB' })
   async createTourManager(
-    @Body() data: NewTourManagerDTO,
+    @Body() data: CreateTourManagerRequest,
     @Res() res: Response,
   ) {
     try {
@@ -66,7 +64,10 @@ export class TourManagersController {
     description: 'Edit existing tour manager',
   })
   @ApiConflictResponse({ description: 'Tour manager already exists in DB' })
-  async updateTourManager(@Body() data: TourManagerDTO, @Res() res: Response) {
+  async updateTourManager(
+    @Body() data: UpdateTourManagerRequest,
+    @Res() res: Response,
+  ) {
     try {
       const tourManager = await this.tourManagersService.updateTourManager(data)
       res.status(HttpStatus.OK).json({
@@ -82,7 +83,7 @@ export class TourManagersController {
   @ApiOkResponse({ type: String, description: 'Delete tour manager' })
   @ApiNotFoundResponse({ type: String, description: 'Tour manager not found' })
   async deleteTourManager(
-    @Param() { id }: TourManagerIdDTO,
+    @Param() { id }: DeleteTourManagerRequest,
     @Res() res: Response,
   ) {
     try {

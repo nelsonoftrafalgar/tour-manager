@@ -36,7 +36,7 @@ export class Salary {
   tourManagerId: string
 }
 
-export class SalaryGetReportRequest {
+export class GetSalaryReportRequest {
   @ApiProperty()
   date: string
 
@@ -79,7 +79,7 @@ export class SalaryReport {
   }
 }
 
-export class SalaryGetResponse {
+export class GetSalaryResponse {
   @ApiProperty()
   id: string
 
@@ -107,7 +107,7 @@ export class SalaryGetResponse {
   }
 }
 
-export class SalaryCreateRequest {
+export class CreateSalaryRequest {
   @ApiProperty()
   @IsString()
   @MaxLength(13)
@@ -126,7 +126,7 @@ export class SalaryCreateRequest {
   concertId: string
 }
 
-export class SalaryUpdateRequest {
+export class UpdateSalaryRequest {
   @ApiProperty()
   @IsUUID()
   id: string
@@ -149,13 +149,13 @@ export class SalaryUpdateRequest {
   concertId: string
 }
 
-export class SalaryDeleteRequest {
+export class DeleteSalaryRequest {
   @ApiProperty()
   @IsUUID()
   id: string
 }
 
-export class SalaryDuplicateCheckParams {
+export class DuplicateSalaryCheckParams {
   comment: string
   amount: string
   concertId: string

@@ -1,17 +1,12 @@
 import {
-  ApiProperty,
-  ApiPropertyOptional,
-  OmitType,
-  PickType,
-} from '@nestjs/swagger'
-import {
   IsDateString,
   IsString,
   IsUUID,
   Matches,
   MaxLength,
-  ValidateIf,
 } from 'class-validator'
+
+import { ApiProperty } from '@nestjs/swagger'
 
 const NAME_CONSTRAIN = /^[A-Za-z\s]+$/
 export const WHITESPACE_CONSTRAIN = /^[^\s]+(\s+[^\s]+)*$/
@@ -33,7 +28,7 @@ export class Concert {
   tourManagerId: string
 }
 
-export class ConcertGetResponse {
+export class GetConcertResponse {
   @ApiProperty()
   id: string
 
@@ -54,15 +49,7 @@ export class ConcertGetResponse {
   }
 }
 
-export class ConcertPlaceDTO {
-  @ValidateIf(({ place }) => place?.length > 0)
-  @ApiPropertyOptional()
-  @MaxLength(250)
-  @Matches(NAME_CONSTRAIN)
-  place: string
-}
-
-export class ConcertDTO {
+export class UpdateConcertRequest {
   @ApiProperty()
   @IsUUID()
   id: string
@@ -87,5 +74,29 @@ export class ConcertDTO {
   tourManagerId: string
 }
 
-export class NewConcertDTO extends OmitType(ConcertDTO, ['id']) {}
-export class ConcertIdDTO extends PickType(ConcertDTO, ['id']) {}
+export class CreateConcertRequest {
+  @ApiProperty()
+  @MaxLength(250)
+  @IsString()
+  @Matches(NAME_CONSTRAIN)
+  @Matches(WHITESPACE_CONSTRAIN)
+  place: string
+
+  @ApiProperty()
+  @IsDateString()
+  date: string
+
+  @ApiProperty()
+  @IsUUID()
+  bandId: string
+
+  @ApiProperty()
+  @IsUUID()
+  tourManagerId: string
+}
+
+export class DeleteConcertRequest {
+  @ApiProperty()
+  @IsUUID()
+  id: string
+}

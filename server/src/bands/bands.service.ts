@@ -1,4 +1,4 @@
-import { Band, BandDTO, BandName, NewBandDTO } from './bands.dto'
+import { Band, CreateBandRequest, UpdateBandRequest } from './bands.dto'
 import {
   ConflictException,
   Injectable,
@@ -12,32 +12,11 @@ import { v4 as uuid } from 'uuid'
 export class BandsService {
   constructor(private prisma: PrismaService) {}
 
-  async getBands(name?: string): Promise<Band[]> {
-    if (name) {
-      return this.getBandByName(name)
-    }
+  async getBands(): Promise<Band[]> {
     return this.prisma.band.findMany()
   }
 
-  async getBandByName(name: string): Promise<Band[]> {
-    return this.prisma.band.findMany({
-      where: {
-        name: {
-          contains: name,
-        },
-      },
-    })
-  }
-
-  async getBandById(id: string): Promise<Band[]> {
-    return this.prisma.band.findMany({
-      where: {
-        id,
-      },
-    })
-  }
-
-  async createBand(data: NewBandDTO): Promise<Band> {
+  async createBand(data: CreateBandRequest): Promise<Band> {
     const { name, frontMan } = data
     await this.preventDuplicates(data)
     return this.prisma.band.create({
@@ -49,7 +28,7 @@ export class BandsService {
     })
   }
 
-  async updateBand(data: BandDTO): Promise<Band> {
+  async updateBand(data: UpdateBandRequest): Promise<Band> {
     const { name, frontMan, id } = data
     await this.preventDuplicates(data)
     return this.prisma.band.update({
@@ -71,7 +50,7 @@ export class BandsService {
     return this.prisma.band.delete({ where: { id } })
   }
 
-  async preventDuplicates(data: NewBandDTO | BandDTO) {
+  async preventDuplicates(data: CreateBandRequest | UpdateBandRequest) {
     const { name, frontMan } = data
     const duplicate = await this.prisma.band.findMany({
       where: { name, frontMan },
@@ -80,9 +59,5 @@ export class BandsService {
     if (duplicate.length > 0) {
       throw new ConflictException({ message: 'Band already exists' })
     }
-  }
-
-  async getBandNames(): Promise<BandName[]> {
-    return this.prisma.band.findMany({ select: { id: true, name: true } })
   }
 }

@@ -1,8 +1,8 @@
 import {
   Concert,
-  ConcertDTO,
-  ConcertGetResponse,
-  NewConcertDTO,
+  CreateConcertRequest,
+  GetConcertResponse,
+  UpdateConcertRequest,
 } from './concerts.dto'
 import {
   ConflictException,
@@ -17,11 +17,7 @@ import { v4 as uuid } from 'uuid'
 export class ConcertsService {
   constructor(private prisma: PrismaService) {}
 
-  async getConcerts(place?: string): Promise<ConcertGetResponse[]> {
-    if (place) {
-      return await this.getConcertsByPlace(place)
-    }
-
+  async getConcerts(): Promise<GetConcertResponse[]> {
     return this.prisma.concert.findMany({
       select: {
         id: true,
@@ -46,53 +42,7 @@ export class ConcertsService {
     })
   }
 
-  async getConcertsByPlace(place: string): Promise<ConcertGetResponse[]> {
-    return this.prisma.concert.findMany({
-      select: {
-        id: true,
-        place: true,
-        date: true,
-        band: {
-          select: {
-            name: true,
-          },
-        },
-        tourManager: {
-          select: {
-            name: true,
-          },
-        },
-      },
-      where: {
-        place,
-      },
-    })
-  }
-
-  async getConcertsByBandId(id: string): Promise<ConcertGetResponse[]> {
-    return this.prisma.concert.findMany({
-      select: {
-        id: true,
-        place: true,
-        date: true,
-        band: {
-          select: {
-            name: true,
-          },
-        },
-        tourManager: {
-          select: {
-            name: true,
-          },
-        },
-      },
-      where: {
-        id,
-      },
-    })
-  }
-
-  async createConcert(data: NewConcertDTO): Promise<Concert> {
+  async createConcert(data: CreateConcertRequest): Promise<Concert> {
     const { date, place, bandId, tourManagerId } = data
     await this.preventDuplicates(data)
 
@@ -107,7 +57,7 @@ export class ConcertsService {
     })
   }
 
-  async updateConcert(data: ConcertDTO): Promise<Concert> {
+  async updateConcert(data: UpdateConcertRequest): Promise<Concert> {
     const { date, place, bandId, tourManagerId, id } = data
     await this.preventDuplicates(data)
     return this.prisma.concert.update({
@@ -136,7 +86,7 @@ export class ConcertsService {
     place,
     bandId,
     tourManagerId,
-  }: NewConcertDTO | ConcertDTO) {
+  }: UpdateConcertRequest | CreateConcertRequest) {
     const duplicate = await this.prisma.concert.findMany({
       where: {
         date,

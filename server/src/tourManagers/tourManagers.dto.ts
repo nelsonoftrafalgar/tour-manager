@@ -1,17 +1,9 @@
-import { ApiProperty, ApiPropertyOptional, PickType } from '@nestjs/swagger'
-import { IsUUID, Matches, MaxLength, ValidateIf } from 'class-validator'
+import { IsUUID, Matches, MaxLength } from 'class-validator'
+
+import { ApiProperty } from '@nestjs/swagger'
 
 const NAME_CONSTRAIN = /^[A-Za-z\s]+$/
 export const WHITESPACE_CONSTRAIN = /^[^\s]+(\s+[^\s]+)*$/
-
-export class TourManagerNameDTO {
-  @ValidateIf(({ name }) => name?.length > 0)
-  @ApiPropertyOptional()
-  @MaxLength(250)
-  @Matches(NAME_CONSTRAIN)
-  @Matches(WHITESPACE_CONSTRAIN)
-  name: string
-}
 
 export class TourManager {
   @ApiProperty()
@@ -27,7 +19,7 @@ export class TourManager {
   name: string
 }
 
-export class TourManagerDTO {
+export class UpdateTourManagerRequest {
   @ApiProperty()
   @IsUUID()
   id: string
@@ -39,5 +31,20 @@ export class TourManagerDTO {
   name: string
 }
 
-export class TourManagerIdDTO extends PickType(TourManagerDTO, ['id']) {}
-export class NewTourManagerDTO extends PickType(TourManagerDTO, ['name']) {}
+export class CreateTourManagerRequest {
+  @ApiProperty()
+  @IsUUID()
+  id: string
+
+  @ApiProperty()
+  @MaxLength(250)
+  @Matches(NAME_CONSTRAIN)
+  @Matches(WHITESPACE_CONSTRAIN)
+  name: string
+}
+
+export class DeleteTourManagerRequest {
+  @ApiProperty()
+  @IsUUID()
+  id: string
+}

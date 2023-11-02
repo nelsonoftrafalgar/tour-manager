@@ -4,9 +4,9 @@ import {
   NotFoundException,
 } from '@nestjs/common'
 import {
-  NewTourManagerDTO,
+  CreateTourManagerRequest,
   TourManager,
-  TourManagerDTO,
+  UpdateTourManagerRequest,
 } from './tourManagers.dto'
 
 import { PrismaService } from '../../src/prisma/prisma.service'
@@ -15,23 +15,13 @@ import { v4 as uuid } from 'uuid'
 @Injectable()
 export class TourManagersService {
   constructor(private prisma: PrismaService) {}
-  async getTourManagers(name?: string): Promise<TourManager[]> {
-    if (name) {
-      return this.getTourManagersByName(name)
-    }
+  async getTourManagers(): Promise<TourManager[]> {
     return this.prisma.tourManager.findMany()
   }
-  async getTourManagersByName(name?: string): Promise<TourManager[]> {
-    return this.prisma.tourManager.findMany({
-      where: {
-        name: {
-          contains: name,
-        },
-      },
-    })
-  }
 
-  async updateTourManager(data: TourManagerDTO): Promise<TourManager> {
+  async updateTourManager(
+    data: UpdateTourManagerRequest,
+  ): Promise<TourManager> {
     const { name, id } = data
     await this.preventDuplicates(data)
     return this.prisma.tourManager.update({
@@ -42,7 +32,9 @@ export class TourManagersService {
     })
   }
 
-  async createTourManager(data: NewTourManagerDTO): Promise<TourManager> {
+  async createTourManager(
+    data: CreateTourManagerRequest,
+  ): Promise<TourManager> {
     const { name } = data
     await this.preventDuplicates(data)
     return this.prisma.tourManager.create({
@@ -63,7 +55,9 @@ export class TourManagersService {
     return this.prisma.tourManager.delete({ where: { id } })
   }
 
-  async preventDuplicates(data: NewTourManagerDTO) {
+  async preventDuplicates(
+    data: CreateTourManagerRequest | UpdateTourManagerRequest,
+  ) {
     const { name } = data
     const duplicate = await this.prisma.tourManager.findMany({
       where: { name },

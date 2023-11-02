@@ -1,11 +1,6 @@
-import { ApiProperty, ApiPropertyOptional, PickType } from '@nestjs/swagger'
-import {
-  IsString,
-  IsUUID,
-  Matches,
-  MaxLength,
-  ValidateIf,
-} from 'class-validator'
+import { IsString, IsUUID, Matches, MaxLength } from 'class-validator'
+
+import { ApiProperty } from '@nestjs/swagger'
 
 const NAME_CONSTRAIN = /^[A-Za-z\s]+$/
 export const WHITESPACE_CONSTRAIN = /^[^\s]+(\s+[^\s]+)*$/
@@ -27,17 +22,23 @@ export class Band {
   updatedAt: Date
 }
 
-export class BandName extends PickType(Band, ['id', 'name']) {}
-
-export class BandNameDTO {
-  @ValidateIf(({ name }) => name?.length > 0)
-  @ApiPropertyOptional()
+export class CreateBandRequest {
+  @ApiProperty()
   @MaxLength(250)
+  @IsString()
   @Matches(NAME_CONSTRAIN)
+  @Matches(WHITESPACE_CONSTRAIN)
   name: string
+
+  @ApiProperty()
+  @MaxLength(250)
+  @IsString()
+  @Matches(NAME_CONSTRAIN)
+  @Matches(WHITESPACE_CONSTRAIN)
+  frontMan: string
 }
 
-export class BandDTO {
+export class UpdateBandRequest {
   @ApiProperty()
   @IsUUID()
   id: string
@@ -57,5 +58,8 @@ export class BandDTO {
   frontMan: string
 }
 
-export class BandIdDTO extends PickType(BandDTO, ['id']) {}
-export class NewBandDTO extends PickType(BandDTO, ['name', 'frontMan']) {}
+export class DeleteBandRequet {
+  @ApiProperty()
+  @IsUUID()
+  id: string
+}

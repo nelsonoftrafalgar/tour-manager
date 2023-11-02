@@ -8,7 +8,6 @@ import {
   Param,
   Post,
   Put,
-  Query,
   Res,
 } from '@nestjs/common'
 import {
@@ -19,11 +18,9 @@ import {
 } from '@nestjs/swagger'
 import {
   Band,
-  BandDTO,
-  BandIdDTO,
-  BandName,
-  BandNameDTO,
-  NewBandDTO,
+  CreateBandRequest,
+  DeleteBandRequet,
+  UpdateBandRequest,
 } from './bands.dto'
 import { Response } from 'express'
 
@@ -33,26 +30,14 @@ export class BandsController {
 
   @Get()
   @ApiOkResponse({ type: [Band], description: 'Get filtered or all bands' })
-  getBands(@Query() { name }: BandNameDTO) {
-    return this.bandsService.getBands(name)
-  }
-
-  @Get('all_names')
-  @ApiOkResponse({ type: [BandName], description: 'Get all band names' })
-  getBandNames() {
-    return this.bandsService.getBandNames()
-  }
-
-  @Get(':id')
-  @ApiOkResponse({ type: [Band], description: 'Get band by ID' })
-  getBandById(@Param() { id }: BandIdDTO) {
-    return this.bandsService.getBandById(id)
+  getBands() {
+    return this.bandsService.getBands()
   }
 
   @Post()
   @ApiCreatedResponse({ type: [Band], description: 'Add new band' })
   @ApiConflictResponse({ description: 'Band already exists in DB' })
-  async createBand(@Body() data: NewBandDTO, @Res() res: Response) {
+  async createBand(@Body() data: CreateBandRequest, @Res() res: Response) {
     try {
       const band = await this.bandsService.createBand(data)
       res
@@ -66,7 +51,7 @@ export class BandsController {
   @Put()
   @ApiOkResponse({ type: [Band], description: 'Edit existing band' })
   @ApiConflictResponse({ description: 'Band already exists in DB' })
-  async updateBand(@Body() data: BandDTO, @Res() res: Response) {
+  async updateBand(@Body() data: UpdateBandRequest, @Res() res: Response) {
     try {
       const band = await this.bandsService.updateBand(data)
       res
@@ -80,7 +65,7 @@ export class BandsController {
   @Delete(':id')
   @ApiOkResponse({ type: String, description: 'Delete band' })
   @ApiNotFoundResponse({ type: String, description: 'Band not found' })
-  async deleteBand(@Param() { id }: BandIdDTO, @Res() res: Response) {
+  async deleteBand(@Param() { id }: DeleteBandRequet, @Res() res: Response) {
     try {
       const band = await this.bandsService.deleteBand(id)
       res

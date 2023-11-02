@@ -1,15 +1,7 @@
 import { Band } from '@/api/queries/useBandsQuery'
 import { Concert } from '@/api/queries/useConcertsQuery'
+import { GetSelectOptionsParams } from './types'
 import { TourManager } from '@/api/queries/useTourManagerQuery'
-
-export interface GetSelectOptionsParams {
-	concerts: Concert[]
-	concertId?: string
-	bands: Band[]
-	bandId?: string
-	tourManagers: TourManager[]
-	tourManagerId?: string
-}
 
 const mapFiltereddDataToOptions = (
 	filteredBands: Band[],

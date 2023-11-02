@@ -1,6 +1,5 @@
 fix server tests
 fix console errors
-refactor interface DTO names on server
 client salaries and reports e2e tests
 add rwd
 fix delete (if delete concert which is used by salary -> foreign key error)
