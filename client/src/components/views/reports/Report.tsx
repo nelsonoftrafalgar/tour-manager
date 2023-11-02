@@ -2,9 +2,9 @@
 
 import { Accordion } from '@/components/ui/accordion/Accordion'
 import { Box } from '@/components/ui/box/styles'
-import { CreateReport } from '@/components/forms/createReport/CreateReport'
 import { EmptyResults } from '@/components/ui/emptyResults/EmptyResults'
 import { List } from './styles'
+import { ReportCreate } from '@/components/forms/reportCreate/ReportCreate'
 import { ReportData } from './types'
 import { useReport } from './hooks'
 import { useState } from 'react'
@@ -19,7 +19,7 @@ export const Report = () => {
 
 	return (
 		<Box>
-			<CreateReport handleReportData={handleReportData} />
+			<ReportCreate handleReportData={handleReportData} />
 			<List data-testid='concerts-list'>
 				<EmptyResults entityType='reports' data={report}>
 					{report && <Accordion items={report} />}

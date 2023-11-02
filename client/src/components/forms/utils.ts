@@ -1,7 +1,7 @@
 import { BandCreateFormData } from './bandCreate/types'
 import { BandEditFormData } from './bandEdit/types'
 import { ConcertEditFormData } from './concertEdit/types'
-import { ReportCreateFormData } from './createReport/types'
+import { ReportCreateFormData } from './reportCreate/types'
 import { SalaryCreateFormData } from './salaryCreate/types'
 import { TourManagerCreateFormData } from './tourManagerCreate/types'
 import { TourManagerEditFormData } from './tourManagerEdit/types'

@@ -5,6 +5,6 @@ export interface ReportCreateFormData {
 	tourManagerId?: string
 }
 
-export interface CreateReportProps {
+export interface ReportCreateProps {
 	handleReportData: (data: ReportCreateFormData) => void
 }

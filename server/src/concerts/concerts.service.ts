@@ -43,7 +43,6 @@ export class ConcertsService {
       orderBy: {
         createdAt: 'desc',
       },
-      take: 7,
     })
   }
 

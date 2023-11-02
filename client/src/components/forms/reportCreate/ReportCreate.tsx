@@ -1,7 +1,7 @@
 'use client'
 
 import { Controller, useForm } from 'react-hook-form'
-import { CreateReportProps, ReportCreateFormData } from './types'
+import { ReportCreateFormData, ReportCreateProps } from './types'
 
 import { Button } from '@/components/ui/button/Button'
 import { ButtonWrapper } from './styles'
@@ -11,6 +11,7 @@ import { LoaderIcon } from '@/components/ui/loader/styles'
 import { RangePicker } from '@/components/ui/datePicker/RangePicker'
 import { Select } from '@/components/ui/select/Select'
 import { getReportSchema } from '../validation'
+import { getSelectOptions } from './utils'
 import { trimData } from '../utils'
 import { useBandsQuery } from '@/api/queries/useBandsQuery'
 import { useConcertsQuery } from '@/api/queries/useConcertsQuery'
@@ -18,7 +19,7 @@ import { useI18n } from '@/locales/client'
 import { useTourManagersQuery } from '@/api/queries/useTourManagerQuery'
 import { yupResolver } from '@hookform/resolvers/yup'
 
-export const CreateReport: FC<CreateReportProps> = ({ handleReportData }) => {
+export const ReportCreate: FC<ReportCreateProps> = ({ handleReportData }) => {
 	const t = useI18n()
 
 	const { data: tourManagers } = useTourManagersQuery()
@@ -40,49 +41,14 @@ export const CreateReport: FC<CreateReportProps> = ({ handleReportData }) => {
 
 	if (!bands || !tourManagers || !concerts) return null
 
-	const selectedConcert = concerts.find(({ id }) => id === concertId)
-
-	const filteredConcerts = () => {
-		if (bandId) {
-			return concerts.filter(({ band }) => band.id === bandId)
-		}
-
-		if (tourManagerId) {
-			return concerts.filter(({ tourManager }) => tourManager.id === tourManagerId)
-		}
-
-		return concerts
-	}
-
-	const filteredBands = () => {
-		if (concertId) {
-			return bands.filter(({ id }) => id === selectedConcert?.band.id)
-		}
-
-		if (tourManagerId) {
-			return bands.filter(({ id }) =>
-				filteredConcerts().some(({ band }) => band.id === id)
-			)
-		}
-
-		return bands
-	}
-
-	const filteredTourManagers = () => {
-		if (concertId) {
-			return tourManagers.filter(
-				({ id }) => id === selectedConcert?.tourManager.id
-			)
-		}
-
-		if (bandId) {
-			return tourManagers.filter(({ id }) =>
-				filteredConcerts().some(({ tourManager }) => tourManager.id === id)
-			)
-		}
-
-		return tourManagers
-	}
+	const { bandOptions, concertOptions, tourManagerOptions } = getSelectOptions({
+		concerts,
+		concertId,
+		bands,
+		bandId,
+		tourManagers,
+		tourManagerId,
+	})
 
 	const onSubmit = (data: ReportCreateFormData) => {
 		handleReportData(trimData(data))
@@ -103,10 +69,7 @@ export const CreateReport: FC<CreateReportProps> = ({ handleReportData }) => {
 						{...field}
 						placeholder={t('concerts.select_tourManager_placeholder')}
 						label={t('concerts.select_tourManager_label')}
-						options={filteredTourManagers().map(({ name, id }) => ({
-							label: name,
-							value: id,
-						}))}
+						options={tourManagerOptions}
 						errorMessage={errors.tourManagerId?.message}
 					/>
 				)}
@@ -119,10 +82,7 @@ export const CreateReport: FC<CreateReportProps> = ({ handleReportData }) => {
 						{...field}
 						placeholder={t('concerts.select_band_placeholder')}
 						label={t('concerts.select_band_label')}
-						options={filteredBands().map(({ name, id }) => ({
-							label: name,
-							value: id,
-						}))}
+						options={bandOptions}
 						errorMessage={errors.bandId?.message}
 					/>
 				)}
@@ -135,10 +95,7 @@ export const CreateReport: FC<CreateReportProps> = ({ handleReportData }) => {
 						{...field}
 						placeholder={t('reports.select_concert_placeholder')}
 						label={t('reports.select_concert_label')}
-						options={filteredConcerts().map(({ place, id }) => ({
-							label: place,
-							value: id,
-						}))}
+						options={concertOptions}
 						errorMessage={errors.bandId?.message}
 					/>
 				)}
