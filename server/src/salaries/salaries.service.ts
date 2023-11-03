@@ -77,12 +77,15 @@ export class SalariesService {
     const [startDate, endDate] = date.split('_')
 
     if (concertId) {
+      await this.checkConcertId(concertId)
       where = { concertId: concertId }
     }
     if (tourManagerId) {
+      await this.checkTourManagerId(tourManagerId)
       where = { tourManagerId: tourManagerId }
     }
     if (bandId) {
+      await this.checkBandId(bandId)
       where = { bandId: bandId }
     }
 
@@ -110,12 +113,7 @@ export class SalariesService {
   }
 
   async deleteSalary(id: string) {
-    const salary = await this.prisma.salary.findUnique({ where: { id } })
-
-    if (!salary) {
-      throw new NotFoundException({ message: `Salary not found` })
-    }
-
+    await this.checkSalaryId(id)
     return this.prisma.salary.delete({ where: { id } })
   }
 
@@ -157,6 +155,41 @@ export class SalariesService {
 
     if (duplicates.length > 0) {
       throw new ConflictException()
+    }
+  }
+
+  async checkConcertId(id: string) {
+    const concert = await this.prisma.concert.findUnique({
+      where: { id },
+    })
+    if (!concert) {
+      throw new NotFoundException({ message: `Concert not found` })
+    }
+  }
+
+  async checkBandId(id: string) {
+    const band = await this.prisma.band.findUnique({
+      where: { id },
+    })
+    if (!band) {
+      throw new NotFoundException({ message: `Band not found` })
+    }
+  }
+
+  async checkTourManagerId(id: string) {
+    const tourManager = await this.prisma.tourManager.findUnique({
+      where: { id },
+    })
+    if (!tourManager) {
+      throw new NotFoundException({ message: `Tour manager not found` })
+    }
+  }
+
+  async checkSalaryId(id: string) {
+    const salary = await this.prisma.salary.findUnique({ where: { id } })
+
+    if (!salary) {
+      throw new NotFoundException({ message: `Salary not found` })
     }
   }
 }

@@ -3,7 +3,7 @@ import {
   HttpStatus,
   NotFoundException,
 } from '@nestjs/common'
-import { MOCK_BAND_ID, MOCK_BAND_NAME, mockBandService } from '../../test/mocks'
+import { MOCK_BAND_ID, mockBandService } from '../../test/mocks'
 import { Test, TestingModule } from '@nestjs/testing'
 
 import { Band } from 'src/bands/bands.dto'
@@ -14,6 +14,11 @@ import { Response } from 'express'
 describe('BandsController', () => {
   let controller: BandsController
   let bandsService: BandsService
+
+  const res: Partial<Response> = {
+    status: jest.fn().mockReturnThis(),
+    json: jest.fn(),
+  }
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -29,18 +34,8 @@ describe('BandsController', () => {
   })
 
   it('should be able to get bands list', () => {
-    const result = controller.getBands({ name: MOCK_BAND_NAME })
+    const result = controller.getBands()
     expect(result).toEqual(mockBandService.getBands())
-  })
-
-  it('should be able to get all band names', () => {
-    const result = controller.getBandNames()
-    expect(result).toEqual(mockBandService.getBandNames())
-  })
-
-  it('should be able to get band by id', () => {
-    const result = controller.getBandById({ id: MOCK_BAND_ID })
-    expect(result).toEqual(mockBandService.getBandById())
   })
 
   it('should create a new band and return a success response', async () => {
@@ -51,10 +46,6 @@ describe('BandsController', () => {
     }
 
     jest.spyOn(bandsService, 'createBand').mockResolvedValue(newBandData)
-    const res: Partial<Response> = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    }
 
     await controller.createBand(newBandData, res as Response)
     expect(bandsService.createBand).toHaveBeenCalledWith(newBandData)
@@ -69,11 +60,6 @@ describe('BandsController', () => {
       .spyOn(bandsService, 'createBand')
       .mockRejectedValue(new ConflictException('Band already exists'))
 
-    const res: Partial<Response> = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn().mockReturnThis(),
-    }
-
     await controller.createBand(newBandData, res as Response)
 
     expect(bandCreateSpy).toHaveBeenCalledWith(newBandData)
@@ -87,11 +73,6 @@ describe('BandsController', () => {
     const updatedBand = mockBandService.updateBand() as Band
 
     jest.spyOn(bandsService, 'updateBand').mockResolvedValue(updatedBand)
-
-    const res: Partial<Response> = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn().mockReturnThis(),
-    }
 
     await controller.updateBand(updatedBand, res as Response)
 
@@ -110,11 +91,6 @@ describe('BandsController', () => {
       .spyOn(bandsService, 'updateBand')
       .mockRejectedValue(new ConflictException('Band already exists'))
 
-    const res: Partial<Response> = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn().mockReturnThis(),
-    }
-
     await controller.updateBand(updateBandData, res as Response)
 
     expect(bandUpdateSpy).toHaveBeenCalledWith(updateBandData)
@@ -131,11 +107,6 @@ describe('BandsController', () => {
       .spyOn(bandsService, 'deleteBand')
       .mockResolvedValue({ name: 'Test Band' } as Band)
 
-    const res: Partial<Response> = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    }
-
     await controller.deleteBand({ id }, res as Response)
 
     expect(deleteBandSpy).toHaveBeenCalledWith(id)
@@ -151,11 +122,6 @@ describe('BandsController', () => {
     const deleteBandSpy = jest
       .spyOn(bandsService, 'deleteBand')
       .mockRejectedValue(new NotFoundException('Band not found'))
-
-    const res: Partial<Response> = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    }
 
     await controller.deleteBand({ id }, res as Response)
 

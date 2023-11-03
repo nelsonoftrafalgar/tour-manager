@@ -15,6 +15,11 @@ describe('ConcertsController', () => {
   let controller: ConcertsController
   let concertService: ConcertsService
 
+  const res: Partial<Response> = {
+    status: jest.fn().mockReturnThis(),
+    json: jest.fn(),
+  }
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [ConcertsController],
@@ -29,15 +34,9 @@ describe('ConcertsController', () => {
   })
 
   it('should be able to get concerts list', () => {
-    expect(controller.getConcerts({ place: undefined })).toMatchObject(
+    expect(controller.getConcerts()).toMatchObject(
       mockConcertService.getConcerts(),
     )
-  })
-
-  it('should be able to get concert by band id', () => {
-    expect(
-      controller.getConcertsByBandId({ id: MOCK_CONCERT_ID }),
-    ).toMatchObject(mockConcertService.getConcertsByBandId())
   })
 
   it('should create a new concert and return a success response', async () => {
@@ -50,10 +49,6 @@ describe('ConcertsController', () => {
     jest
       .spyOn(concertService, 'createConcert')
       .mockResolvedValue(newConcertData)
-    const res: Partial<Response> = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    }
 
     await controller.createConcert(newConcertData, res as Response)
     expect(concertService.createConcert).toHaveBeenCalledWith(newConcertData)
@@ -67,11 +62,6 @@ describe('ConcertsController', () => {
     const concertCreateSpy = jest
       .spyOn(concertService, 'createConcert')
       .mockRejectedValue(new ConflictException('Concert already exists'))
-
-    const res: Partial<Response> = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn().mockReturnThis(),
-    }
 
     await controller.createConcert(newConcertData, res as Response)
 
@@ -88,11 +78,6 @@ describe('ConcertsController', () => {
     jest
       .spyOn(concertService, 'updateConcert')
       .mockResolvedValue(updatedConcert)
-
-    const res: Partial<Response> = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn().mockReturnThis(),
-    }
 
     await controller.updateConcert(updatedConcert, res as Response)
 
@@ -111,11 +96,6 @@ describe('ConcertsController', () => {
       .spyOn(concertService, 'updateConcert')
       .mockRejectedValue(new ConflictException('Concert already exists'))
 
-    const res: Partial<Response> = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn().mockReturnThis(),
-    }
-
     await controller.updateConcert(updateConcertData, res as Response)
 
     expect(concertUpdateSpy).toHaveBeenCalledWith(updateConcertData)
@@ -132,11 +112,6 @@ describe('ConcertsController', () => {
       .spyOn(concertService, 'deleteConcert')
       .mockResolvedValue({ place: 'Test concert place' } as Concert)
 
-    const res: Partial<Response> = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    }
-
     await controller.deleteConcert({ id }, res as Response)
 
     expect(deleteConcertSpy).toHaveBeenCalledWith(id)
@@ -152,11 +127,6 @@ describe('ConcertsController', () => {
     const deleteConcertSpy = jest
       .spyOn(concertService, 'deleteConcert')
       .mockRejectedValue(new NotFoundException('Concert not found'))
-
-    const res: Partial<Response> = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    }
 
     await controller.deleteConcert({ id }, res as Response)
 

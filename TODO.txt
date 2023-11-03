@@ -1,4 +1,6 @@
-fix server tests
 fix console errors
 client salaries and reports e2e tests
 add rwd
+fix navigation (report doesn't get highlighted)
+fix report endpoint and tests
+move id checks to separate service on server

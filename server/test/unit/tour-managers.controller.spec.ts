@@ -3,11 +3,7 @@ import {
   HttpStatus,
   NotFoundException,
 } from '@nestjs/common'
-import {
-  MOCK_TOUR_MANAGER_ID,
-  MOCK_TOUR_MANAGER_NAME,
-  mockTourManagerService,
-} from '../../test/mocks'
+import { MOCK_TOUR_MANAGER_ID, mockTourManagerService } from '../../test/mocks'
 import { Test, TestingModule } from '@nestjs/testing'
 
 import { Response } from 'express'
@@ -18,6 +14,11 @@ import { TourManagersService } from '../../src/tourManagers/tourManagers.service
 describe('TourManagersController', () => {
   let controller: TourManagersController
   let tourManagerService: TourManagersService
+
+  const res: Partial<Response> = {
+    status: jest.fn().mockReturnThis(),
+    json: jest.fn(),
+  }
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -33,9 +34,9 @@ describe('TourManagersController', () => {
   })
 
   it('should be able to get tour managers list', () => {
-    expect(
-      controller.getTourManagers({ name: MOCK_TOUR_MANAGER_NAME }),
-    ).toMatchObject(mockTourManagerService.getTourManagers())
+    expect(controller.getTourManagers()).toMatchObject(
+      mockTourManagerService.getTourManagers(),
+    )
   })
 
   it('should create a new tour manager and return a success response', async () => {
@@ -49,10 +50,6 @@ describe('TourManagersController', () => {
     jest
       .spyOn(tourManagerService, 'createTourManager')
       .mockResolvedValue(newTourManagerData)
-    const res: Partial<Response> = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    }
 
     await controller.createTourManager(newTourManagerData, res as Response)
     expect(tourManagerService.createTourManager).toHaveBeenCalledWith(
@@ -68,11 +65,6 @@ describe('TourManagersController', () => {
     const TourManagerCreateSpy = jest
       .spyOn(tourManagerService, 'createTourManager')
       .mockRejectedValue(new ConflictException('Tour manager already exists'))
-
-    const res: Partial<Response> = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn().mockReturnThis(),
-    }
 
     await controller.createTourManager(newTourManagerData, res as Response)
 
@@ -90,11 +82,6 @@ describe('TourManagersController', () => {
     jest
       .spyOn(tourManagerService, 'updateTourManager')
       .mockResolvedValue(updatedTourManager)
-
-    const res: Partial<Response> = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn().mockReturnThis(),
-    }
 
     await controller.updateTourManager(updatedTourManager, res as Response)
 
@@ -115,11 +102,6 @@ describe('TourManagersController', () => {
       .spyOn(tourManagerService, 'updateTourManager')
       .mockRejectedValue(new ConflictException('Tour manager already exists'))
 
-    const res: Partial<Response> = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn().mockReturnThis(),
-    }
-
     await controller.updateTourManager(updateTourManagerData, res as Response)
 
     expect(tourManagerUpdateSpy).toHaveBeenCalledWith(updateTourManagerData)
@@ -136,11 +118,6 @@ describe('TourManagersController', () => {
       .spyOn(tourManagerService, 'deleteTourManager')
       .mockResolvedValue({ name: 'Test Tour manager' } as TourManager)
 
-    const res: Partial<Response> = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    }
-
     await controller.deleteTourManager({ id }, res as Response)
 
     expect(deleteTourManagerSpy).toHaveBeenCalledWith(id)
@@ -156,11 +133,6 @@ describe('TourManagersController', () => {
     const deleteTourManagerSpy = jest
       .spyOn(tourManagerService, 'deleteTourManager')
       .mockRejectedValue(new NotFoundException('Tour manager not found'))
-
-    const res: Partial<Response> = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    }
 
     await controller.deleteTourManager({ id }, res as Response)
 

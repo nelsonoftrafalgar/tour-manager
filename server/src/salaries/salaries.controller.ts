@@ -20,6 +20,7 @@ import {
   CreateSalaryRequest,
   DeleteSalaryRequest,
   UpdateSalaryRequest,
+  SalaryReport,
 } from './salaries.dto'
 import { SalariesService } from './salaries.service'
 import { Response } from 'express'
@@ -35,19 +36,25 @@ export class SalariesController {
   }
 
   @Get('report')
-  @ApiOkResponse({ type: [Salary], description: 'Generate report' })
-  getReport(
+  @ApiOkResponse({ type: [SalaryReport], description: 'Generate report' })
+  async getReport(
     @Query('date') date: string,
     @Query('bandId') bandId: string,
     @Query('concertId') concertId: string,
     @Query('tourManagerId') tourManagerId: string,
+    @Res() res: Response,
   ) {
-    return this.salariesService.getReport({
-      date,
-      bandId,
-      concertId,
-      tourManagerId,
-    })
+    try {
+      const report = await this.salariesService.getReport({
+        date,
+        bandId,
+        concertId,
+        tourManagerId,
+      })
+      return report
+    } catch ({ message }) {
+      res.status(HttpStatus.NOT_FOUND).json({ message })
+    }
   }
 
   @Post()

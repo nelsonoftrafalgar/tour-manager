@@ -3,16 +3,15 @@ export const MOCK_TOUR_MANAGER_ID = '484c3155-78d2-4d0c-ab09-dab3768803e4'
 export const MOCK_CONCERT_ID = '2e756ddc-191a-4728-97a4-e90a6ffe4955'
 export const MOCK_DATE = '2021-03-06T17:30:05.519Z'
 export const MOCK_PLACE = 'Oslo'
-export const MOCK_AMOUNT = '12345'
+export const MOCK_AMOUNT = '$12345'
 export const MOCK_SALARY_ID = 'd471e2c6-0282-4314-98bc-49836809eb57'
 export const MOCK_BAND_NAME = 'Mock Band Name'
 export const MOCK_FRONTMAN = 'Mock front man'
 export const MOCK_TOUR_MANAGER_NAME = 'Mock Tour Manager Name'
+export const MOCK_COMMENT = 'mock comment'
 
 export const mockBandService = {
   getBands: () => [MOCK_BAND_NAME],
-  getBandNames: () => [MOCK_BAND_NAME],
-  getBandById: () => [MOCK_BAND_NAME],
   createBand: () => ({
     name: MOCK_BAND_NAME,
     frontMan: MOCK_FRONTMAN,
@@ -27,7 +26,6 @@ export const mockBandService = {
 
 export const mockConcertService = {
   getConcerts: () => [MOCK_PLACE],
-  getConcertsByBandId: () => [MOCK_PLACE],
   createConcert: () => ({
     date: MOCK_DATE,
     place: MOCK_PLACE,
@@ -45,22 +43,36 @@ export const mockConcertService = {
 }
 
 export const mockSalaryService = {
+  getSalaries: () => [
+    {
+      id: MOCK_SALARY_ID,
+      amount: MOCK_AMOUNT,
+      comment: MOCK_COMMENT,
+      band: { name: MOCK_BAND_NAME },
+      tourManager: { name: MOCK_TOUR_MANAGER_NAME },
+      concert: { id: MOCK_CONCERT_ID, date: MOCK_DATE, place: MOCK_PLACE },
+    },
+  ],
   createSalary: () => ({
     amount: MOCK_AMOUNT,
+    comment: MOCK_COMMENT,
     bandId: MOCK_BAND_ID,
     tourManagerId: MOCK_TOUR_MANAGER_ID,
     concertId: MOCK_CONCERT_ID,
   }),
-  getReport: () => ({
-    id: MOCK_SALARY_ID,
-    amount: MOCK_AMOUNT,
-    place: MOCK_PLACE,
-    bandName: MOCK_BAND_NAME,
-    tourManagerName: MOCK_TOUR_MANAGER_NAME,
-  }),
+  getReport: () => [
+    {
+      id: MOCK_SALARY_ID,
+      amount: MOCK_AMOUNT,
+      concert: { id: MOCK_CONCERT_ID, date: MOCK_DATE, place: MOCK_PLACE },
+      band: { name: MOCK_BAND_NAME },
+      tourManager: { name: MOCK_TOUR_MANAGER_NAME },
+    },
+  ],
   updateSalary: () => ({
     id: MOCK_SALARY_ID,
     amount: MOCK_AMOUNT,
+    comment: MOCK_COMMENT,
     bandId: MOCK_BAND_ID,
     tourManagerId: MOCK_TOUR_MANAGER_ID,
     concertId: MOCK_CONCERT_ID,

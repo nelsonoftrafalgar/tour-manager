@@ -49,34 +49,6 @@ describe('BandsController (e2e)', () => {
       .expect(mockBandService.getBands())
   })
 
-  it('should validate band name', async () => {
-    await request(app.getHttpServer())
-      .get('/bands')
-      .query({ name: 'Led!' })
-      .expect(400)
-  })
-
-  it('should get all band names', () => {
-    return request(app.getHttpServer())
-      .get('/bands/all_names')
-      .expect(200)
-      .expect(mockBandService.getBandNames())
-  })
-
-  it('should get band by id', () => {
-    return request(app.getHttpServer())
-      .get(`/bands/${MOCK_BAND_ID}`)
-      .expect(200)
-      .expect(mockBandService.getBandById())
-  })
-
-  it('should validate band id', async () => {
-    await request(app.getHttpServer())
-      .get('/bands')
-      .query({ id: `${MOCK_BAND_ID}!` })
-      .expect(400)
-  })
-
   it('should create new band', () => {
     return request(app.getHttpServer())
       .post('/bands')

@@ -47,13 +47,6 @@ describe('TourManagersController (e2e)', () => {
       .expect(mockTourManagerService.getTourManagers())
   })
 
-  it('should validate tour manager name', async () => {
-    await request(app.getHttpServer())
-      .get('/tour_managers')
-      .query({ name: 'Sam!' })
-      .expect(400)
-  })
-
   it('should create new tour manager', () => {
     return request(app.getHttpServer())
       .post('/tour_managers')

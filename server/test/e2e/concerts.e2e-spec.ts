@@ -50,27 +50,6 @@ describe('ConcertsController (e2e)', () => {
       .expect(mockConcertService.getConcerts())
   })
 
-  it('should validate concert place', async () => {
-    await request(app.getHttpServer())
-      .get('/concerts')
-      .query({ place: `${MOCK_PLACE}!` })
-      .expect(400)
-  })
-
-  it('should get concert by band id', () => {
-    return request(app.getHttpServer())
-      .get(`/concerts/${MOCK_CONCERT_ID}`)
-      .expect(200)
-      .expect(mockConcertService.getConcertsByBandId())
-  })
-
-  it('should validate band id', async () => {
-    await request(app.getHttpServer())
-      .get('/concerts')
-      .query({ id: `${MOCK_CONCERT_ID}!` })
-      .expect(400)
-  })
-
   it('should create new concert', () => {
     return request(app.getHttpServer())
       .post('/concerts')

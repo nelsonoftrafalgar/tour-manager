@@ -33,10 +33,6 @@ export class UpdateTourManagerRequest {
 
 export class CreateTourManagerRequest {
   @ApiProperty()
-  @IsUUID()
-  id: string
-
-  @ApiProperty()
   @MaxLength(250)
   @Matches(NAME_CONSTRAIN)
   @Matches(WHITESPACE_CONSTRAIN)
