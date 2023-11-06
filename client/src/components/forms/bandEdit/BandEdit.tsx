@@ -39,12 +39,12 @@ export const BandEdit: FC<BandEditProps> = ({ name, frontMan, id }) => {
 			<Controller
 				name='name'
 				control={control}
-				render={({ field }) => (
+				render={({ field: { value, onChange } }) => (
 					<Input
 						placeholder={t('bands.input_name_placeholder')}
 						label={t('bands.input_name_label')}
-						{...field}
-						ref={null}
+						onChange={onChange}
+						value={value}
 						errorMessage={errors.name?.message}
 					/>
 				)}
@@ -52,12 +52,12 @@ export const BandEdit: FC<BandEditProps> = ({ name, frontMan, id }) => {
 			<Controller
 				name='frontMan'
 				control={control}
-				render={({ field }) => (
+				render={({ field: { value, onChange } }) => (
 					<Input
 						placeholder={t('bands.input_frontMan_placeholder')}
 						label={t('bands.input_frontMan_label')}
-						{...field}
-						ref={null}
+						onChange={onChange}
+						value={value}
 						errorMessage={errors.frontMan?.message}
 					/>
 				)}

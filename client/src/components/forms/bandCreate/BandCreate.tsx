@@ -32,12 +32,12 @@ export const BandCreate: FC<BandCreateProps> = ({ handleModalClose }) => {
 			<Controller
 				name='name'
 				control={control}
-				render={({ field }) => (
+				render={({ field: { value, onChange } }) => (
 					<Input
 						placeholder={t('bands.input_name_placeholder')}
 						label={t('bands.input_name_label')}
-						{...field}
-						ref={null}
+						value={value}
+						onChange={onChange}
 						errorMessage={errors.name?.message}
 					/>
 				)}
@@ -45,12 +45,12 @@ export const BandCreate: FC<BandCreateProps> = ({ handleModalClose }) => {
 			<Controller
 				name='frontMan'
 				control={control}
-				render={({ field }) => (
+				render={({ field: { value, onChange } }) => (
 					<Input
 						placeholder={t('bands.input_frontMan_placeholder')}
 						label={t('bands.input_frontMan_label')}
-						{...field}
-						ref={null}
+						value={value}
+						onChange={onChange}
 						errorMessage={errors.frontMan?.message}
 					/>
 				)}

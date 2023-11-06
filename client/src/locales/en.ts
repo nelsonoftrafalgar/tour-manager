@@ -26,7 +26,7 @@ export default {
 		input_name_placeholder: 'Tour manager name',
 	},
 	concerts: {
-		search_placeholder: 'Filter by name',
+		search_placeholder: 'Filter by place',
 		add_new_concert: 'Add new concert',
 		input_place_placeholder: 'Concert place',
 		select_band_placeholder: 'Select band',

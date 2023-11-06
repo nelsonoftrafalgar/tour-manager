@@ -5,5 +5,6 @@ import { PrismaModule } from 'src/prisma/prisma.module'
 @Module({
   providers: [IdCheckerService],
   imports: [PrismaModule],
+  exports: [IdCheckerService],
 })
 export class IdCheckerModule {}

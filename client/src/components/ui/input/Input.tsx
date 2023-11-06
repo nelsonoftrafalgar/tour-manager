@@ -10,7 +10,7 @@ export const Input: FC<InputProps> = ({
 	label,
 	placeholder,
 	type = 'text',
-	value,
+	value = '',
 	onChange,
 }) => {
 	return (

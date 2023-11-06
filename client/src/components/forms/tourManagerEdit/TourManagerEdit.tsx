@@ -39,11 +39,11 @@ export const TourManagerEdit: FC<TourManagerEditProps> = ({
 				<Controller
 					name='name'
 					control={control}
-					render={({ field }) => (
+					render={({ field: { value, onChange } }) => (
 						<Input
 							placeholder={t('tourManagers.input_name_placeholder')}
-							{...field}
-							ref={null}
+							value={value}
+							onChange={onChange}
 							errorMessage={errors.name?.message}
 						/>
 					)}

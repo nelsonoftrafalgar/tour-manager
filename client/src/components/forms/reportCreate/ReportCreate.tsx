@@ -59,14 +59,17 @@ export const ReportCreate: FC<ReportCreateProps> = ({ handleReportData }) => {
 			<Controller
 				name='date'
 				control={control}
-				render={({ field }) => <RangePicker {...field} />}
+				render={({ field: { value, onChange } }) => (
+					<RangePicker value={value} onChange={onChange} />
+				)}
 			/>
 			<Controller
 				name='tourManagerId'
 				control={control}
-				render={({ field }) => (
+				render={({ field: { value, onChange } }) => (
 					<Select
-						{...field}
+						value={value}
+						onChange={onChange}
 						placeholder={t('concerts.select_tourManager_placeholder')}
 						label={t('concerts.select_tourManager_label')}
 						options={tourManagerOptions}
@@ -77,9 +80,10 @@ export const ReportCreate: FC<ReportCreateProps> = ({ handleReportData }) => {
 			<Controller
 				name='bandId'
 				control={control}
-				render={({ field }) => (
+				render={({ field: { value, onChange } }) => (
 					<Select
-						{...field}
+						value={value}
+						onChange={onChange}
 						placeholder={t('concerts.select_band_placeholder')}
 						label={t('concerts.select_band_label')}
 						options={bandOptions}
@@ -90,9 +94,10 @@ export const ReportCreate: FC<ReportCreateProps> = ({ handleReportData }) => {
 			<Controller
 				name='concertId'
 				control={control}
-				render={({ field }) => (
+				render={({ field: { value, onChange } }) => (
 					<Select
-						{...field}
+						value={value}
+						onChange={onChange}
 						placeholder={t('reports.select_concert_placeholder')}
 						label={t('reports.select_concert_label')}
 						options={concertOptions}

@@ -52,9 +52,10 @@ export const SalaryCreate = () => {
 			<Controller
 				name='concertId'
 				control={control}
-				render={({ field }) => (
+				render={({ field: { value, onChange } }) => (
 					<Select
-						{...field}
+						value={value}
+						onChange={onChange}
 						placeholder={t('salaries.select_concert_palceholder')}
 						label={t('salaries.select_concert_label')}
 						options={concerts.map(({ place, id }) => ({ label: place, value: id }))}
@@ -66,9 +67,10 @@ export const SalaryCreate = () => {
 			<Controller
 				name='amount'
 				control={control}
-				render={({ field }) => (
+				render={({ field: { value, onChange } }) => (
 					<Amount
-						{...field}
+						value={value}
+						onChange={onChange}
 						label={t('salaries.amount_label')}
 						errorMessage={errors.amount?.message}
 					/>
@@ -80,11 +82,12 @@ export const SalaryCreate = () => {
 				<Controller
 					name='comment'
 					control={control}
-					render={({ field }) => (
+					render={({ field: { value, onChange } }) => (
 						<Textarea
 							label={t('salaries.comment_label')}
 							placeholder={t('salaries.comment_placeholder')}
-							{...field}
+							value={value}
+							onChange={onChange}
 							errorMessage={errors.comment?.message}
 						/>
 					)}

@@ -55,12 +55,12 @@ export const ConcertEdit: FC<ConcertEditProps> = ({
 				<Controller
 					name='place'
 					control={control}
-					render={({ field }) => (
+					render={({ field: { value, onChange } }) => (
 						<Input
 							placeholder={t('concerts.input_place_placeholder')}
 							label={t('concerts.input_place_label')}
-							{...field}
-							ref={null}
+							value={value}
+							onChange={onChange}
 							errorMessage={errors.place?.message}
 						/>
 					)}
@@ -68,16 +68,21 @@ export const ConcertEdit: FC<ConcertEditProps> = ({
 				<Controller
 					name='date'
 					control={control}
-					render={({ field }) => (
-						<DatePicker {...field} errorMessage={errors.date?.message} />
+					render={({ field: { value, onChange } }) => (
+						<DatePicker
+							value={value}
+							onChange={onChange}
+							errorMessage={errors.date?.message}
+						/>
 					)}
 				/>
 				<Controller
 					name='bandId'
 					control={control}
-					render={({ field }) => (
+					render={({ field: { value, onChange } }) => (
 						<Select
-							{...field}
+							value={value}
+							onChange={onChange}
 							placeholder={t('concerts.select_band_placeholder')}
 							label={t('concerts.select_band_label')}
 							options={bands.map(({ name, id }) => ({ label: name, value: id }))}
@@ -87,9 +92,10 @@ export const ConcertEdit: FC<ConcertEditProps> = ({
 				<Controller
 					name='tourManagerId'
 					control={control}
-					render={({ field }) => (
+					render={({ field: { value, onChange } }) => (
 						<Select
-							{...field}
+							value={value}
+							onChange={onChange}
 							placeholder={t('concerts.select_tourManager_placeholder')}
 							label={t('concerts.select_tourManager_label')}
 							options={tourManagers.map(({ name, id }) => ({
