@@ -1,5 +1,4 @@
 fix console errors
 client salaries and reports e2e tests
 add rwd
-fix navigation (report doesn't get highlighted)
 move id checks to separate service on server

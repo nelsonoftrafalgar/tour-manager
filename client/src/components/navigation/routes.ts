@@ -3,5 +3,5 @@ export const ROUTES = {
 	tourManagers: '/en/tour-managers',
 	concerts: '/en/concerts',
 	salaries: '/en/salaries',
-	reports: './reports',
+	reports: '/en/reports',
 }
