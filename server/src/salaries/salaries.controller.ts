@@ -9,6 +9,7 @@ import {
   Put,
   Res,
   Query,
+  ParseUUIDPipe,
 } from '@nestjs/common'
 import {
   ApiConflictResponse,
@@ -39,9 +40,9 @@ export class SalariesController {
   @ApiOkResponse({ type: [SalaryReport], description: 'Generate report' })
   async getReport(
     @Query('date') date: string,
-    @Query('bandId') bandId: string,
-    @Query('concertId') concertId: string,
-    @Query('tourManagerId') tourManagerId: string,
+    @Query('bandId', ParseUUIDPipe) bandId: string,
+    @Query('concertId', ParseUUIDPipe) concertId: string,
+    @Query('tourManagerId', ParseUUIDPipe) tourManagerId: string,
     @Res() res: Response,
   ) {
     try {
@@ -51,7 +52,7 @@ export class SalariesController {
         concertId,
         tourManagerId,
       })
-      return report
+      res.status(HttpStatus.OK).json(report)
     } catch ({ message }) {
       res.status(HttpStatus.NOT_FOUND).json({ message })
     }

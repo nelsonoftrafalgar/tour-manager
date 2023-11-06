@@ -6,6 +6,7 @@ import {
   MOCK_BAND_ID,
   MOCK_COMMENT,
   MOCK_CONCERT_ID,
+  MOCK_DATE,
   MOCK_SALARY_ID,
   MOCK_TOUR_MANAGER_ID,
   mockSalaryService,
@@ -36,47 +37,50 @@ describe('SalariesController (e2e)', () => {
     await app.init()
   })
 
-  // it('should get report', () => {
-  //   return request(app.getHttpServer())
-  //     .get('/salaries/report')
-  //     .query({
-  //       date: MOCK_DATE,
-  //       bandId: MOCK_BAND_ID,
-  //       tourManagerId: MOCK_TOUR_MANAGER_ID,
-  //       concertId: MOCK_CONCERT_ID,
-  //     })
-  //     .expect(200)
-  //     .expect(mockSalaryService.getReport())
-  // })
+  it('should get report', () => {
+    return request(app.getHttpServer())
+      .get('/salaries/report')
+      .query({
+        date: MOCK_DATE,
+        bandId: MOCK_BAND_ID,
+        tourManagerId: MOCK_TOUR_MANAGER_ID,
+        concertId: MOCK_CONCERT_ID,
+      })
+      .expect(200)
+      .expect(mockSalaryService.getReport())
+  })
 
-  // it('should validate report params', async () => {
-  //   await request(app.getHttpServer())
-  //     .get('/salaries')
-  //     .query({
-  //       bandId: `${MOCK_BAND_ID}!`,
-  //       tourManagerId: MOCK_TOUR_MANAGER_ID,
-  //       concertId: MOCK_CONCERT_ID,
-  //     })
-  //     .expect(400)
+  it('should validate report params', async () => {
+    await request(app.getHttpServer())
+      .get('/salaries/report')
+      .query({
+        date: MOCK_DATE,
+        bandId: `${MOCK_BAND_ID}!`,
+        tourManagerId: MOCK_TOUR_MANAGER_ID,
+        concertId: MOCK_CONCERT_ID,
+      })
+      .expect(400)
 
-  //   await request(app.getHttpServer())
-  //     .get('/salaries')
-  //     .query({
-  //       bandId: MOCK_BAND_ID,
-  //       tourManagerId: `${MOCK_TOUR_MANAGER_ID}!`,
-  //       concertId: MOCK_CONCERT_ID,
-  //     })
-  //     .expect(400)
+    await request(app.getHttpServer())
+      .get('/salaries/report')
+      .query({
+        date: MOCK_DATE,
+        bandId: MOCK_BAND_ID,
+        tourManagerId: `${MOCK_TOUR_MANAGER_ID}!`,
+        concertId: MOCK_CONCERT_ID,
+      })
+      .expect(400)
 
-  //   await request(app.getHttpServer())
-  //     .get('/salaries')
-  //     .query({
-  //       bandId: MOCK_BAND_ID,
-  //       tourManagerId: MOCK_TOUR_MANAGER_ID,
-  //       concertId: `${MOCK_CONCERT_ID}!`,
-  //     })
-  //     .expect(400)
-  // })
+    await request(app.getHttpServer())
+      .get('/salaries/report')
+      .query({
+        date: MOCK_DATE,
+        bandId: MOCK_BAND_ID,
+        tourManagerId: MOCK_TOUR_MANAGER_ID,
+        concertId: `${MOCK_CONCERT_ID}!`,
+      })
+      .expect(400)
+  })
 
   it('should create new salary', () => {
     return request(app.getHttpServer())

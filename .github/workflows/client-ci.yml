@@ -28,11 +28,5 @@ jobs:
    - name: Install Dependencies
      run: yarn install
 
-   - name: Start Next.js Application
-     run: yarn run dev &
-
-   - name: Wait for Next.js to start
-     run: sleep 5s
-
    - name: Run TypeScript Type Check
      run: yarn type-check

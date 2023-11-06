@@ -47,7 +47,7 @@ describe('SalariesController', () => {
       .spyOn(salaryService, 'getReport')
       .mockResolvedValue(newReportData)
 
-    const result = await controller.getReport(
+    await controller.getReport(
       MOCK_DATE,
       MOCK_BAND_ID,
       MOCK_CONCERT_ID,
@@ -61,7 +61,8 @@ describe('SalariesController', () => {
       tourManagerId: MOCK_TOUR_MANAGER_ID,
       concertId: MOCK_CONCERT_ID,
     })
-    expect(result).toEqual(newReportData)
+    expect(res.status).toHaveBeenCalledWith(200)
+    expect(res.json).toHaveBeenCalledWith(newReportData)
   })
 
   it('should be able to return error message if band was not found', async () => {
