@@ -1,16 +1,16 @@
 import { Band, CreateBandRequest, UpdateBandRequest } from './bands.dto'
-import {
-  ConflictException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common'
+import { ConflictException, Injectable } from '@nestjs/common'
 
+import { IdCheckerService } from '../../src/idChecker/IdChecker.service'
 import { PrismaService } from '../../src/prisma/prisma.service'
 import { v4 as uuid } from 'uuid'
 
 @Injectable()
 export class BandsService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private idChecker: IdCheckerService,
+  ) {}
 
   async getBands(): Promise<Band[]> {
     return this.prisma.band.findMany()
@@ -41,11 +41,7 @@ export class BandsService {
   }
 
   async deleteBand(id: string): Promise<Band> | null {
-    const band = await this.prisma.band.findUnique({ where: { id } })
-
-    if (!band) {
-      throw new NotFoundException({ message: `Band not found` })
-    }
+    await this.idChecker.checkBandId(id)
 
     return this.prisma.band.delete({ where: { id } })
   }

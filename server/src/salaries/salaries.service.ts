@@ -1,8 +1,4 @@
-import {
-  ConflictException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common'
+import { ConflictException, Injectable } from '@nestjs/common'
 import {
   CreateSalaryRequest,
   DuplicateSalaryCheckParams,
@@ -13,12 +9,16 @@ import {
   UpdateSalaryRequest,
 } from './salaries.dto'
 
+import { IdCheckerService } from '../../src/idChecker/IdChecker.service'
 import { PrismaService } from '../../src/prisma/prisma.service'
 import { v4 as uuid } from 'uuid'
 
 @Injectable()
 export class SalariesService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private idChecker: IdCheckerService,
+  ) {}
 
   async getSalaries(): Promise<GetSalaryResponse[]> {
     return this.prisma.salary.findMany({
@@ -77,15 +77,15 @@ export class SalariesService {
     const [startDate, endDate] = date.split('_')
 
     if (concertId) {
-      await this.checkConcertId(concertId)
+      await this.idChecker.checkConcertId(concertId)
       where = { concertId: concertId }
     }
     if (tourManagerId) {
-      await this.checkTourManagerId(tourManagerId)
+      await this.idChecker.checkTourManagerId(tourManagerId)
       where = { tourManagerId: tourManagerId }
     }
     if (bandId) {
-      await this.checkBandId(bandId)
+      await this.idChecker.checkBandId(bandId)
       where = { bandId: bandId }
     }
 
@@ -113,7 +113,7 @@ export class SalariesService {
   }
 
   async deleteSalary(id: string) {
-    await this.checkSalaryId(id)
+    await this.idChecker.checkSalaryId(id)
     return this.prisma.salary.delete({ where: { id } })
   }
 
@@ -155,41 +155,6 @@ export class SalariesService {
 
     if (duplicates.length > 0) {
       throw new ConflictException()
-    }
-  }
-
-  async checkConcertId(id: string) {
-    const concert = await this.prisma.concert.findUnique({
-      where: { id },
-    })
-    if (!concert) {
-      throw new NotFoundException({ message: `Concert not found` })
-    }
-  }
-
-  async checkBandId(id: string) {
-    const band = await this.prisma.band.findUnique({
-      where: { id },
-    })
-    if (!band) {
-      throw new NotFoundException({ message: `Band not found` })
-    }
-  }
-
-  async checkTourManagerId(id: string) {
-    const tourManager = await this.prisma.tourManager.findUnique({
-      where: { id },
-    })
-    if (!tourManager) {
-      throw new NotFoundException({ message: `Tour manager not found` })
-    }
-  }
-
-  async checkSalaryId(id: string) {
-    const salary = await this.prisma.salary.findUnique({ where: { id } })
-
-    if (!salary) {
-      throw new NotFoundException({ message: `Salary not found` })
     }
   }
 }

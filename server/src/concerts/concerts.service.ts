@@ -4,18 +4,18 @@ import {
   GetConcertResponse,
   UpdateConcertRequest,
 } from './concerts.dto'
-import {
-  ConflictException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common'
+import { ConflictException, Injectable } from '@nestjs/common'
 
+import { IdCheckerService } from '../../src/idChecker/IdChecker.service'
 import { PrismaService } from '../../src/prisma/prisma.service'
 import { v4 as uuid } from 'uuid'
 
 @Injectable()
 export class ConcertsService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private idChecker: IdCheckerService,
+  ) {}
 
   async getConcerts(): Promise<GetConcertResponse[]> {
     return this.prisma.concert.findMany({
@@ -72,12 +72,7 @@ export class ConcertsService {
   }
 
   async deleteConcert(id: string): Promise<Concert> | null {
-    const concert = await this.prisma.concert.findUnique({ where: { id } })
-
-    if (!concert) {
-      throw new NotFoundException({ message: `Concert not found` })
-    }
-
+    await this.idChecker.checkConcertId(id)
     return this.prisma.concert.delete({ where: { id } })
   }
 

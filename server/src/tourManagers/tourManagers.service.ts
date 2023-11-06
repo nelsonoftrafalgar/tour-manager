@@ -1,20 +1,20 @@
-import {
-  ConflictException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common'
+import { ConflictException, Injectable } from '@nestjs/common'
 import {
   CreateTourManagerRequest,
   TourManager,
   UpdateTourManagerRequest,
 } from './tourManagers.dto'
 
+import { IdCheckerService } from '../../src/idChecker/IdChecker.service'
 import { PrismaService } from '../../src/prisma/prisma.service'
 import { v4 as uuid } from 'uuid'
 
 @Injectable()
 export class TourManagersService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private idChecker: IdCheckerService,
+  ) {}
   async getTourManagers(): Promise<TourManager[]> {
     return this.prisma.tourManager.findMany()
   }
@@ -46,11 +46,7 @@ export class TourManagersService {
   }
 
   async deleteTourManager(id: string): Promise<TourManager> | null {
-    const band = await this.prisma.tourManager.findUnique({ where: { id } })
-
-    if (!band) {
-      throw new NotFoundException({ message: `Tour manager not found` })
-    }
+    await this.idChecker.checkTourManagerId(id)
 
     return this.prisma.tourManager.delete({ where: { id } })
   }
