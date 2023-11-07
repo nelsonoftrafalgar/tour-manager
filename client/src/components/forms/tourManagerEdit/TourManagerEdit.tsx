@@ -1,11 +1,11 @@
-import { Controller, useForm } from 'react-hook-form'
 import { EditWrapper, SaveIcon } from './styles'
 import React, { FC } from 'react'
 import { TourManagerEditFormData, TourManagerEditProps } from './types'
 
-import { Input } from '@/components/ui/input/Input'
+import { FormInput } from '../formFields/FormInput'
 import { getTourManagerSchema } from '../validation'
 import { trimData } from '../utils'
+import { useForm } from 'react-hook-form'
 import { useI18n } from '@/locales/client'
 import { useTourManagerEditMutation } from '@/api/mutations/useTourManagerEditMutation'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -18,7 +18,7 @@ export const TourManagerEdit: FC<TourManagerEditProps> = ({
 	const t = useI18n()
 	const {
 		control,
-		formState: { errors, isDirty, isSubmitting },
+		formState: { isDirty, isSubmitting },
 		handleSubmit,
 	} = useForm<TourManagerEditFormData>({
 		resolver: yupResolver(getTourManagerSchema(t)),
@@ -36,17 +36,10 @@ export const TourManagerEdit: FC<TourManagerEditProps> = ({
 	return (
 		<>
 			<EditWrapper>
-				<Controller
+				<FormInput
+					placeholder={t('tourManagers.input_name_placeholder')}
 					name='name'
 					control={control}
-					render={({ field: { value, onChange } }) => (
-						<Input
-							placeholder={t('tourManagers.input_name_placeholder')}
-							value={value}
-							onChange={onChange}
-							errorMessage={errors.name?.message}
-						/>
-					)}
 				/>
 			</EditWrapper>
 			{isDirty && !isSubmitting && (

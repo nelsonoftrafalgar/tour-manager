@@ -1,14 +1,14 @@
 import { BandCreateFormData, BandCreateProps } from './types'
-import { Controller, useForm } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button/Button'
 import { FC } from 'react'
 import { Form } from '@/components/ui/form/styles'
-import { Input } from '@/components/ui/input/Input'
+import { FormInput } from '../formFields/FormInput'
 import { LoaderIcon } from '@/components/ui/loader/styles'
 import { getBandSchema } from '../validation'
 import { trimData } from '../utils'
 import { useBandCreateMutation } from '@/api/mutations/useBandCreateMutation'
+import { useForm } from 'react-hook-form'
 import { useI18n } from '@/locales/client'
 import { yupResolver } from '@hookform/resolvers/yup'
 
@@ -16,7 +16,7 @@ export const BandCreate: FC<BandCreateProps> = ({ handleModalClose }) => {
 	const t = useI18n()
 	const mutation = useBandCreateMutation(handleModalClose)
 	const {
-		formState: { errors, isSubmitting },
+		formState: { isSubmitting },
 		control,
 		handleSubmit,
 	} = useForm<BandCreateFormData>({
@@ -29,32 +29,19 @@ export const BandCreate: FC<BandCreateProps> = ({ handleModalClose }) => {
 
 	return (
 		<Form onSubmit={handleSubmit(onSubmit)}>
-			<Controller
+			<FormInput
+				placeholder={t('bands.input_name_placeholder')}
+				label={t('bands.input_name_label')}
 				name='name'
 				control={control}
-				render={({ field: { value, onChange } }) => (
-					<Input
-						placeholder={t('bands.input_name_placeholder')}
-						label={t('bands.input_name_label')}
-						value={value}
-						onChange={onChange}
-						errorMessage={errors.name?.message}
-					/>
-				)}
 			/>
-			<Controller
+			<FormInput
+				placeholder={t('bands.input_frontMan_placeholder')}
+				label={t('bands.input_frontMan_label')}
 				name='frontMan'
 				control={control}
-				render={({ field: { value, onChange } }) => (
-					<Input
-						placeholder={t('bands.input_frontMan_placeholder')}
-						label={t('bands.input_frontMan_label')}
-						value={value}
-						onChange={onChange}
-						errorMessage={errors.frontMan?.message}
-					/>
-				)}
 			/>
+
 			<Button disabled={isSubmitting} buttonStyle='primary'>
 				{isSubmitting && <LoaderIcon />}
 				{t('forms.add')}

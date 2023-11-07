@@ -1,18 +1,18 @@
 import { ConcertEditFormData, ConcertEditProps } from './types'
-import { Controller, useForm } from 'react-hook-form'
 import { FC, useEffect } from 'react'
 
 import { Button } from '@/components/ui/button/Button'
 import { ConcertEditWrapper } from './styles'
-import { DatePicker } from '@/components/ui/datePicker/DatePicker'
 import { Form } from '@/components/ui/form/styles'
-import { Input } from '@/components/ui/input/Input'
+import { FormDatePicker } from '../formFields/FormDatePicker'
+import { FormInput } from '../formFields/FormInput'
+import { FormSelect } from '../formFields/FormSelect'
 import { LoaderIcon } from '@/components/ui/loader/styles'
-import { Select } from '@/components/ui/select/Select'
 import { getConcertSchema } from '../validation'
 import { trimData } from '../utils'
 import { useBandsQuery } from '@/api/queries/useBandsQuery'
 import { useConcertEditMutation } from '@/api/mutations/useConcertEditMutation'
+import { useForm } from 'react-hook-form'
 import { useI18n } from '@/locales/client'
 import { useTourManagersQuery } from '@/api/queries/useTourManagerQuery'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -29,7 +29,7 @@ export const ConcertEdit: FC<ConcertEditProps> = ({
 	const { data: tourManagers } = useTourManagersQuery()
 	const mutation = useConcertEditMutation()
 	const {
-		formState: { errors, isDirty, isSubmitting, isSubmitSuccessful },
+		formState: { isDirty, isSubmitting, isSubmitSuccessful },
 		control,
 		handleSubmit,
 		reset,
@@ -52,58 +52,29 @@ export const ConcertEdit: FC<ConcertEditProps> = ({
 	return (
 		<ConcertEditWrapper>
 			<Form onSubmit={handleSubmit(onSubmit)}>
-				<Controller
+				<FormInput
+					placeholder={t('concerts.input_place_placeholder')}
+					label={t('concerts.input_place_label')}
 					name='place'
 					control={control}
-					render={({ field: { value, onChange } }) => (
-						<Input
-							placeholder={t('concerts.input_place_placeholder')}
-							label={t('concerts.input_place_label')}
-							value={value}
-							onChange={onChange}
-							errorMessage={errors.place?.message}
-						/>
-					)}
 				/>
-				<Controller
-					name='date'
-					control={control}
-					render={({ field: { value, onChange } }) => (
-						<DatePicker
-							value={value}
-							onChange={onChange}
-							errorMessage={errors.date?.message}
-						/>
-					)}
-				/>
-				<Controller
+				<FormDatePicker name='date' control={control} />
+				<FormSelect
 					name='bandId'
 					control={control}
-					render={({ field: { value, onChange } }) => (
-						<Select
-							value={value}
-							onChange={onChange}
-							placeholder={t('concerts.select_band_placeholder')}
-							label={t('concerts.select_band_label')}
-							options={bands.map(({ name, id }) => ({ label: name, value: id }))}
-						/>
-					)}
+					placeholder={t('concerts.select_band_placeholder')}
+					label={t('concerts.select_band_label')}
+					options={bands.map(({ name, id }) => ({ label: name, value: id }))}
 				/>
-				<Controller
+				<FormSelect
 					name='tourManagerId'
 					control={control}
-					render={({ field: { value, onChange } }) => (
-						<Select
-							value={value}
-							onChange={onChange}
-							placeholder={t('concerts.select_tourManager_placeholder')}
-							label={t('concerts.select_tourManager_label')}
-							options={tourManagers.map(({ name, id }) => ({
-								label: name,
-								value: id,
-							}))}
-						/>
-					)}
+					placeholder={t('concerts.select_tourManager_placeholder')}
+					label={t('concerts.select_tourManager_label')}
+					options={tourManagers.map(({ name, id }) => ({
+						label: name,
+						value: id,
+					}))}
 				/>
 				<Button disabled={!isDirty || isSubmitting} buttonStyle='primary'>
 					{isSubmitting && <LoaderIcon />}

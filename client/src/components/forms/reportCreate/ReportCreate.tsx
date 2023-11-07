@@ -1,20 +1,20 @@
 'use client'
 
-import { Controller, useForm } from 'react-hook-form'
 import { ReportCreateFormData, ReportCreateProps } from './types'
 
 import { Button } from '@/components/ui/button/Button'
 import { ButtonWrapper } from './styles'
 import { FC } from 'react'
 import { Form } from '@/components/ui/form/styles'
+import { FormRangePicker } from '../formFields/FormRangePicker'
+import { FormSelect } from '../formFields/FormSelect'
 import { LoaderIcon } from '@/components/ui/loader/styles'
-import { RangePicker } from '@/components/ui/datePicker/RangePicker'
-import { Select } from '@/components/ui/select/Select'
 import { getReportSchema } from '../validation'
 import { getSelectOptions } from './utils'
 import { trimData } from '../utils'
 import { useBandsQuery } from '@/api/queries/useBandsQuery'
 import { useConcertsQuery } from '@/api/queries/useConcertsQuery'
+import { useForm } from 'react-hook-form'
 import { useI18n } from '@/locales/client'
 import { useTourManagersQuery } from '@/api/queries/useTourManagerQuery'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -27,7 +27,7 @@ export const ReportCreate: FC<ReportCreateProps> = ({ handleReportData }) => {
 	const { data: concerts } = useConcertsQuery()
 
 	const {
-		formState: { errors, isSubmitting },
+		formState: { isSubmitting },
 		control,
 		handleSubmit,
 		watch,
@@ -56,54 +56,27 @@ export const ReportCreate: FC<ReportCreateProps> = ({ handleReportData }) => {
 
 	return (
 		<Form onSubmit={handleSubmit(onSubmit)}>
-			<Controller
-				name='date'
-				control={control}
-				render={({ field: { value, onChange } }) => (
-					<RangePicker value={value} onChange={onChange} />
-				)}
-			/>
-			<Controller
+			<FormRangePicker name='date' control={control} />
+			<FormSelect
 				name='tourManagerId'
 				control={control}
-				render={({ field: { value, onChange } }) => (
-					<Select
-						value={value}
-						onChange={onChange}
-						placeholder={t('concerts.select_tourManager_placeholder')}
-						label={t('concerts.select_tourManager_label')}
-						options={tourManagerOptions}
-						errorMessage={errors.tourManagerId?.message}
-					/>
-				)}
+				placeholder={t('concerts.select_tourManager_placeholder')}
+				label={t('concerts.select_tourManager_label')}
+				options={tourManagerOptions}
 			/>
-			<Controller
+			<FormSelect
 				name='bandId'
 				control={control}
-				render={({ field: { value, onChange } }) => (
-					<Select
-						value={value}
-						onChange={onChange}
-						placeholder={t('concerts.select_band_placeholder')}
-						label={t('concerts.select_band_label')}
-						options={bandOptions}
-						errorMessage={errors.bandId?.message}
-					/>
-				)}
+				placeholder={t('concerts.select_band_placeholder')}
+				label={t('concerts.select_band_label')}
+				options={bandOptions}
 			/>
-			<Controller
+			<FormSelect
 				name='concertId'
 				control={control}
-				render={({ field: { value, onChange } }) => (
-					<Select
-						value={value}
-						onChange={onChange}
-						placeholder={t('reports.select_concert_placeholder')}
-						label={t('reports.select_concert_label')}
-						options={concertOptions}
-						errorMessage={errors.bandId?.message}
-					/>
-				)}
+				placeholder={t('reports.select_concert_placeholder')}
+				label={t('reports.select_concert_label')}
+				options={concertOptions}
 			/>
 			<ButtonWrapper>
 				<Button disabled={isSubmitting} buttonStyle='primary'>

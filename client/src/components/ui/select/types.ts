@@ -7,7 +7,7 @@ export interface SelectProps {
 	errorMessage?: string
 }
 
-interface SelectOption {
+export interface SelectOption {
 	label: string
 	value: string
 }
