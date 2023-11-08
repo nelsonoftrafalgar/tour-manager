@@ -40,9 +40,11 @@ export class SalariesController {
   @ApiOkResponse({ type: [SalaryReport], description: 'Generate report' })
   async getReport(
     @Query('date') date: string,
-    @Query('bandId', ParseUUIDPipe) bandId: string,
-    @Query('concertId', ParseUUIDPipe) concertId: string,
-    @Query('tourManagerId', ParseUUIDPipe) tourManagerId: string,
+    @Query('bandId', new ParseUUIDPipe({ optional: true })) bandId: string,
+    @Query('concertId', new ParseUUIDPipe({ optional: true }))
+    concertId: string,
+    @Query('tourManagerId', new ParseUUIDPipe({ optional: true }))
+    tourManagerId: string,
     @Res() res: Response,
   ) {
     try {
