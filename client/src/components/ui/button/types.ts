@@ -8,3 +8,10 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 		| [string, ReactElement | false]
 		| string
 }
+
+export interface StyledButtonProps
+	extends ButtonHTMLAttributes<HTMLButtonElement> {
+	$type: 'primary' | 'secondary' | 'warning'
+	$hasLeftIcon: boolean
+	$hasRightIcon: boolean
+}

@@ -1,5 +1,6 @@
 'use client'
 
+import { media } from '@/styles/media'
 import * as Dialog from '@radix-ui/react-dialog'
 
 import styled, { keyframes } from 'styled-components'
@@ -67,6 +68,11 @@ export const DialogContent = styled(Dialog.Content)`
 	left: 50%;
 	transform: translate(-50%, -50%);
 	animation: ${contentShow} 150ms cubic-bezier(0.16, 1, 0.3, 1);
+	width: 95%;
+
+	${media.md`
+		width: unset;
+	`}
 
 	&:focus {
 		outline: none;

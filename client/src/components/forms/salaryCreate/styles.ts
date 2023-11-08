@@ -1,11 +1,19 @@
+import { media } from '@/styles/media'
 import styled from 'styled-components'
 
 export const CommentWrapper = styled.div`
 	display: flex;
-	align-items: center;
+	align-items: stretch;
 	order: 1;
-	width: 70%;
+	width: 100%;
 	gap: 40px;
+	flex-direction: column;
+
+	${media.sm`
+		align-items: center;
+		flex-direction: row;
+		width: 70%;
+	`}
 `
 
 export const ConcertDetailsWrapper = styled.div`

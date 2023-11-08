@@ -3,6 +3,7 @@
 import styled, { css } from 'styled-components'
 
 import { Label } from '@radix-ui/react-label'
+import { media } from '@/styles/media'
 
 export const DatePickerWrapper = styled.div<{ $error?: boolean }>`
 	margin-bottom: ${({ $error }) => ($error ? 0 : 25)}px;
@@ -46,6 +47,10 @@ export const DatePickerWrapper = styled.div<{ $error?: boolean }>`
 		padding: ${({ theme }) => theme.gridUnit * 2.5}px;
 		border-radius: ${({ theme }) => theme.borderRadius}px;
 		outline: none;
+		width: 137px;
+		${media.sm`
+			width: unset;
+		`}
 		${({ theme, $error }) =>
 			$error &&
 			css`
@@ -62,7 +67,10 @@ export const StyledLabel = styled(Label)`
 	font-size: ${({ theme }) => theme.fonts.size.xs}px;
 	font-weight: ${({ theme }) => theme.fonts.weight.bold};
 	display: flex;
-	gap: 140px;
+	gap: 95px;
+	${media.sm`
+		gap: 140px;
+	`}
 	margin-bottom: ${({ theme }) => theme.gridUnit * 2.5}px;
 `
 

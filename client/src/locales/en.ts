@@ -13,6 +13,13 @@ export default {
 		salaries: 'Salaries',
 		reports: 'Reports',
 	},
+	mobileRoutes: {
+		bands: 'B',
+		tour_managers: 'T',
+		concerts: 'C',
+		salaries: 'S',
+		reports: 'R',
+	},
 	bands: {
 		search_placeholder: 'Filter by name',
 		add_new_band: 'Add new band',

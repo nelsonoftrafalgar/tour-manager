@@ -3,8 +3,9 @@ import styled from 'styled-components'
 
 export const Wrapper = styled.div`
 	display: grid;
-	grid-template-columns: repeat(6, 1fr);
+	grid-template-columns: repeat(auto-fill, 180px);
 	grid-gap: ${({ theme }) => theme.gridUnit * 4}px;
+	justify-content: space-between;
 `
 export const CreateWrapper = styled.div`
 	height: 100px;

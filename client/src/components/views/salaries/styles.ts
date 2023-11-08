@@ -9,6 +9,7 @@ export const SalaryListHeader = styled.ul`
 	background-color: ${({ theme }) => theme.colors.secondary.mint};
 	margin-top: ${({ theme }) => theme.gridUnit * 4}px;
 	border-radius: ${({ theme }) => theme.borderRadius}px;
+	flex-wrap: wrap;
 `
 
 export const SalaryBoxWrapper = styled.div`
@@ -35,6 +36,7 @@ export const SalaryDetailsList = styled.ul`
 	gap: 20px;
 	list-style-type: none;
 	width: 100%;
+	flex-wrap: wrap;
 `
 
 export const SalaryDetailsItem = styled.li<{ $amount?: boolean }>`

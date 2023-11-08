@@ -6,6 +6,7 @@ export const ReportDetailsList = styled.ul`
 	gap: 20px;
 	list-style-type: none;
 	width: 100%;
+	flex-wrap: wrap;
 `
 
 export const ReportDetailsItem = styled.li<{ $amount?: boolean }>`

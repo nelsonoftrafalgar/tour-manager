@@ -1,9 +1,17 @@
+import { media } from '@/styles/media'
 import styled from 'styled-components'
 
 export const CommentWrapper = styled.div`
 	display: flex;
-	align-items: center;
 	order: 1;
-	width: 70%;
+	width: 100%;
 	gap: 40px;
+	flex-direction: column;
+	align-items: stretch;
+
+	${media.lg`
+		width: 70%;
+		flex-direction: row;
+		align-items: center;
+	`}
 `

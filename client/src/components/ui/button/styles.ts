@@ -1,14 +1,8 @@
 'use client'
 
 import { Button } from '@radix-ui/themes'
-import { ButtonHTMLAttributes } from 'react'
 import styled from 'styled-components'
-
-interface StyledButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-	$type: 'primary' | 'secondary' | 'warning'
-	$hasLeftIcon: boolean
-	$hasRightIcon: boolean
-}
+import { StyledButtonProps } from './types'
 
 export const StyledButton = styled(Button)<StyledButtonProps>`
 	background-color: ${({ theme, $type }) =>
@@ -35,6 +29,7 @@ export const StyledButton = styled(Button)<StyledButtonProps>`
 	}
 	display: flex;
 	align-items: center;
+	justify-content: center;
 	svg {
 		margin-left: ${({ theme, $hasRightIcon }) =>
 			$hasRightIcon ? theme.gridUnit * 2 : 0}px;
