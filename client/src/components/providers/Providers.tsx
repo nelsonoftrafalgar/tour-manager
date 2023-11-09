@@ -2,7 +2,7 @@
 
 import 'react-toastify/dist/ReactToastify.css'
 
-import { FC, PropsWithChildren } from 'react'
+import { FC, ReactElement } from 'react'
 
 import GlobalStyles from '@/styles/GlobalStyles'
 import { I18nProviderClient } from '@/locales/client'
@@ -12,10 +12,15 @@ import { ThemeProvider } from 'styled-components'
 import { ToastContainer } from 'react-toastify'
 import { theme } from '@/styles/Theme'
 
-const Providers: FC<PropsWithChildren> = ({ children }) => {
+interface ProvidersProps {
+	locale: string
+	children: ReactElement
+}
+
+const Providers: FC<ProvidersProps> = ({ locale, children }) => {
 	return (
 		<ReactQueryProvider>
-			<I18nProviderClient>
+			<I18nProviderClient locale={locale}>
 				<StyledComponentsRegistry>
 					<ThemeProvider theme={theme}>
 						<GlobalStyles />

@@ -1,2 +1,1 @@
-translation keys are initialy visible after page load
 refactor e2e tests
