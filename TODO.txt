@@ -1,2 +1,2 @@
-client reports e2e tests
-set range picker to 1 month by default
+translation keys are initialy visible after page load
+refactor e2e tests

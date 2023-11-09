@@ -12,7 +12,9 @@ import { useI18n } from '@/locales/client'
 export const RangePicker: FC<RangePickerProps> = ({ onChange }) => {
 	const t = useI18n()
 	const [startDate, setStartDate] = useState<Date | null>(new Date())
-	const [endDate, setEndDate] = useState<Date | null>(new Date())
+	const [endDate, setEndDate] = useState<Date | null>(
+		new Date(new Date().setDate(new Date().getDate() + 30))
+	)
 
 	useEffect(() => {
 		onChange(`${startDate?.toISOString()}_${endDate?.toISOString()}`)

@@ -172,7 +172,7 @@ describe('Salary edit form', () => {
 })
 
 describe('Salary delete', () => {
-	it.only('should delete salary', () => {
+	it('should delete salary', () => {
 		cy.visit('/en/salaries')
 		cy
 			.intercept('GET', 'http://localhost:8000/api/concerts', {
