@@ -16,7 +16,7 @@ export const ConcertDetails: FC<ConcertDetailsProps> = ({ concertId }) => {
 	const { data } = useConcertsQuery()
 	const { band, date, tourManager } = getConcertDetails(concertId, data)
 	return (
-		<ConcertDetailsWrapper>
+		<ConcertDetailsWrapper data-cy='concert-details-wrapper'>
 			<div>
 				<ConcertDetailsLabel>
 					{t('salaries.concert_details_band')}

@@ -72,7 +72,11 @@ export const SalaryEdit: FC<SalaryEditProps> = ({
 					name='comment'
 					control={control}
 				/>
-				<Button disabled={isSubmitting} buttonStyle='secondary'>
+				<Button
+					data-cy='salary-edit-submit'
+					disabled={isSubmitting}
+					buttonStyle='secondary'
+				>
 					{isSubmitting && <LoaderIcon />}
 					{t('forms.edit')}
 				</Button>

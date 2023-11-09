@@ -30,7 +30,7 @@ export const useSalaries = (data?: Salary[]) => {
 				return {
 					id,
 					header: (
-						<SalaryDetailsList>
+						<SalaryDetailsList data-cy='salary-details-list'>
 							<Tooltip title={concertDate}>
 								<SalaryDetailsItem>{concertDate}</SalaryDetailsItem>
 							</Tooltip>

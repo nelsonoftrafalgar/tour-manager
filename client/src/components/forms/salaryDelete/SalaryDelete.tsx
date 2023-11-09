@@ -26,7 +26,11 @@ export const SalaryDelete: FC<SalaryDeleteProps> = ({
 				<Button onClick={handleModalClose} buttonStyle='primary'>
 					{t('forms.cancel')}
 				</Button>
-				<Button onClick={handleDeleteBand} buttonStyle='warning'>
+				<Button
+					onClick={handleDeleteBand}
+					buttonStyle='warning'
+					data-cy='salary-delete-submit'
+				>
 					{t('forms.delete')}
 				</Button>
 			</DeleteButtonsWrapper>

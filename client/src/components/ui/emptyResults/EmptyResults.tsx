@@ -16,7 +16,7 @@ export const EmptyResults: FC<EmptyResultsProps> = ({
 
 	if (noData) {
 		return (
-			<Wrapper>
+			<Wrapper data-cy='empty-results-placeholder'>
 				<ExclamationTriangleIcon width={40} height={40} />
 				<p>{t('ui.empty_state', { type: entityType })}</p>
 			</Wrapper>
