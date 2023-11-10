@@ -3,23 +3,7 @@ describe('Salaries create form', () => {
 		cy.visit('/en/salaries')
 		cy
 			.intercept('GET', 'http://localhost:8000/api/concerts', {
-				statusCode: 200,
-				body: [
-					{
-						id: 1,
-						place: 'Place1',
-						date: '2020-05-06T17:30:05.519Z',
-						band: { name: 'Band1', id: 1 },
-						tourManager: { name: 'Tour manager1', id: 1 },
-					},
-					{
-						id: 2,
-						place: 'Place2',
-						date: '2020-05-06T17:30:05.519Z',
-						band: { name: 'Band2', id: 2 },
-						tourManager: { name: 'Tour manager2', id: 2 },
-					},
-				],
+				fixture: 'initialConcerts.json',
 			})
 			.as('getConcerts')
 		cy
@@ -48,21 +32,7 @@ describe('Salaries create form', () => {
 			.as('createSalary')
 		cy
 			.intercept('GET', 'http://localhost:8000/api/salaries', {
-				statusCode: 200,
-				body: [
-					{
-						id: 1,
-						amount: '$12345',
-						comment: 'Test comment',
-						band: { name: 'Band1' },
-						tourManager: { name: 'Tour manager1' },
-						concert: {
-							place: 'Place1',
-							date: '2020-05-06T17:30:05.519Z',
-							id: 1,
-						},
-					},
-				],
+				fixture: 'initialSalaries.json',
 			})
 			.as('getNewSalaries')
 		cy.contains(/^Create$/).click()
@@ -90,45 +60,15 @@ describe('Salary edit form', () => {
 			.as('getConcerts')
 		cy
 			.intercept('GET', 'http://localhost:8000/api/salaries', {
-				statusCode: 200,
-				body: [
-					{
-						id: 1,
-						amount: '$12345',
-						comment: 'Test comment',
-						band: { name: 'Band1' },
-						tourManager: { name: 'Tour manager1' },
-						concert: {
-							place: 'Place1',
-							date: '2020-05-06T17:30:05.519Z',
-							id: 1,
-						},
-					},
-				],
+				fixture: 'initialSalaries.json',
 			})
 			.as('getSalaries')
 		cy.wait('@getSalaries')
 		cy.wait('@getConcerts')
-		cy.get('[data-cy="salary-details-list"]').click()
+		cy.get('[data-cy="salary-details-list"]').first().click()
 		cy
 			.intercept('GET', 'http://localhost:8000/api/concerts', {
-				statusCode: 200,
-				body: [
-					{
-						id: 1,
-						place: 'Place1',
-						date: '2020-05-06T17:30:05.519Z',
-						band: { name: 'Band1', id: 1 },
-						tourManager: { name: 'Tour manager1', id: 1 },
-					},
-					{
-						id: 2,
-						place: 'Place2',
-						date: '2020-05-06T17:30:05.519Z',
-						band: { name: 'Band2', id: 2 },
-						tourManager: { name: 'Tour manager2', id: 2 },
-					},
-				],
+				fixture: 'initialConcerts.json',
 			})
 			.as('getConcertsForEdit')
 		cy.contains('Edit').click()
@@ -182,45 +122,15 @@ describe('Salary delete', () => {
 			.as('getConcerts')
 		cy
 			.intercept('GET', 'http://localhost:8000/api/salaries', {
-				statusCode: 200,
-				body: [
-					{
-						id: 1,
-						amount: '$12345',
-						comment: 'Test comment',
-						band: { name: 'Band1' },
-						tourManager: { name: 'Tour manager1' },
-						concert: {
-							place: 'Place1',
-							date: '2020-05-06T17:30:05.519Z',
-							id: 1,
-						},
-					},
-				],
+				fixture: 'initialSalaries.json',
 			})
 			.as('getSalaries')
 		cy.wait('@getSalaries')
 		cy.wait('@getConcerts')
-		cy.get('[data-cy="salary-details-list"]').click()
+		cy.get('[data-cy="salary-details-list"]').first().click()
 		cy
 			.intercept('GET', 'http://localhost:8000/api/concerts', {
-				statusCode: 200,
-				body: [
-					{
-						id: 1,
-						place: 'Place1',
-						date: '2020-05-06T17:30:05.519Z',
-						band: { name: 'Band1', id: 1 },
-						tourManager: { name: 'Tour manager1', id: 1 },
-					},
-					{
-						id: 2,
-						place: 'Place2',
-						date: '2020-05-06T17:30:05.519Z',
-						band: { name: 'Band2', id: 2 },
-						tourManager: { name: 'Tour manager2', id: 2 },
-					},
-				],
+				fixture: 'initialConcerts.json',
 			})
 			.as('getConcertsForEdit')
 		cy.contains('Delete').click()

@@ -1,1 +1,2 @@
-refactor e2e tests
+update readme
+contenerize next app

@@ -1,0 +1,15 @@
+[
+    {
+      "id": "1",
+      "amount": "$12345",
+      "comment": "Test comment",
+      "band": { "name": "First band" },
+      "tourManager": { "name": "First tour manager" },
+      "concert": {
+        "place": "Place1",
+        "date": "2020-05-06T17:30:05.519Z",
+        "id": "1"
+      }
+    }
+  ]
+  

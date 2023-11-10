@@ -3,26 +3,10 @@ describe('Search input', () => {
 		cy.visit('/en/concerts')
 		cy
 			.intercept('GET', 'http://localhost:8000/api/concerts', {
-				statusCode: 200,
-				body: [
-					{
-						id: 1,
-						place: 'Place1',
-						date: '2020-05-06T17:30:05.519Z',
-						band: { name: 'Band1', id: 1 },
-						tourManager: { name: 'Tour manager1', id: 1 },
-					},
-					{
-						id: 2,
-						place: 'Place2',
-						date: '2020-05-06T17:30:05.519Z',
-						band: { name: 'Band2', id: 2 },
-						tourManager: { name: 'Tour manager2', id: 2 },
-					},
-				],
+				fixture: 'initialConcerts.json',
 			})
-			.as('mockGET')
-		cy.wait('@mockGET')
+			.as('getConcerts')
+		cy.wait('@getConcerts')
 		cy.contains('Place1').should('be.visible')
 		cy.contains('Place2').should('be.visible')
 		cy.get('[placeholder="Filter by place"]').type('Place1')
@@ -38,23 +22,7 @@ describe('Concert list', () => {
 		cy.visit('/en/concerts')
 		cy
 			.intercept('GET', 'http://localhost:8000/api/concerts', {
-				statusCode: 200,
-				body: [
-					{
-						id: 1,
-						place: 'Place1',
-						date: '2020-05-06T17:30:05.519Z',
-						band: { name: 'Band1', id: 1 },
-						tourManager: { name: 'Tour manager1', id: 1 },
-					},
-					{
-						id: 2,
-						place: 'Place2',
-						date: '2020-05-06T17:30:05.519Z',
-						band: { name: 'Band2', id: 2 },
-						tourManager: { name: 'Tour manager2', id: 2 },
-					},
-				],
+				fixture: 'initialConcerts.json',
 			})
 			.as('getConcerts')
 
@@ -63,20 +31,12 @@ describe('Concert list', () => {
 	it('accordion should show single item at a time', () => {
 		cy
 			.intercept('GET', 'http://localhost:8000/api/bands', {
-				statusCode: 200,
-				body: [
-					{ id: 1, name: 'Band1', frontMan: 'First frontman' },
-					{ id: 2, name: 'Band2', frontMan: 'Second frontman' },
-				],
+				fixture: 'initialBands.json',
 			})
 			.as('getBands')
 		cy
 			.intercept('GET', 'http://localhost:8000/api/tour_managers', {
-				statusCode: 200,
-				body: [
-					{ id: 1, name: 'Tour manager1' },
-					{ id: 2, name: 'Tour manager2' },
-				],
+				fixture: 'initialTourManagers.json',
 			})
 			.as('getTourManagers')
 		cy.contains('Place1').click()
@@ -95,43 +55,19 @@ describe('Concert edit form', () => {
 		cy.visit('/en/concerts')
 		cy
 			.intercept('GET', 'http://localhost:8000/api/concerts', {
-				statusCode: 200,
-				body: [
-					{
-						id: '1',
-						place: 'Place1',
-						date: '2020-05-06T17:30:05.519Z',
-						band: { name: 'Band1', id: '1' },
-						tourManager: { name: 'Tour manager1', id: '1' },
-					},
-					{
-						id: '2',
-						place: 'Place2',
-						date: '2020-05-06T17:30:05.519Z',
-						band: { name: 'Band2', id: '2' },
-						tourManager: { name: 'Tour manager2', id: '2' },
-					},
-				],
+				fixture: 'initialConcerts.json',
 			})
 			.as('getConcerts')
 
 		cy.wait('@getConcerts')
 		cy
 			.intercept('GET', 'http://localhost:8000/api/bands', {
-				statusCode: 200,
-				body: [
-					{ id: '1', name: 'Band1', frontMan: 'First frontman' },
-					{ id: '2', name: 'Band2', frontMan: 'Second frontman' },
-				],
+				fixture: 'initialBands.json',
 			})
 			.as('getBands')
 		cy
 			.intercept('GET', 'http://localhost:8000/api/tour_managers', {
-				statusCode: 200,
-				body: [
-					{ id: '1', name: 'Tour manager1' },
-					{ id: '2', name: 'Tour manager2' },
-				],
+				fixture: 'initialTourManagers.json',
 			})
 			.as('getTourManagers')
 		cy.contains('Place1').click()
@@ -150,8 +86,8 @@ describe('Concert edit form', () => {
 						id: 1,
 						place: 'New Place',
 						date: '2020-05-06T17:30:05.519Z',
-						band: { name: 'Band1', id: 1 },
-						tourManager: { name: 'Tour manager1', id: 1 },
+						band: { name: 'First band', id: 1 },
+						tourManager: { name: 'First tour manager', id: 1 },
 					},
 				],
 			})
@@ -171,8 +107,8 @@ describe('Concert edit form', () => {
 						id: 1,
 						place: 'New Place',
 						date: '2021-01-01T17:30:05.519Z',
-						band: { name: 'Band1', id: 1 },
-						tourManager: { name: 'Tour manager1', id: 1 },
+						band: { name: 'First band', id: 1 },
+						tourManager: { name: 'First tour manager', id: 1 },
 					},
 				],
 			})
@@ -187,7 +123,7 @@ describe('Concert edit form', () => {
 			.click()
 			.siblings()
 			.last()
-			.select('Band2', { force: true })
+			.select('Second band', { force: true })
 		cy.contains('Save').should('not.be.disabled')
 		cy
 			.intercept('PUT', 'http://localhost:8000/api/concerts', {
@@ -197,8 +133,8 @@ describe('Concert edit form', () => {
 						id: 1,
 						place: 'New Place',
 						date: '2021-01-01T17:30:05.519Z',
-						band: { name: 'Band2', id: 2 },
-						tourManager: { name: 'Tour manager1', id: 1 },
+						band: { name: 'Second band', id: 2 },
+						tourManager: { name: 'First tour manager', id: 1 },
 					},
 				],
 			})
@@ -210,14 +146,14 @@ describe('Concert edit form', () => {
 			.first()
 			.children()
 			.first()
-			.should('contain', 'Band2')
+			.should('contain', 'Second band')
 		cy
 			.get('[data-cy="select-trigger"]')
 			.last()
 			.click()
 			.siblings()
 			.last()
-			.select('Tour manager2', { force: true })
+			.select('Second tour manager', { force: true })
 		cy.contains('Save').should('not.be.disabled')
 		cy
 			.intercept('PUT', 'http://localhost:8000/api/concerts', {
@@ -227,8 +163,8 @@ describe('Concert edit form', () => {
 						id: 1,
 						place: 'New Place',
 						date: '2021-01-01T17:30:05.519Z',
-						band: { name: 'Band2', id: 2 },
-						tourManager: { name: 'Tour manager2', id: 2 },
+						band: { name: 'Second band', id: 2 },
+						tourManager: { name: 'Second tour manager', id: 2 },
 					},
 				],
 			})
@@ -240,7 +176,7 @@ describe('Concert edit form', () => {
 			.last()
 			.children()
 			.first()
-			.should('contain', 'Tour manager2')
+			.should('contain', 'Second tour manager')
 	})
 	it('should validate concert place', () => {
 		cy.get('[value="Place1"]').clear().type('Place!')
@@ -262,20 +198,12 @@ describe('Concert create form', () => {
 		cy.visit('/en/concerts')
 		cy
 			.intercept('GET', 'http://localhost:8000/api/bands', {
-				statusCode: 200,
-				body: [
-					{ id: '1', name: 'Band1', frontMan: 'First frontman' },
-					{ id: '2', name: 'Band2', frontMan: 'Second frontman' },
-				],
+				fixture: 'initialBands.json',
 			})
 			.as('getBands')
 		cy
 			.intercept('GET', 'http://localhost:8000/api/tour_managers', {
-				statusCode: 200,
-				body: [
-					{ id: '1', name: 'Tour manager1' },
-					{ id: '2', name: 'Tour manager2' },
-				],
+				fixture: 'initialTourManagers.json',
 			})
 			.as('getTourManagers')
 		cy.contains('Add new concert').click()
@@ -291,14 +219,14 @@ describe('Concert create form', () => {
 			.click()
 			.siblings()
 			.last()
-			.select('Band2', { force: true })
+			.select('Second band', { force: true })
 		cy
 			.get('[data-cy="select-trigger"]')
 			.last()
 			.click()
 			.siblings()
 			.last()
-			.select('Tour manager2', { force: true })
+			.select('Second tour manager', { force: true })
 		cy
 			.intercept('POST', 'http://localhost:8000/api/concerts', {
 				statusCode: 200,
@@ -312,8 +240,8 @@ describe('Concert create form', () => {
 						id: 1,
 						place: 'Place',
 						date: '2020-01-01T17:30:05.519Z',
-						band: { name: 'Band2', id: 2 },
-						tourManager: { name: 'Tour manager2', id: 2 },
+						band: { name: 'Second band', id: 2 },
+						tourManager: { name: 'Second tour manager', id: 2 },
 					},
 				],
 			})
@@ -321,7 +249,7 @@ describe('Concert create form', () => {
 		cy.contains(/^Add$/).click()
 		cy.wait('@createConcert')
 		cy.wait('@getConcerts')
-		cy.contains('Band2').should('be.visible')
+		cy.contains('Second band').should('be.visible')
 	})
 	it('should validate concert place', () => {
 		cy.get('[placeholder="Concert place"]').type('Place!')
@@ -343,42 +271,18 @@ describe('Concert delete modal', () => {
 		cy.visit('/en/concerts')
 		cy
 			.intercept('GET', 'http://localhost:8000/api/concerts', {
-				statusCode: 200,
-				body: [
-					{
-						id: 1,
-						place: 'Place1',
-						date: '2020-05-06T17:30:05.519Z',
-						band: { name: 'Band1', id: 1 },
-						tourManager: { name: 'Tour manager1', id: 1 },
-					},
-					{
-						id: 2,
-						place: 'Place2',
-						date: '2020-05-06T17:30:05.519Z',
-						band: { name: 'Band2', id: 2 },
-						tourManager: { name: 'Tour manager2', id: 2 },
-					},
-				],
+				fixture: 'initialConcerts.json',
 			})
 			.as('getConcerts')
 		cy.wait('@getConcerts')
 		cy
 			.intercept('GET', 'http://localhost:8000/api/bands', {
-				statusCode: 200,
-				body: [
-					{ id: 1, name: 'Band1', frontMan: 'First frontman' },
-					{ id: 2, name: 'Band2', frontMan: 'Second frontman' },
-				],
+				fixture: 'initialBands.json',
 			})
 			.as('getBands')
 		cy
 			.intercept('GET', 'http://localhost:8000/api/tour_managers', {
-				statusCode: 200,
-				body: [
-					{ id: 1, name: 'Tour manager1' },
-					{ id: 2, name: 'Tour manager2' },
-				],
+				fixture: 'initialTourManagers.json',
 			})
 			.as('getTourManagers')
 		cy.contains('Place1').click()
@@ -399,8 +303,8 @@ describe('Concert delete modal', () => {
 						id: 2,
 						place: 'Place2',
 						date: '2020-05-06T17:30:05.519Z',
-						band: { name: 'Band2', id: 2 },
-						tourManager: { name: 'Tour manager2', id: 2 },
+						band: { name: 'Second band', id: 2 },
+						tourManager: { name: 'Second tour manager', id: 2 },
 					},
 				],
 			})
@@ -418,35 +322,18 @@ describe('Concert should properly display error toast', () => {
 		cy.visit('/en/concerts')
 		cy
 			.intercept('GET', 'http://localhost:8000/api/concerts', {
-				statusCode: 200,
-				body: [
-					{
-						id: '1',
-						place: 'Place1',
-						date: '2020-05-06T17:30:05.519Z',
-						band: { name: 'Band1', id: '1' },
-						tourManager: { name: 'Tour manager1', id: '1' },
-					},
-				],
+				fixture: 'initialConcerts.json',
 			})
 			.as('getConcerts')
 		cy.wait('@getConcerts')
 		cy
 			.intercept('GET', 'http://localhost:8000/api/bands', {
-				statusCode: 200,
-				body: [
-					{ id: '1', name: 'Band1', frontMan: 'First frontman' },
-					{ id: '2', name: 'Band2', frontMan: 'Second frontman' },
-				],
+				fixture: 'initialBands.json',
 			})
 			.as('getBands')
 		cy
 			.intercept('GET', 'http://localhost:8000/api/tour_managers', {
-				statusCode: 200,
-				body: [
-					{ id: '1', name: 'Tour manager1' },
-					{ id: '2', name: 'Tour manager2' },
-				],
+				fixture: 'initialTourManagers.json',
 			})
 			.as('getTourManagers')
 		cy.contains('Place1').click()
@@ -460,7 +347,7 @@ describe('Concert should properly display error toast', () => {
 				statusCode: 404,
 				body: { message: 'Concert not found' },
 			})
-			.as('mockDELETE')
+			.as('deleteConcert')
 		cy.get('button:contains("Delete"):last').click()
 		cy.contains('.Toastify__toast-body', 'Concert not found')
 	})
@@ -471,7 +358,7 @@ describe('Concert should properly display error toast', () => {
 				statusCode: 404,
 				body: { message: 'Bad Request' },
 			})
-			.as('mockDELETE')
+			.as('deleteConcert')
 		cy.get('button:contains("Delete"):last').click()
 		cy.contains('.Toastify__toast-body', 'Bad Request')
 	})
@@ -508,20 +395,20 @@ describe('Concert should properly display error toast', () => {
 			.click()
 			.siblings()
 			.last()
-			.select('Band2', { force: true })
+			.select('Second band', { force: true })
 		cy
 			.get('[data-cy="select-trigger"]')
 			.last()
 			.click()
 			.siblings()
 			.last()
-			.select('Tour manager2', { force: true })
+			.select('Second tour manager', { force: true })
 		cy
 			.intercept('POST', 'http://localhost:8000/api/concerts', {
 				statusCode: 400,
 				body: { error: 'Bad Request' },
 			})
-			.as('mockPOST')
+			.as('createConcert')
 		cy.contains(/^Add$/).click()
 		cy.contains('.Toastify__toast-body', 'Bad Request')
 	})
@@ -536,20 +423,20 @@ describe('Concert should properly display error toast', () => {
 			.click()
 			.siblings()
 			.last()
-			.select('Band2', { force: true })
+			.select('Second band', { force: true })
 		cy
 			.get('[data-cy="select-trigger"]')
 			.last()
 			.click()
 			.siblings()
 			.last()
-			.select('Tour manager2', { force: true })
+			.select('Second tour manager', { force: true })
 		cy
 			.intercept('POST', 'http://localhost:8000/api/concerts', {
 				statusCode: 409,
 				body: { message: 'Concert already exists' },
 			})
-			.as('mockPOST')
+			.as('createConcert')
 		cy.contains(/^Add$/).click()
 		cy.contains('.Toastify__toast-body', 'Concert already exists')
 	})

@@ -3,14 +3,10 @@ describe('Search input', () => {
 		cy.visit('/en/bands')
 		cy
 			.intercept('GET', 'http://localhost:8000/api/bands', {
-				statusCode: 200,
-				body: [
-					{ id: 1, name: 'First band', frontMan: 'First frontman' },
-					{ id: 2, name: 'Second band', frontMan: 'Second frontman' },
-				],
+				fixture: 'initialBands.json',
 			})
-			.as('mockGET')
-		cy.wait('@mockGET')
+			.as('getBands')
+		cy.wait('@getBands')
 		cy.contains('First band').should('be.visible')
 		cy.contains('Second band').should('be.visible')
 		cy.get('[placeholder="Filter by name"]').type('First')
@@ -26,14 +22,10 @@ describe('Band list', () => {
 		cy.visit('/en/bands')
 		cy
 			.intercept('GET', 'http://localhost:8000/api/bands', {
-				statusCode: 200,
-				body: [
-					{ id: 1, name: 'First band', frontMan: 'First frontman' },
-					{ id: 2, name: 'Second band', frontMan: 'Second frontman' },
-				],
+				fixture: 'initialBands.json',
 			})
-			.as('mockGET')
-		cy.wait('@mockGET')
+			.as('getBands')
+		cy.wait('@getBands')
 		cy.contains('First band').click()
 		cy.get('[value="First frontman"]').should('be.visible')
 		cy.get('[value="Second frontman"]').should('not.exist')
@@ -48,11 +40,10 @@ describe('Band edit form', () => {
 		cy.visit('/en/bands')
 		cy
 			.intercept('GET', 'http://localhost:8000/api/bands', {
-				statusCode: 200,
-				body: [{ id: 1, name: 'First band', frontMan: 'First frontman' }],
+				fixture: 'initialBands.json',
 			})
-			.as('mockGET1')
-		cy.wait('@mockGET1')
+			.as('getBands1')
+		cy.wait('@getBands1')
 		cy.contains('First band').click()
 		cy.contains('Save').should('be.disabled')
 		cy.get('[value="First frontman"]').clear().type('Second frontman')
@@ -62,9 +53,9 @@ describe('Band edit form', () => {
 				statusCode: 200,
 				body: [{ id: 1, name: 'First band', frontMan: 'Second frontman' }],
 			})
-			.as('mockPUTfrontman')
+			.as('updateFrontman')
 		cy.contains('Save').click()
-		cy.wait('@mockPUTfrontman')
+		cy.wait('@updateFrontman')
 		cy.contains('Save').should('be.disabled')
 		cy.get('[value="First frontman"]').should('not.exist')
 		cy.get('[value="Second frontman"]').should('be.visible')
@@ -74,16 +65,16 @@ describe('Band edit form', () => {
 				statusCode: 200,
 				body: [{ id: 1, name: 'Second band', frontMan: 'Second frontman' }],
 			})
-			.as('mockPUTname')
+			.as('updateName')
 		cy
 			.intercept('GET', 'http://localhost:8000/api/bands', {
 				statusCode: 200,
 				body: [{ id: 1, name: 'Second band', frontMan: 'Second frontman' }],
 			})
-			.as('mockGET2')
+			.as('getBands2')
 		cy.contains('Save').click()
-		cy.wait('@mockPUTname')
-		cy.wait('@mockGET2')
+		cy.wait('@updateName')
+		cy.wait('@getBands2')
 		cy.get('[value="First band"]').should('not.exist')
 		cy.get('[value="Second band"]').should('be.visible')
 		cy.contains('Save').should('be.disabled')
@@ -94,14 +85,10 @@ describe('Band edit form', () => {
 		cy.visit('/en/bands')
 		cy
 			.intercept('GET', 'http://localhost:8000/api/bands', {
-				statusCode: 200,
-				body: [
-					{ id: 1, name: 'First band', frontMan: 'First frontman' },
-					{ id: 2, name: 'Second band', frontMan: 'Second frontman' },
-				],
+				fixture: 'initialBands.json',
 			})
-			.as('mockGET1')
-		cy.wait('@mockGET1')
+			.as('getBands1')
+		cy.wait('@getBands1')
 		cy.contains('First band').click()
 		cy.get('[value="First band"]').clear().type('First band!')
 		cy.contains('Save').click()
@@ -114,14 +101,10 @@ describe('Band edit form', () => {
 		cy.visit('/en/bands')
 		cy
 			.intercept('GET', 'http://localhost:8000/api/bands', {
-				statusCode: 200,
-				body: [
-					{ id: 1, name: 'First band', frontMan: 'First frontman' },
-					{ id: 2, name: 'Second band', frontMan: 'Second frontman' },
-				],
+				fixture: 'initialBands.json',
 			})
-			.as('mockGET1')
-		cy.wait('@mockGET1')
+			.as('getBands1')
+		cy.wait('@getBands1')
 		cy.contains('First band').click()
 		cy.get('[value="First frontman"]').clear().type('First frontman!')
 		cy.contains('Save').click()
@@ -137,14 +120,10 @@ describe('Band create form', () => {
 		cy.visit('/en/bands')
 		cy
 			.intercept('GET', 'http://localhost:8000/api/bands', {
-				statusCode: 200,
-				body: [
-					{ id: 1, name: 'First band', frontMan: 'First frontman' },
-					{ id: 2, name: 'Second band', frontMan: 'Second frontman' },
-				],
+				fixture: 'initialBands.json',
 			})
-			.as('mockGET1')
-		cy.wait('@mockGET1')
+			.as('getBands1')
+		cy.wait('@getBands1')
 		cy.contains('Add new band').click()
 		cy.get('[placeholder="Band name"]').type('Third band')
 		cy.get('[placeholder="Band frontman"]').type('Third frontman')
@@ -152,7 +131,7 @@ describe('Band create form', () => {
 			.intercept('POST', 'http://localhost:8000/api/bands', {
 				statusCode: 200,
 			})
-			.as('mockPOST')
+			.as('createBand')
 		cy
 			.intercept('GET', 'http://localhost:8000/api/bands', {
 				statusCode: 200,
@@ -162,24 +141,20 @@ describe('Band create form', () => {
 					{ id: 3, name: 'Third band', frontMan: 'Third frontman' },
 				],
 			})
-			.as('mockGET1')
+			.as('getBands1')
 		cy.contains(/^Add$/).click()
-		cy.wait('@mockPOST')
-		cy.wait('@mockGET1')
+		cy.wait('@createBand')
+		cy.wait('@getBands1')
 		cy.contains('Third band').should('be.visible')
 	})
 	it('should validate band name', () => {
 		cy.visit('/en/bands')
 		cy
 			.intercept('GET', 'http://localhost:8000/api/bands', {
-				statusCode: 200,
-				body: [
-					{ id: 1, name: 'First band', frontMan: 'First frontman' },
-					{ id: 2, name: 'Second band', frontMan: 'Second frontman' },
-				],
+				fixture: 'initialBands.json',
 			})
-			.as('mockGET1')
-		cy.wait('@mockGET1')
+			.as('getBands1')
+		cy.wait('@getBands1')
 		cy.contains('Add new band').click()
 		cy.get('[placeholder="Band name"]').type('Third band!')
 		cy.get('[placeholder="Band frontman"]').type('Third frontman')
@@ -193,14 +168,10 @@ describe('Band create form', () => {
 		cy.visit('/en/bands')
 		cy
 			.intercept('GET', 'http://localhost:8000/api/bands', {
-				statusCode: 200,
-				body: [
-					{ id: 1, name: 'First band', frontMan: 'First frontman' },
-					{ id: 2, name: 'Second band', frontMan: 'Second frontman' },
-				],
+				fixture: 'initialBands.json',
 			})
-			.as('mockGET1')
-		cy.wait('@mockGET1')
+			.as('getBands1')
+		cy.wait('@getBands1')
 		cy.contains('Add new band').click()
 		cy.get('[placeholder="Band name"]').type('Third band')
 		cy.get('[placeholder="Band frontman"]').type('Third frontman#')
@@ -217,14 +188,10 @@ describe('Band delete modal', () => {
 		cy.visit('/en/bands')
 		cy
 			.intercept('GET', 'http://localhost:8000/api/bands', {
-				statusCode: 200,
-				body: [
-					{ id: 1, name: 'First band', frontMan: 'First frontman' },
-					{ id: 2, name: 'Second band', frontMan: 'Second frontman' },
-				],
+				fixture: 'initialBands.json',
 			})
-			.as('mockGET1')
-		cy.wait('@mockGET1')
+			.as('getBands1')
+		cy.wait('@getBands1')
 		cy.contains('First band').click()
 		cy.contains('Delete').click()
 		cy.contains('Delete band').should('be.visible')
@@ -232,16 +199,16 @@ describe('Band delete modal', () => {
 			.intercept('DELETE', 'http://localhost:8000/api/bands/1', {
 				statusCode: 200,
 			})
-			.as('mockDELETE')
+			.as('deleteBand')
 		cy
 			.intercept('GET', 'http://localhost:8000/api/bands', {
 				statusCode: 200,
 				body: [{ id: 2, name: 'Second band', frontMan: 'Second frontman' }],
 			})
-			.as('mockGET2')
+			.as('getBands2')
 		cy.get('button:contains("Delete"):last').click()
-		cy.wait('@mockDELETE')
-		cy.wait('@mockGET2')
+		cy.wait('@deleteBand')
+		cy.wait('@getBands2')
 		cy.contains('Delete band').should('not.exist')
 		cy.contains('First band').should('not.exist')
 	})
@@ -255,8 +222,8 @@ describe('Band should propelry display error toast', () => {
 				statusCode: 200,
 				body: [{ id: 1, name: 'First band', frontMan: 'First frontman' }],
 			})
-			.as('mockGET1')
-		cy.wait('@mockGET1')
+			.as('getBands1')
+		cy.wait('@getBands1')
 		cy.contains('First band').click()
 		cy.contains('Delete').click()
 		cy
@@ -264,7 +231,7 @@ describe('Band should propelry display error toast', () => {
 				statusCode: 404,
 				body: { message: 'Band not found' },
 			})
-			.as('mockDELETE')
+			.as('deleteBand')
 		cy.get('button:contains("Delete"):last').click()
 		cy.contains('.Toastify__toast-body', 'Band not found')
 	})
@@ -275,8 +242,8 @@ describe('Band should propelry display error toast', () => {
 				statusCode: 200,
 				body: [{ id: 1, name: 'First band', frontMan: 'First frontman' }],
 			})
-			.as('mockGET1')
-		cy.wait('@mockGET1')
+			.as('getBands1')
+		cy.wait('@getBands1')
 		cy.contains('First band').click()
 		cy.contains('Delete').click()
 		cy
@@ -284,7 +251,7 @@ describe('Band should propelry display error toast', () => {
 				statusCode: 400,
 				body: { error: 'Bad Request' },
 			})
-			.as('mockDELETE')
+			.as('deleteBand')
 		cy.get('button:contains("Delete"):last').click()
 		cy.contains('.Toastify__toast-body', 'Bad Request')
 	})
@@ -292,11 +259,10 @@ describe('Band should propelry display error toast', () => {
 		cy.visit('/en/bands')
 		cy
 			.intercept('GET', 'http://localhost:8000/api/bands', {
-				statusCode: 200,
-				body: [{ id: 1, name: 'First band', frontMan: 'First frontman' }],
+				fixture: 'initialBands.json',
 			})
-			.as('mockGET1')
-		cy.wait('@mockGET1')
+			.as('getBands1')
+		cy.wait('@getBands1')
 		cy.contains('Add new band').click()
 		cy.get('[placeholder="Band name"]').type('Third band')
 		cy.get('[placeholder="Band frontman"]').type('Third frontman')
@@ -305,20 +271,19 @@ describe('Band should propelry display error toast', () => {
 				statusCode: 400,
 				body: { error: 'Bad Request' },
 			})
-			.as('mockPOST')
+			.as('createBand')
 		cy.contains(/^Add$/).click()
-		cy.wait('@mockPOST')
+		cy.wait('@createBand')
 		cy.contains('.Toastify__toast-body', 'Bad Request')
 	})
 	it('when POST returns 409', () => {
 		cy.visit('/en/bands')
 		cy
 			.intercept('GET', 'http://localhost:8000/api/bands', {
-				statusCode: 200,
-				body: [{ id: 1, name: 'First band', frontMan: 'First frontman' }],
+				fixture: 'initialBands.json',
 			})
-			.as('mockGET1')
-		cy.wait('@mockGET1')
+			.as('getBands1')
+		cy.wait('@getBands1')
 		cy.contains('Add new band').click()
 		cy.get('[placeholder="Band name"]').type('Third band')
 		cy.get('[placeholder="Band frontman"]').type('Third frontman')
@@ -327,20 +292,19 @@ describe('Band should propelry display error toast', () => {
 				statusCode: 409,
 				body: { message: 'Band already exists' },
 			})
-			.as('mockPOST')
+			.as('createBand')
 		cy.contains(/^Add$/).click()
-		cy.wait('@mockPOST')
+		cy.wait('@createBand')
 		cy.contains('.Toastify__toast-body', 'Band already exists')
 	})
 	it('when PUT returns 400', () => {
 		cy.visit('/en/bands')
 		cy
 			.intercept('GET', 'http://localhost:8000/api/bands', {
-				statusCode: 200,
-				body: [{ id: 1, name: 'First band', frontMan: 'First frontman' }],
+				fixture: 'initialBands.json',
 			})
-			.as('mockGET1')
-		cy.wait('@mockGET1')
+			.as('getBands1')
+		cy.wait('@getBands1')
 		cy.contains('First band').click()
 		cy.get('[value="First frontman"]').clear().type('Second frontman')
 		cy
@@ -348,20 +312,19 @@ describe('Band should propelry display error toast', () => {
 				statusCode: 400,
 				body: { error: 'Bad Request' },
 			})
-			.as('mockPUTfrontman')
+			.as('updateFrontman')
 		cy.contains('Save').click()
-		cy.wait('@mockPUTfrontman')
+		cy.wait('@updateFrontman')
 		cy.contains('.Toastify__toast-body', 'Bad Request')
 	})
 	it('when PUT returns 409', () => {
 		cy.visit('/en/bands')
 		cy
 			.intercept('GET', 'http://localhost:8000/api/bands', {
-				statusCode: 200,
-				body: [{ id: 1, name: 'First band', frontMan: 'First frontman' }],
+				fixture: 'initialBands.json',
 			})
-			.as('mockGET1')
-		cy.wait('@mockGET1')
+			.as('getBands1')
+		cy.wait('@getBands1')
 		cy.contains('First band').click()
 		cy.get('[value="First frontman"]').clear().type('Second frontman')
 		cy
@@ -369,9 +332,9 @@ describe('Band should propelry display error toast', () => {
 				statusCode: 409,
 				body: { message: 'Band already exists' },
 			})
-			.as('mockPUTfrontman')
+			.as('updateFrontman')
 		cy.contains('Save').click()
-		cy.wait('@mockPUTfrontman')
+		cy.wait('@updateFrontman')
 		cy.contains('.Toastify__toast-body', 'Band already exists')
 	})
 })
