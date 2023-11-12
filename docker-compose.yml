@@ -34,6 +34,21 @@ services:
   depends_on:
    - db
 
+ client:
+  container_name: nextjs
+  restart: unless-stopped
+  build:
+   context: ./
+   dockerfile: ./client/Dockerfile
+  volumes:
+   - ./client:/app
+  ports:
+   - '3000:3000'
+  networks:
+   - nest
+  depends_on:
+   - server
+
 networks:
  nest:
 

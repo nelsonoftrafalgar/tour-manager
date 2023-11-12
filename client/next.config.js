@@ -12,6 +12,16 @@ const nextConfig = {
     
         return config
       },
+
+    async redirects() {
+      return [
+         {
+            source: '/',
+            destination: '/en/bands',
+            permanent: true,
+          },
+      ]
+    },
 }
 
 module.exports = nextConfig
