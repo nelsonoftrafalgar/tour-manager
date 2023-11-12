@@ -7,6 +7,7 @@ import { DatePickerWrapper, ErrorMessage, StyledLabel } from './styles'
 import DatePicker from 'react-datepicker'
 import { DatePickerProps } from './types'
 import { FC } from 'react'
+import { formatDate } from './utils'
 import { useI18n } from '@/locales/client'
 
 const DatePickerComponent: FC<DatePickerProps> = ({
@@ -17,8 +18,8 @@ const DatePickerComponent: FC<DatePickerProps> = ({
 	const t = useI18n()
 	const selected = value ? new Date(value) : null
 
-	const handleDateChange = (date: Date | null) => {
-		onChange(date?.toISOString())
+	const handleDateChange = (date: Date) => {
+		onChange(formatDate(date))
 	}
 
 	return (

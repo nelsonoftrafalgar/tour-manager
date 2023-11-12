@@ -7,17 +7,21 @@ import React, { FC, useEffect, useState } from 'react'
 
 import DatePicker from 'react-datepicker'
 import { RangePickerProps } from './types'
+import { formatDate } from './utils'
 import { useI18n } from '@/locales/client'
 
 export const RangePicker: FC<RangePickerProps> = ({ onChange }) => {
 	const t = useI18n()
-	const [startDate, setStartDate] = useState<Date | null>(new Date())
-	const [endDate, setEndDate] = useState<Date | null>(
+	const [startDate, setStartDate] = useState(new Date())
+	const [endDate, setEndDate] = useState(
 		new Date(new Date().setDate(new Date().getDate() + 30))
 	)
 
+	const handleStartDate = (date: Date) => setStartDate(date)
+	const handleEndDate = (date: Date) => setEndDate(date)
+
 	useEffect(() => {
-		onChange(`${startDate?.toISOString()}_${endDate?.toISOString()}`)
+		onChange(`${formatDate(startDate)}_${formatDate(endDate)}`)
 	}, [startDate, endDate, onChange])
 
 	return (
@@ -29,7 +33,7 @@ export const RangePicker: FC<RangePickerProps> = ({ onChange }) => {
 			<DatePickerWrapper>
 				<DatePicker
 					selected={startDate}
-					onChange={setStartDate}
+					onChange={handleStartDate}
 					selectsStart
 					startDate={startDate}
 					endDate={endDate}
@@ -38,7 +42,7 @@ export const RangePicker: FC<RangePickerProps> = ({ onChange }) => {
 				<div>-</div>
 				<DatePicker
 					selected={endDate}
-					onChange={setEndDate}
+					onChange={handleEndDate}
 					selectsEnd
 					startDate={startDate}
 					endDate={endDate}

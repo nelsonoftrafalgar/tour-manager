@@ -1,5 +1,3 @@
-'use client'
-
 import { ReportCreateFormData, ReportCreateProps } from './types'
 
 import { Button } from '@/components/ui/button/Button'
