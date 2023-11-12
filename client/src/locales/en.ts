@@ -76,6 +76,7 @@ export default {
 	},
 	forms: {
 		required: 'This field is required',
+		range_required: 'Date range is required',
 		invalid_characters: 'Invalid characters',
 		save: 'Save',
 		add: 'Add',

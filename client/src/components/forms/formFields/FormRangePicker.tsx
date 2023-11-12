@@ -9,9 +9,16 @@ export function FormRangePicker<T extends FieldValues>({
 }: FormRangePickerProps<T>) {
 	const {
 		field: { onChange, value },
+		fieldState: { error },
 	} = useController({
 		name,
 		control,
 	})
-	return <RangePicker value={value} onChange={onChange} />
+	return (
+		<RangePicker
+			value={value}
+			onChange={onChange}
+			errorMessage={error?.message}
+		/>
+	)
 }

@@ -2,7 +2,9 @@ import * as yup from 'yup'
 
 import { useI18n } from '@/locales/client'
 
-export const getConcertSchema = (t: ReturnType<typeof useI18n>) =>
+type Translate = ReturnType<typeof useI18n>
+
+export const getConcertSchema = (t: Translate) =>
 	yup
 		.object({
 			place: yup
@@ -19,7 +21,7 @@ export const getConcertSchema = (t: ReturnType<typeof useI18n>) =>
 		})
 		.required()
 
-export const getBandSchema = (t: ReturnType<typeof useI18n>) =>
+export const getBandSchema = (t: Translate) =>
 	yup
 		.object({
 			name: yup
@@ -41,7 +43,7 @@ export const getBandSchema = (t: ReturnType<typeof useI18n>) =>
 		})
 		.required()
 
-export const getTourManagerSchema = (t: ReturnType<typeof useI18n>) =>
+export const getTourManagerSchema = (t: Translate) =>
 	yup
 		.object({
 			name: yup
@@ -54,7 +56,7 @@ export const getTourManagerSchema = (t: ReturnType<typeof useI18n>) =>
 				.required(t('forms.required')),
 		})
 		.required()
-export const getSalarySchema = (t: ReturnType<typeof useI18n>) =>
+export const getSalarySchema = (t: Translate) =>
 	yup
 		.object({
 			concertId: yup.string().required(t('forms.required')),
@@ -78,9 +80,9 @@ export const getSalarySchema = (t: ReturnType<typeof useI18n>) =>
 		})
 		.required()
 
-export const getReportSchema = (t: ReturnType<typeof useI18n>) =>
+export const getReportSchema = (t: Translate) =>
 	yup
 		.object({
-			date: yup.string().required(t('forms.required')),
+			date: yup.string().required(t('forms.range_required')),
 		})
 		.required()

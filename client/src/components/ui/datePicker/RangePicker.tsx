@@ -2,7 +2,7 @@
 
 import 'react-datepicker/dist/react-datepicker.css'
 
-import { DatePickerWrapper, StyledLabel } from './styles'
+import { DatePickerWrapper, ErrorMessage, StyledLabel } from './styles'
 import React, { FC, useEffect, useState } from 'react'
 
 import DatePicker from 'react-datepicker'
@@ -10,7 +10,10 @@ import { RangePickerProps } from './types'
 import { formatDate } from './utils'
 import { useI18n } from '@/locales/client'
 
-export const RangePicker: FC<RangePickerProps> = ({ onChange }) => {
+export const RangePicker: FC<RangePickerProps> = ({
+	onChange,
+	errorMessage,
+}) => {
 	const t = useI18n()
 	const [startDate, setStartDate] = useState(new Date())
 	const [endDate, setEndDate] = useState(
@@ -21,7 +24,9 @@ export const RangePicker: FC<RangePickerProps> = ({ onChange }) => {
 	const handleEndDate = (date: Date) => setEndDate(date)
 
 	useEffect(() => {
-		onChange(`${formatDate(startDate)}_${formatDate(endDate)}`)
+		if (!startDate || !endDate) {
+			onChange('')
+		} else onChange(`${formatDate(startDate)}_${formatDate(endDate)}`)
 	}, [startDate, endDate, onChange])
 
 	return (
@@ -30,7 +35,7 @@ export const RangePicker: FC<RangePickerProps> = ({ onChange }) => {
 				<span>{t('ui.start_date')}</span>
 				<span>{t('ui.end_date')}</span>
 			</StyledLabel>
-			<DatePickerWrapper>
+			<DatePickerWrapper $error={!!errorMessage}>
 				<DatePicker
 					selected={startDate}
 					onChange={handleStartDate}
@@ -38,6 +43,7 @@ export const RangePicker: FC<RangePickerProps> = ({ onChange }) => {
 					startDate={startDate}
 					endDate={endDate}
 					dateFormat={'dd/MM/yyyy'}
+					placeholderText={t('forms.date_placeholder')}
 				/>
 				<div>-</div>
 				<DatePicker
@@ -48,8 +54,10 @@ export const RangePicker: FC<RangePickerProps> = ({ onChange }) => {
 					endDate={endDate}
 					minDate={startDate}
 					dateFormat={'dd/MM/yyyy'}
+					placeholderText={t('forms.date_placeholder')}
 				/>
 			</DatePickerWrapper>
+			{errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
 		</div>
 	)
 }
