@@ -12,8 +12,9 @@ Fullstack application build with:
 - React-query
 - Cypress
 
-To access application in dev mode inside docker containers 
-run ```./dev.sh``` and go to [http://localhost:3000/en/bands](http://localhost:3000/en/bands) 
+To access application in dev mode inside docker containers: 
+- run ```./dev.sh``` 
+- go to [http://localhost:3000/en/bands](http://localhost:3000/en/bands) 
 
 The application allows to perform CRUD operations on 4 entities: 
 - bands 
